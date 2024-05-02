@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  baseUrl = environment.apiUrl;
   title = 'Yukata App';
   products: any;
 
@@ -18,7 +20,7 @@ export class AppComponent implements OnInit {
   }
 
   getProducts() {
-    return this.http.get('https://localhost:5001/api/products').subscribe({
+    return this.http.get(this.baseUrl + '/products').subscribe({
       next: response => this.products = response,
       error: error => console.log(error)
     });
