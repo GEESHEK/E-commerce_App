@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit {
   baseUrl = environment.apiUrl;
-  title = 'JDM Watches';
   watches: any;
 
   constructor(private http: HttpClient) {}
