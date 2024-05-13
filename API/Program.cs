@@ -12,7 +12,7 @@ builder.Services.AddDbContext<DataContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<WatchService>();
 
 var app = builder.Build();
 

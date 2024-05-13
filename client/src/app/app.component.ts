@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -10,18 +9,18 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit {
   baseUrl = environment.apiUrl;
-  title = 'Yukata App';
-  products: any;
+  title = 'JDM Watches';
+  watches: any;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getProducts();
+    this.getWatches();
   }
 
-  getProducts() {
-    return this.http.get(this.baseUrl + '/products').subscribe({
-      next: response => this.products = response,
+  getWatches() {
+    return this.http.get(this.baseUrl + '/watches').subscribe({
+      next: response => this.watches = response,
       error: error => console.log(error)
     });
   }
