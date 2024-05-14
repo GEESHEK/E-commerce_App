@@ -11,4 +11,24 @@ public class DataContext : DbContext
     }
     
     public DbSet<Watch> Watches { get; set; }
+    public DbSet<Calibre> Calibres { get; set; }
+    public DbSet<MovementType> MovementTypes { get; set; }
+    public DbSet<PowerReserve> PowerReserves { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Calibre>()
+            .HasIndex(c => c.Name)
+            .IsUnique();
+        
+        modelBuilder.Entity<MovementType>()
+            .HasIndex(m => m.Name)
+            .IsUnique();
+        
+        modelBuilder.Entity<PowerReserve>()
+            .HasIndex(p => p.Duration)
+            .IsUnique();
+    }
 }
