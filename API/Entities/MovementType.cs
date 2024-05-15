@@ -2,7 +2,10 @@
 
 namespace API.Entities;
 
-public class MovementType
+public enum MovementType
 {
-    public string Name { get; set; }
+    Automatic,
+    Manual,
+    Quartz,
+    Solar
 }
