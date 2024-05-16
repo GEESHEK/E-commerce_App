@@ -6,6 +6,5 @@ public enum MovementType
 {
     Automatic,
     Manual,
-    Quartz,
-    Solar
+    Quartz
 }

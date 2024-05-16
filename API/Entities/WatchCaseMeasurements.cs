@@ -2,6 +2,7 @@
 
 public class WatchCaseMeasurements
 {
+    public int Id { get; set; }
     public double Diameter { get; set; }
     public double Thickness { get; set; }
     public double Length { get; set; }
