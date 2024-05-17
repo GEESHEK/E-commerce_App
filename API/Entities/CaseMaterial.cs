@@ -1,11 +1,12 @@
 ﻿namespace API.Entities;
 
-public enum Material
+public enum CaseMaterial
 {
     StainlessSteel,
     Ceramic,
     Titanium,
     CarbonFibre,
+    Gold,
     Rubber,
-    Gold
+    Resin
 }
