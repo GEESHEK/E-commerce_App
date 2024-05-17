@@ -16,7 +16,12 @@ public class WatchService
     
     public async Task<ActionResult<IEnumerable<Watch>>> GetWatches()
     {
-        return await _dataContext.Watches.ToListAsync();
+        return await _dataContext.Watches
+            .Include(b => b.Brand)
+            .Include(c => c.Case.Dial)
+            // .ThenInclude(d => d.Dial)
+            .Include(c => c.Case.WatchCaseMeasurements)
+            .ToListAsync();
     }
     
     public async Task<ActionResult<Watch>> GetWatchById(int id)
