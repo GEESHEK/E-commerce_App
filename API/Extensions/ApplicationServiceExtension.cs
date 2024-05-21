@@ -10,7 +10,7 @@ public static class ApplicationServiceExtension
     {
         services.AddDbContext<DataContext>(opt =>
         {
-            opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+            opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
         });
         services.AddCors();
         services.AddScoped<WatchService>();
