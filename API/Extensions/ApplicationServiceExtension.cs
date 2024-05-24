@@ -1,4 +1,6 @@
 ﻿using API.Data;
+using API.Data.Repositories;
+using API.Interfaces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,7 @@ public static class ApplicationServiceExtension
         });
         services.AddCors();
         services.AddScoped<WatchService>();
+        services.AddScoped<IWatchRepository, WatchRepository>();
 
         return services;
     }
