@@ -5,9 +5,10 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  title = 'Ecommerce App';
   baseUrl = environment.apiUrl;
   watches: any;
 
@@ -19,9 +20,8 @@ export class AppComponent implements OnInit {
 
   getWatches() {
     return this.http.get(this.baseUrl + '/watches').subscribe({
-      next: response => this.watches = response,
-      error: error => console.log(error)
+      next: (response) => (this.watches = response),
+      error: (error) => console.log(error),
     });
   }
-
 }
