@@ -1,26 +1,28 @@
-﻿using API.Data;
-using API.Entities;
+﻿using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace API.Services;
+namespace API.Controllers;
 
-public class WatchService
+[ApiController]
+[Route("api/[controller]")]
+public class WatchController : ControllerBase
 {
     private readonly IWatchRepository _watchRepository;
 
-    public WatchService(IWatchRepository watchRepository)
+    public WatchController(IWatchRepository watchRepository)
     {
         _watchRepository = watchRepository;
     }
     
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<Watch>>> GetWatches()
     {
         return await _watchRepository.GetWatchesAsync();
     }
-    
-    public async Task<ActionResult<Watch>> GetWatchById(int id)
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Watch>> GetWatch(int id)
     {
         return await _watchRepository.GetWatchByIdAsync(id);
     }

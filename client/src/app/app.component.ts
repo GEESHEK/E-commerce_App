@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   getWatches() {
-    return this.http.get(this.baseUrl + '/watches').subscribe({
+    return this.http.get(this.baseUrl + '/watch').subscribe({
       next: (response) => (this.watches = response),
       error: (error) => console.log(error),
     });
