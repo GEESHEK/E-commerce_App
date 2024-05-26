@@ -1,7 +1,6 @@
 ﻿using API.Data;
 using API.Data.Repositories;
 using API.Interfaces;
-using API.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
@@ -15,7 +14,6 @@ public static class ApplicationServiceExtension
             opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
         });
         services.AddCors();
-        services.AddScoped<WatchService>();
         services.AddScoped<IWatchRepository, WatchRepository>();
 
         return services;
