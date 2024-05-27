@@ -1,13 +1,7 @@
 ﻿namespace API.Entities;
 
-public enum StrapBraceletMaterial
+public class StrapBraceletMaterial
 {
-    StainlessSteel,
-    Ceramic,
-    Titanium,
-    CarbonFibre,
-    Gold,
-    Rubber,
-    Resin,
-    Leather
+    public int Id { get; set; }
+    public string Material { get; set; }
 }

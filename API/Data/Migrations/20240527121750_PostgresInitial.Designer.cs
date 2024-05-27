@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240521190031_PostgresInitial")]
+    [Migration("20240527121750_PostgresInitial")]
     partial class PostgresInitial
     {
         /// <inheritdoc />
@@ -71,10 +71,10 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CaseMaterial")
+                    b.Property<int?>("CaseMaterialId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Crystal")
+                    b.Property<int?>("CrystalId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("DialId")
@@ -83,22 +83,68 @@ namespace API.Data.Migrations
                     b.Property<bool>("Lume")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("StrapBraceletMaterial")
+                    b.Property<int?>("StrapBraceletMaterialId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("WatchCaseMeasurementsId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("WaterResistance")
+                    b.Property<int?>("WaterResistanceId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CaseMaterialId");
+
+                    b.HasIndex("CrystalId");
+
                     b.HasIndex("DialId");
+
+                    b.HasIndex("StrapBraceletMaterialId");
 
                     b.HasIndex("WatchCaseMeasurementsId");
 
+                    b.HasIndex("WaterResistanceId");
+
                     b.ToTable("Cases");
+                });
+
+            modelBuilder.Entity("API.Entities.CaseMaterial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Material")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Material")
+                        .IsUnique();
+
+                    b.ToTable("CaseMaterials");
+                });
+
+            modelBuilder.Entity("API.Entities.Crystal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Material")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Material")
+                        .IsUnique();
+
+                    b.ToTable("Crystals");
                 });
 
             modelBuilder.Entity("API.Entities.Dial", b =>
@@ -120,6 +166,25 @@ namespace API.Data.Migrations
                     b.ToTable("Dial");
                 });
 
+            modelBuilder.Entity("API.Entities.MovementType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Type")
+                        .IsUnique();
+
+                    b.ToTable("MovementTypes");
+                });
+
             modelBuilder.Entity("API.Entities.PowerReserve", b =>
                 {
                     b.Property<int>("Id")
@@ -139,6 +204,25 @@ namespace API.Data.Migrations
                     b.ToTable("PowerReserves");
                 });
 
+            modelBuilder.Entity("API.Entities.StrapBraceletMaterial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Material")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Material")
+                        .IsUnique();
+
+                    b.ToTable("StrapBraceletMaterials");
+                });
+
             modelBuilder.Entity("API.Entities.Watch", b =>
                 {
                     b.Property<int>("Id")
@@ -153,7 +237,7 @@ namespace API.Data.Migrations
                     b.Property<int?>("CaseId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MovementType")
+                    b.Property<int?>("MovementTypeId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -171,7 +255,7 @@ namespace API.Data.Migrations
                     b.Property<string>("Reference")
                         .HasColumnType("text");
 
-                    b.Property<int>("WatchType")
+                    b.Property<int?>("WatchTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -179,6 +263,10 @@ namespace API.Data.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CaseId");
+
+                    b.HasIndex("MovementTypeId");
+
+                    b.HasIndex("WatchTypeId");
 
                     b.ToTable("Watches");
                 });
@@ -208,19 +296,81 @@ namespace API.Data.Migrations
                     b.ToTable("WatchCaseMeasurements");
                 });
 
+            modelBuilder.Entity("API.Entities.WatchType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Type")
+                        .IsUnique();
+
+                    b.ToTable("WatchTypes");
+                });
+
+            modelBuilder.Entity("API.Entities.WaterResistance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Resistance")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Resistance")
+                        .IsUnique();
+
+                    b.ToTable("WaterResistances");
+                });
+
             modelBuilder.Entity("API.Entities.Case", b =>
                 {
+                    b.HasOne("API.Entities.CaseMaterial", "CaseMaterial")
+                        .WithMany()
+                        .HasForeignKey("CaseMaterialId");
+
+                    b.HasOne("API.Entities.Crystal", "Crystal")
+                        .WithMany()
+                        .HasForeignKey("CrystalId");
+
                     b.HasOne("API.Entities.Dial", "Dial")
                         .WithMany()
                         .HasForeignKey("DialId");
+
+                    b.HasOne("API.Entities.StrapBraceletMaterial", "StrapBraceletMaterial")
+                        .WithMany()
+                        .HasForeignKey("StrapBraceletMaterialId");
 
                     b.HasOne("API.Entities.WatchCaseMeasurements", "WatchCaseMeasurements")
                         .WithMany()
                         .HasForeignKey("WatchCaseMeasurementsId");
 
+                    b.HasOne("API.Entities.WaterResistance", "WaterResistance")
+                        .WithMany()
+                        .HasForeignKey("WaterResistanceId");
+
+                    b.Navigation("CaseMaterial");
+
+                    b.Navigation("Crystal");
+
                     b.Navigation("Dial");
 
+                    b.Navigation("StrapBraceletMaterial");
+
                     b.Navigation("WatchCaseMeasurements");
+
+                    b.Navigation("WaterResistance");
                 });
 
             modelBuilder.Entity("API.Entities.Watch", b =>
@@ -233,9 +383,21 @@ namespace API.Data.Migrations
                         .WithMany()
                         .HasForeignKey("CaseId");
 
+                    b.HasOne("API.Entities.MovementType", "MovementType")
+                        .WithMany()
+                        .HasForeignKey("MovementTypeId");
+
+                    b.HasOne("API.Entities.WatchType", "WatchType")
+                        .WithMany()
+                        .HasForeignKey("WatchTypeId");
+
                     b.Navigation("Brand");
 
                     b.Navigation("Case");
+
+                    b.Navigation("MovementType");
+
+                    b.Navigation("WatchType");
                 });
 #pragma warning restore 612, 618
         }

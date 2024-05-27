@@ -1,12 +1,7 @@
 ﻿namespace API.Entities;
 
-public enum WatchType
+public class WatchType
 {
-    Dress,
-    Diver,
-    Gmt, 
-    Chronograph,
-    Digital,
-    Solar,
-    Smart
+    public int Id { get; set; }
+    public string Type { get; set; }
 }

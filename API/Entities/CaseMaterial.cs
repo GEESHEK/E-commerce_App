@@ -1,12 +1,7 @@
 ﻿namespace API.Entities;
 
-public enum CaseMaterial
+public class CaseMaterial
 {
-    StainlessSteel,
-    Ceramic,
-    Titanium,
-    CarbonFibre,
-    Gold,
-    Rubber,
-    Resin
+    public int Id { get; set; }
+    public string Material { get; set; }
 }

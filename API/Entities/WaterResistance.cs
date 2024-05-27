@@ -1,10 +1,7 @@
 ﻿namespace API.Entities;
 
-public enum WaterResistance
+public class WaterResistance
 {
-    ThreeBar,
-    FiveBar,
-    TenBar,
-    TwentyBar,
-    ThirtyBar
+    public int Id { get; set; }
+    public string Resistance { get; set; }
 }

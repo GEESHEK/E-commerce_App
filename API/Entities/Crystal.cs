@@ -1,9 +1,7 @@
 ﻿namespace API.Entities;
 
-public enum Crystal
+public class Crystal
 {
-    Hardlex,
-    Sapphire,
-    Acrylic,
-    Mineral
+    public int Id { get; set; }
+    public string Material { get; set; }
 }
