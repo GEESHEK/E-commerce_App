@@ -4,4 +4,5 @@ public class Calibre
 { 
     public int Id { get; set; }
     public String Name { get; set; }
+    public List<Watch> Watches { get; set; } = new();
 }

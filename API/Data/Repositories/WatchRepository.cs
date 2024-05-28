@@ -17,10 +17,6 @@ public class WatchRepository : IWatchRepository
     public async Task<ActionResult<IEnumerable<Watch>>> GetWatchesAsync()
     {
         return await _dataContext.Watches
-            .Include(b => b.Brand)
-            .Include(c => c.Case.Dial)
-            // .ThenInclude(d => d.Dial)
-            .Include(c => c.Case.WatchCaseMeasurements)
             .ToListAsync();
     }
 

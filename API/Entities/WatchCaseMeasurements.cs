@@ -7,4 +7,5 @@ public class WatchCaseMeasurements
     public double Thickness { get; set; }
     public double Length { get; set; }
     public double LugWidth { get; set; }
+    public List<Watch> Watches { get; set; } = new();
 }

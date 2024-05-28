@@ -17,7 +17,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,7 +30,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,7 +43,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Material = table.Column<string>(type: "text", nullable: true)
+                    Material = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,7 +56,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Material = table.Column<string>(type: "text", nullable: true)
+                    Material = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,7 +69,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Colour = table.Column<string>(type: "text", nullable: true)
+                    Colour = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,7 +82,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Type = table.Column<string>(type: "text", nullable: true)
+                    Type = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,7 +95,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Duration = table.Column<string>(type: "text", nullable: true)
+                    Duration = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -108,7 +108,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Material = table.Column<string>(type: "text", nullable: true)
+                    Material = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,7 +137,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Type = table.Column<string>(type: "text", nullable: true)
+                    Type = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,60 +150,11 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Resistance = table.Column<string>(type: "text", nullable: true)
+                    Resistance = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WaterResistances", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cases",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    DialId = table.Column<int>(type: "integer", nullable: true),
-                    CrystalId = table.Column<int>(type: "integer", nullable: true),
-                    Lume = table.Column<bool>(type: "boolean", nullable: false),
-                    CaseMaterialId = table.Column<int>(type: "integer", nullable: true),
-                    StrapBraceletMaterialId = table.Column<int>(type: "integer", nullable: true),
-                    WatchCaseMeasurementsId = table.Column<int>(type: "integer", nullable: true),
-                    WaterResistanceId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cases", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cases_CaseMaterials_CaseMaterialId",
-                        column: x => x.CaseMaterialId,
-                        principalTable: "CaseMaterials",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Cases_Crystals_CrystalId",
-                        column: x => x.CrystalId,
-                        principalTable: "Crystals",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Cases_Dial_DialId",
-                        column: x => x.DialId,
-                        principalTable: "Dial",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Cases_StrapBraceletMaterials_StrapBraceletMaterialId",
-                        column: x => x.StrapBraceletMaterialId,
-                        principalTable: "StrapBraceletMaterials",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Cases_WatchCaseMeasurements_WatchCaseMeasurementsId",
-                        column: x => x.WatchCaseMeasurementsId,
-                        principalTable: "WatchCaseMeasurements",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Cases_WaterResistances_WaterResistanceId",
-                        column: x => x.WaterResistanceId,
-                        principalTable: "WaterResistances",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -212,14 +163,22 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    BrandId = table.Column<int>(type: "integer", nullable: true),
-                    CaseId = table.Column<int>(type: "integer", nullable: true),
-                    Reference = table.Column<string>(type: "text", nullable: true),
-                    MovementTypeId = table.Column<int>(type: "integer", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    BrandId = table.Column<int>(type: "integer", nullable: false),
+                    CalibreId = table.Column<int>(type: "integer", nullable: false),
+                    CaseMaterialId = table.Column<int>(type: "integer", nullable: false),
+                    CrystalId = table.Column<int>(type: "integer", nullable: false),
+                    DialId = table.Column<int>(type: "integer", nullable: false),
+                    Lume = table.Column<bool>(type: "boolean", nullable: false),
+                    Reference = table.Column<string>(type: "text", nullable: false),
+                    MovementTypeId = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    PowerReserveId = table.Column<int>(type: "integer", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    WatchTypeId = table.Column<int>(type: "integer", nullable: true),
+                    StrapBraceletMaterialId = table.Column<int>(type: "integer", nullable: false),
+                    WatchCaseMeasurementsId = table.Column<int>(type: "integer", nullable: false),
+                    WatchTypeId = table.Column<int>(type: "integer", nullable: false),
+                    WaterResistanceId = table.Column<int>(type: "integer", nullable: false),
                     OtherSpecifications = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -229,22 +188,68 @@ namespace API.Data.Migrations
                         name: "FK_Watches_Brand_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brand",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Watches_Cases_CaseId",
-                        column: x => x.CaseId,
-                        principalTable: "Cases",
-                        principalColumn: "Id");
+                        name: "FK_Watches_Calibres_CalibreId",
+                        column: x => x.CalibreId,
+                        principalTable: "Calibres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Watches_CaseMaterials_CaseMaterialId",
+                        column: x => x.CaseMaterialId,
+                        principalTable: "CaseMaterials",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Watches_Crystals_CrystalId",
+                        column: x => x.CrystalId,
+                        principalTable: "Crystals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Watches_Dial_DialId",
+                        column: x => x.DialId,
+                        principalTable: "Dial",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Watches_MovementTypes_MovementTypeId",
                         column: x => x.MovementTypeId,
                         principalTable: "MovementTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Watches_PowerReserves_PowerReserveId",
+                        column: x => x.PowerReserveId,
+                        principalTable: "PowerReserves",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Watches_StrapBraceletMaterials_StrapBraceletMaterialId",
+                        column: x => x.StrapBraceletMaterialId,
+                        principalTable: "StrapBraceletMaterials",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Watches_WatchCaseMeasurements_WatchCaseMeasurementsId",
+                        column: x => x.WatchCaseMeasurementsId,
+                        principalTable: "WatchCaseMeasurements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Watches_WatchTypes_WatchTypeId",
                         column: x => x.WatchTypeId,
                         principalTable: "WatchTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Watches_WaterResistances_WaterResistanceId",
+                        column: x => x.WaterResistanceId,
+                        principalTable: "WaterResistances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -264,36 +269,6 @@ namespace API.Data.Migrations
                 table: "CaseMaterials",
                 column: "Material",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cases_CaseMaterialId",
-                table: "Cases",
-                column: "CaseMaterialId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cases_CrystalId",
-                table: "Cases",
-                column: "CrystalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cases_DialId",
-                table: "Cases",
-                column: "DialId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cases_StrapBraceletMaterialId",
-                table: "Cases",
-                column: "StrapBraceletMaterialId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cases_WatchCaseMeasurementsId",
-                table: "Cases",
-                column: "WatchCaseMeasurementsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cases_WaterResistanceId",
-                table: "Cases",
-                column: "WaterResistanceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Crystals_Material",
@@ -326,14 +301,35 @@ namespace API.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_WatchCaseMeasurements_Diameter_Length_LugWidth_Thickness",
+                table: "WatchCaseMeasurements",
+                columns: new[] { "Diameter", "Length", "LugWidth", "Thickness" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Watches_BrandId",
                 table: "Watches",
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Watches_CaseId",
+                name: "IX_Watches_CalibreId",
                 table: "Watches",
-                column: "CaseId");
+                column: "CalibreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watches_CaseMaterialId",
+                table: "Watches",
+                column: "CaseMaterialId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watches_CrystalId",
+                table: "Watches",
+                column: "CrystalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watches_DialId",
+                table: "Watches",
+                column: "DialId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Watches_MovementTypeId",
@@ -341,9 +337,35 @@ namespace API.Data.Migrations
                 column: "MovementTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Watches_PowerReserveId",
+                table: "Watches",
+                column: "PowerReserveId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watches_Reference",
+                table: "Watches",
+                column: "Reference",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watches_StrapBraceletMaterialId",
+                table: "Watches",
+                column: "StrapBraceletMaterialId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watches_WatchCaseMeasurementsId",
+                table: "Watches",
+                column: "WatchCaseMeasurementsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Watches_WatchTypeId",
                 table: "Watches",
                 column: "WatchTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watches_WaterResistanceId",
+                table: "Watches",
+                column: "WaterResistanceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WatchTypes_Type",
@@ -362,25 +384,13 @@ namespace API.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Calibres");
-
-            migrationBuilder.DropTable(
-                name: "PowerReserves");
-
-            migrationBuilder.DropTable(
                 name: "Watches");
 
             migrationBuilder.DropTable(
                 name: "Brand");
 
             migrationBuilder.DropTable(
-                name: "Cases");
-
-            migrationBuilder.DropTable(
-                name: "MovementTypes");
-
-            migrationBuilder.DropTable(
-                name: "WatchTypes");
+                name: "Calibres");
 
             migrationBuilder.DropTable(
                 name: "CaseMaterials");
@@ -392,10 +402,19 @@ namespace API.Data.Migrations
                 name: "Dial");
 
             migrationBuilder.DropTable(
+                name: "MovementTypes");
+
+            migrationBuilder.DropTable(
+                name: "PowerReserves");
+
+            migrationBuilder.DropTable(
                 name: "StrapBraceletMaterials");
 
             migrationBuilder.DropTable(
                 name: "WatchCaseMeasurements");
+
+            migrationBuilder.DropTable(
+                name: "WatchTypes");
 
             migrationBuilder.DropTable(
                 name: "WaterResistances");
