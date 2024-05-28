@@ -17,6 +17,8 @@ public class WatchRepository : IWatchRepository
     public async Task<ActionResult<IEnumerable<Watch>>> GetWatchesAsync()
     {
         return await _dataContext.Watches
+                //circular reference > fix this
+            .Include(w => w.Brand)
             .ToListAsync();
     }
 

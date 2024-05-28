@@ -12,7 +12,7 @@ namespace API.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Brand",
+                name: "Brands",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -21,7 +21,7 @@ namespace API.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Brand", x => x.Id);
+                    table.PrimaryKey("PK_Brands", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,7 +64,7 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Dial",
+                name: "Dials",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -73,7 +73,7 @@ namespace API.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dial", x => x.Id);
+                    table.PrimaryKey("PK_Dials", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,9 +185,9 @@ namespace API.Data.Migrations
                 {
                     table.PrimaryKey("PK_Watches", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Watches_Brand_BrandId",
+                        name: "FK_Watches_Brands_BrandId",
                         column: x => x.BrandId,
-                        principalTable: "Brand",
+                        principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -209,9 +209,9 @@ namespace API.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Watches_Dial_DialId",
+                        name: "FK_Watches_Dials_DialId",
                         column: x => x.DialId,
-                        principalTable: "Dial",
+                        principalTable: "Dials",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -253,8 +253,8 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Brand_Name",
-                table: "Brand",
+                name: "IX_Brands_Name",
+                table: "Brands",
                 column: "Name",
                 unique: true);
 
@@ -277,8 +277,8 @@ namespace API.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dial_Colour",
-                table: "Dial",
+                name: "IX_Dials_Colour",
+                table: "Dials",
                 column: "Colour",
                 unique: true);
 
@@ -387,7 +387,7 @@ namespace API.Data.Migrations
                 name: "Watches");
 
             migrationBuilder.DropTable(
-                name: "Brand");
+                name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "Calibres");
@@ -399,7 +399,7 @@ namespace API.Data.Migrations
                 name: "Crystals");
 
             migrationBuilder.DropTable(
-                name: "Dial");
+                name: "Dials");
 
             migrationBuilder.DropTable(
                 name: "MovementTypes");

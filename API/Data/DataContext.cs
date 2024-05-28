@@ -11,7 +11,7 @@ public class DataContext : DbContext
     }
     
     public DbSet<Watch> Watches { get; set; }
-    public DbSet<Dial> Brand { get; set; }
+    public DbSet<Brand> Brands { get; set; }
     public DbSet<Calibre> Calibres { get; set; }
     public DbSet<CaseMaterial> CaseMaterials { get; set; }
     public DbSet<Crystal> Crystals { get; set; }

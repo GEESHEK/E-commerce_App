@@ -38,7 +38,7 @@ namespace API.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Brand");
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("API.Entities.Calibre", b =>
@@ -118,7 +118,7 @@ namespace API.Data.Migrations
                     b.HasIndex("Colour")
                         .IsUnique();
 
-                    b.ToTable("Dial");
+                    b.ToTable("Dials");
                 });
 
             modelBuilder.Entity("API.Entities.MovementType", b =>
