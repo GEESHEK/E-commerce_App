@@ -1,10 +1,11 @@
-﻿namespace API.Entities;
+﻿using System.Text.Json.Serialization;
 
-public enum WaterResistance
+namespace API.Entities;
+
+public class WaterResistance
 {
-    ThreeBar,
-    FiveBar,
-    TenBar,
-    TwentyBar,
-    ThirtyBar
+    public int Id { get; set; }
+    public string Resistance { get; set; }
+    [JsonIgnore]
+    public List<Watch> Watches { get; set; } = new();
 }

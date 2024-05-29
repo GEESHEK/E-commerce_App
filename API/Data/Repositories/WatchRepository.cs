@@ -2,6 +2,7 @@
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace API.Data.Repositories;
 
@@ -17,15 +18,34 @@ public class WatchRepository : IWatchRepository
     public async Task<ActionResult<IEnumerable<Watch>>> GetWatchesAsync()
     {
         return await _dataContext.Watches
-            .Include(b => b.Brand)
-            .Include(c => c.Case.Dial)
-            // .ThenInclude(d => d.Dial)
-            .Include(c => c.Case.WatchCaseMeasurements)
+            .Include(w => w.Brand)
+            .Include(w => w.Calibre)
+            .Include(w => w.CaseMaterial)
+            .Include(w => w.Crystal)
+            .Include(w => w.Dial)
+            .Include(w => w.MovementType)
+            .Include(w => w.PowerReserve)
+            .Include(w => w.StrapBraceletMaterial)
+            .Include(w => w.WatchCaseMeasurementsType)
+            .Include(w => w.WatchType)
+            .Include(w => w.WaterResistance)
             .ToListAsync();
     }
 
     public async Task<ActionResult<Watch>> GetWatchByIdAsync(int id)
     {
-        return await _dataContext.Watches.FindAsync(id);
+        return await _dataContext.Watches
+            .Include(w => w.Brand)
+            .Include(w => w.Calibre)
+            .Include(w => w.CaseMaterial)
+            .Include(w => w.Crystal)
+            .Include(w => w.Dial)
+            .Include(w => w.MovementType)
+            .Include(w => w.PowerReserve)
+            .Include(w => w.StrapBraceletMaterial)
+            .Include(w => w.WatchCaseMeasurementsType)
+            .Include(w => w.WatchType)
+            .Include(w => w.WaterResistance)
+            .SingleOrDefaultAsync(w => w.Id == id);
     }
 }

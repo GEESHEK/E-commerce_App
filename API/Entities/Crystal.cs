@@ -1,9 +1,11 @@
-﻿namespace API.Entities;
+﻿using System.Text.Json.Serialization;
 
-public enum Crystal
+namespace API.Entities;
+
+public class Crystal
 {
-    Hardlex,
-    Sapphire,
-    Acrylic,
-    Mineral
+    public int Id { get; set; }
+    public string Material { get; set; }
+    [JsonIgnore]
+    public List<Watch> Watches { get; set; } = new();
 }

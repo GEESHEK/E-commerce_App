@@ -1,12 +1,11 @@
-﻿namespace API.Entities;
+﻿using System.Text.Json.Serialization;
 
-public enum WatchType
+namespace API.Entities;
+
+public class WatchType
 {
-    Dress,
-    Diver,
-    Gmt, 
-    Chronograph,
-    Digital,
-    Solar,
-    Smart
+    public int Id { get; set; }
+    public string Type { get; set; }
+    [JsonIgnore]
+    public List<Watch> Watches { get; set; } = new();
 }

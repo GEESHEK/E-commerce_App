@@ -1,12 +1,11 @@
-﻿namespace API.Entities;
+﻿using System.Text.Json.Serialization;
 
-public enum CaseMaterial
+namespace API.Entities;
+
+public class CaseMaterial
 {
-    StainlessSteel,
-    Ceramic,
-    Titanium,
-    CarbonFibre,
-    Gold,
-    Rubber,
-    Resin
+    public int Id { get; set; }
+    public string Material { get; set; }
+    [JsonIgnore]
+    public List<Watch> Watches { get; set; } = new();
 }

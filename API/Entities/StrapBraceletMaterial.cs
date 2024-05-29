@@ -1,13 +1,11 @@
-﻿namespace API.Entities;
+﻿using System.Text.Json.Serialization;
 
-public enum StrapBraceletMaterial
+namespace API.Entities;
+
+public class StrapBraceletMaterial
 {
-    StainlessSteel,
-    Ceramic,
-    Titanium,
-    CarbonFibre,
-    Gold,
-    Rubber,
-    Resin,
-    Leather
+    public int Id { get; set; }
+    public string Material { get; set; }
+    [JsonIgnore]
+    public List<Watch> Watches { get; set; } = new();
 }
