@@ -1,33 +1,46 @@
-﻿namespace API.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace API.Entities;
 
 public class Watch
 {
     public int Id { get; set; }
     public string Name { get; set; }
+    [JsonIgnore]
     public int BrandId { get; set; }
     public Brand Brand { get; set; }
+    [JsonIgnore]
     public int CalibreId { get; set; }
     public Calibre Calibre { get; set; }
+    [JsonIgnore]
     public int CaseMaterialId { get; set; }
     public CaseMaterial CaseMaterial { get; set; }
+    [JsonIgnore]
     public int CrystalId { get; set; }
     public Crystal Crystal { get; set; }
+    [JsonIgnore]
     public int DialId { get; set; }
     public Dial Dial { get; set; }
     public bool Lume { get; set; }
     public string Reference { get; set; }
+    [JsonIgnore]
     public int MovementTypeId { get; set; }
     public MovementType MovementType { get; set; }
     public Decimal Price { get; set; }
+    [JsonIgnore]
     public int PowerReserveId { get; set; }
     public PowerReserve PowerReserve { get; set; }
     public int Quantity { get; set; }
+    [JsonIgnore]
     public int StrapBraceletMaterialId { get; set; }
     public StrapBraceletMaterial StrapBraceletMaterial { get; set; }
+    [JsonIgnore]
     public int WatchCaseMeasurementsId { get; set; }
     public WatchCaseMeasurements WatchCaseMeasurementsType { get; set; }
+    [JsonIgnore]
     public int WatchTypeId { get; set; }
     public WatchType WatchType { get; set; }
+    [JsonIgnore]
     public int WaterResistanceId { get; set; }
     public WaterResistance WaterResistance { get; set; }
     public string OtherSpecifications { get; set; }
