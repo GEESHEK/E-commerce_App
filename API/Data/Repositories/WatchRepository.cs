@@ -15,7 +15,7 @@ public class WatchRepository : IWatchRepository
         _dataContext = dataContext;
     }
     
-    public async Task<ActionResult<IEnumerable<Watch>>> GetWatchesAsync()
+    public async Task<IEnumerable<Watch>> GetWatchesAsync()
     {
         return await _dataContext.Watches
             .Include(w => w.Brand)
@@ -26,13 +26,13 @@ public class WatchRepository : IWatchRepository
             .Include(w => w.MovementType)
             .Include(w => w.PowerReserve)
             .Include(w => w.StrapBraceletMaterial)
-            .Include(w => w.WatchCaseMeasurementsType)
+            .Include(w => w.WatchCaseMeasurements)
             .Include(w => w.WatchType)
             .Include(w => w.WaterResistance)
             .ToListAsync();
     }
 
-    public async Task<ActionResult<Watch>> GetWatchByIdAsync(int id)
+    public async Task<Watch> GetWatchByIdAsync(int id)
     {
         return await _dataContext.Watches
             .Include(w => w.Brand)
@@ -43,7 +43,7 @@ public class WatchRepository : IWatchRepository
             .Include(w => w.MovementType)
             .Include(w => w.PowerReserve)
             .Include(w => w.StrapBraceletMaterial)
-            .Include(w => w.WatchCaseMeasurementsType)
+            .Include(w => w.WatchCaseMeasurements)
             .Include(w => w.WatchType)
             .Include(w => w.WaterResistance)
             .SingleOrDefaultAsync(w => w.Id == id);
