@@ -1,7 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace API.Entities;
 
+[ExcludeFromCodeCoverage]
 public class Watch
 {
     public int Id { get; set; }
@@ -36,7 +38,7 @@ public class Watch
     public StrapBraceletMaterial StrapBraceletMaterial { get; set; }
     [JsonIgnore]
     public int WatchCaseMeasurementsId { get; set; }
-    public WatchCaseMeasurements WatchCaseMeasurementsType { get; set; }
+    public WatchCaseMeasurements WatchCaseMeasurements { get; set; }
     [JsonIgnore]
     public int WatchTypeId { get; set; }
     public WatchType WatchType { get; set; }

@@ -18,12 +18,21 @@ public class WatchController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Watch>>> GetWatches()
     {
-        return await _watchRepository.GetWatchesAsync();
+        var watches = await _watchRepository.GetWatchesAsync();
+
+        return Ok(watches);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Watch>> GetWatch(int id)
     {
-        return await _watchRepository.GetWatchByIdAsync(id);
+        var watch = await _watchRepository.GetWatchByIdAsync(id);
+        
+        if (watch == null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(watch);
     }
 }

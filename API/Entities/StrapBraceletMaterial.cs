@@ -1,7 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace API.Entities;
 
+[ExcludeFromCodeCoverage]
 public class StrapBraceletMaterial
 {
     public int Id { get; set; }
