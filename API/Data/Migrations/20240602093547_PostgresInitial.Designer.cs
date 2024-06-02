@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240529201439_PostgresInitial")]
+    [Migration("20240602093547_PostgresInitial")]
     partial class PostgresInitial
     {
         /// <inheritdoc />
@@ -164,6 +164,22 @@ namespace API.Data.Migrations
                     b.ToTable("PowerReserves");
                 });
 
+            modelBuilder.Entity("API.Entities.Stock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stocks");
+                });
+
             modelBuilder.Entity("API.Entities.StrapBraceletMaterial", b =>
                 {
                     b.Property<int>("Id")
@@ -201,6 +217,9 @@ namespace API.Data.Migrations
                     b.Property<int>("CaseMaterialId")
                         .HasColumnType("integer");
 
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("numeric");
+
                     b.Property<int>("CrystalId")
                         .HasColumnType("integer");
 
@@ -226,12 +245,12 @@ namespace API.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Reference")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("StrapBraceletMaterialId")
                         .HasColumnType("integer");
@@ -263,6 +282,8 @@ namespace API.Data.Migrations
 
                     b.HasIndex("Reference")
                         .IsUnique();
+
+                    b.HasIndex("StockId");
 
                     b.HasIndex("StrapBraceletMaterialId");
 
@@ -387,13 +408,19 @@ namespace API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("API.Entities.Stock", "Stock")
+                        .WithMany("Watches")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("API.Entities.StrapBraceletMaterial", "StrapBraceletMaterial")
                         .WithMany("Watches")
                         .HasForeignKey("StrapBraceletMaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Entities.WatchCaseMeasurements", "WatchCaseMeasurementsType")
+                    b.HasOne("API.Entities.WatchCaseMeasurements", "WatchCaseMeasurements")
                         .WithMany("Watches")
                         .HasForeignKey("WatchCaseMeasurementsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -425,9 +452,11 @@ namespace API.Data.Migrations
 
                     b.Navigation("PowerReserve");
 
+                    b.Navigation("Stock");
+
                     b.Navigation("StrapBraceletMaterial");
 
-                    b.Navigation("WatchCaseMeasurementsType");
+                    b.Navigation("WatchCaseMeasurements");
 
                     b.Navigation("WatchType");
 
@@ -465,6 +494,11 @@ namespace API.Data.Migrations
                 });
 
             modelBuilder.Entity("API.Entities.PowerReserve", b =>
+                {
+                    b.Navigation("Watches");
+                });
+
+            modelBuilder.Entity("API.Entities.Stock", b =>
                 {
                     b.Navigation("Watches");
                 });

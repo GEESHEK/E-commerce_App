@@ -103,6 +103,19 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Stocks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stocks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StrapBraceletMaterials",
                 columns: table => new
                 {
@@ -174,12 +187,13 @@ namespace API.Data.Migrations
                     MovementTypeId = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     PowerReserveId = table.Column<int>(type: "integer", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    StockId = table.Column<int>(type: "integer", nullable: false),
                     StrapBraceletMaterialId = table.Column<int>(type: "integer", nullable: false),
                     WatchCaseMeasurementsId = table.Column<int>(type: "integer", nullable: false),
                     WatchTypeId = table.Column<int>(type: "integer", nullable: false),
                     WaterResistanceId = table.Column<int>(type: "integer", nullable: false),
-                    OtherSpecifications = table.Column<string>(type: "text", nullable: true)
+                    OtherSpecifications = table.Column<string>(type: "text", nullable: true),
+                    Cost = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -224,6 +238,12 @@ namespace API.Data.Migrations
                         name: "FK_Watches_PowerReserves_PowerReserveId",
                         column: x => x.PowerReserveId,
                         principalTable: "PowerReserves",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Watches_Stocks_StockId",
+                        column: x => x.StockId,
+                        principalTable: "Stocks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -348,6 +368,11 @@ namespace API.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Watches_StockId",
+                table: "Watches",
+                column: "StockId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Watches_StrapBraceletMaterialId",
                 table: "Watches",
                 column: "StrapBraceletMaterialId");
@@ -406,6 +431,9 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "PowerReserves");
+
+            migrationBuilder.DropTable(
+                name: "Stocks");
 
             migrationBuilder.DropTable(
                 name: "StrapBraceletMaterials");
