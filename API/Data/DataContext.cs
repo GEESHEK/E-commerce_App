@@ -1,8 +1,10 @@
-﻿using API.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
+using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
+[ExcludeFromCodeCoverage]
 public class DataContext : DbContext
 {
     public DataContext(DbContextOptions options) : base(options)
@@ -18,6 +20,7 @@ public class DataContext : DbContext
     public DbSet<Dial> Dials { get; set; }
     public DbSet<MovementType> MovementTypes { get; set; }
     public DbSet<PowerReserve> PowerReserves { get; set; }
+    public DbSet<Stock> Stocks { get; set; }
     public DbSet<StrapBraceletMaterial> StrapBraceletMaterials { get; set; }
     public DbSet<WatchType> WatchTypes { get; set; }
     public DbSet<WaterResistance> WaterResistances { get; set; }
@@ -82,6 +85,10 @@ public class DataContext : DbContext
             .Property(p => p.Duration)
             .IsRequired();
         
+        modelBuilder.Entity<Stock>()
+            .Property(p => p.Quantity)
+            .IsRequired();
+        
         modelBuilder.Entity<StrapBraceletMaterial>()
             .HasIndex(s => s.Material)
             .IsUnique();
@@ -107,12 +114,16 @@ public class DataContext : DbContext
             .IsRequired();
         
         modelBuilder.Entity<Watch>()
-            .Property(w => w.Reference)
+            .Property(w => w.Cost)
             .IsRequired();
         
         modelBuilder.Entity<Watch>()
-            .Property(w => w.Quantity)
+            .Property(w => w.Reference)
             .IsRequired();
+        
+        // modelBuilder.Entity<Watch>()
+        //     .Property(w => w.Stock)
+        //     .IsRequired();
 
         modelBuilder.Entity<WatchCaseMeasurements>()
             .HasIndex(w => new {w.Diameter, w.Length, w.LugWidth, w.Thickness})

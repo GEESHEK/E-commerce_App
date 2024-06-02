@@ -28,11 +28,13 @@ public class Watch
     [JsonIgnore]
     public int MovementTypeId { get; set; }
     public MovementType MovementType { get; set; }
-    public Decimal Price { get; set; }
+    public decimal Price { get; set; }
     [JsonIgnore]
     public int PowerReserveId { get; set; }
     public PowerReserve PowerReserve { get; set; }
-    public int Quantity { get; set; }
+    [JsonIgnore]
+    public int StockId { get; set; }
+    public Stock Stock { get; set; }
     [JsonIgnore]
     public int StrapBraceletMaterialId { get; set; }
     public StrapBraceletMaterial StrapBraceletMaterial { get; set; }
@@ -46,4 +48,6 @@ public class Watch
     public int WaterResistanceId { get; set; }
     public WaterResistance WaterResistance { get; set; }
     public string OtherSpecifications { get; set; }
+    [JsonIgnore]
+    public decimal Cost { get; set; }
 }
