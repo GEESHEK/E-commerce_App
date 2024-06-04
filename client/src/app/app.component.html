@@ -5,6 +5,13 @@
 <br>
 <ul>
   <li *ngFor="let watch of watches">
-    {{watch.id}}: {{watch.brand}} {{watch.model}} {{watch.reference}}
+    {{watch.id}}: {{watch.brand.name}} {{watch.price | currency: 'USD'}} {{watch.reference}}
+    <div *ngIf="watch.photos[0] != null">
+      <img src="{{watch.photos[0].url}}" alt="watch1">
+    </div>
+<!--    please remove this in the future, all watches should have a picture or add it in as an || './assets/NoWatch.png'-->
+    <div *ngIf="watch.photos[0] == null">
+      <img src="./assets/NoWatch.png" alt="No Image">
+    </div>
   </li>
 </ul>

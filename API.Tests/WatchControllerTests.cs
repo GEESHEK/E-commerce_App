@@ -65,8 +65,19 @@ public class WatchControllerTests
 
     private List<Watch> GetTestWatches()
     {
+        List<Photo> watch1 = new List<Photo>();
+        watch1.Add(new Photo() {Id = 1, Url = "w1.com", IsMain = true, PublicId = "1", WatchId = 1});
+        watch1.Add(new Photo() {Id = 2, Url = "w2.com", IsMain = true, PublicId = "2", WatchId = 1});
+        
+        List<Photo> watch2 = new List<Photo>();
+        watch2.Add(new Photo() {Id = 1, Url = "w1.com", IsMain = true, PublicId = "1", WatchId = 2});
+        watch2.Add(new Photo() {Id = 2, Url = "w2.com", IsMain = true, PublicId = "2", WatchId = 2});
+        
+        
         return new List<Watch>
         {
+       
+            
             new()
             {
                 Id = 1,
@@ -85,6 +96,7 @@ public class WatchControllerTests
                 Reference = "SKXZL1",
                 MovementTypeId = 1,
                 MovementType = new MovementType { Id = 1, Type = "Automatic" },
+                Photos = watch1,
                 Price = (decimal)999.99,
                 PowerReserveId = 1,
                 PowerReserve = new PowerReserve { Id = 1, Duration = "40hrs" },
@@ -118,6 +130,7 @@ public class WatchControllerTests
                 Reference = "SKXZL2",
                 MovementTypeId = 2,
                 MovementType = new MovementType { Id = 2, Type = "Automatic" },
+                Photos = watch2,
                 Price = (decimal)1000.50,
                 PowerReserveId = 2,
                 PowerReserve = new PowerReserve { Id = 2, Duration = "40hrs" },

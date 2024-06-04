@@ -51,5 +51,5 @@ public class Watch
     [JsonIgnore]
     public decimal Cost { get; set; }
 
-    public List<Photo> Photos = new();
+    public List<Photo> Photos { get; set; } = new();
 }
