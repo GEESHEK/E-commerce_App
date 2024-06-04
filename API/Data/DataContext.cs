@@ -19,6 +19,7 @@ public class DataContext : DbContext
     public DbSet<Crystal> Crystals { get; set; }
     public DbSet<Dial> Dials { get; set; }
     public DbSet<MovementType> MovementTypes { get; set; }
+    public DbSet<Photo> Photos { get; set; }
     public DbSet<PowerReserve> PowerReserves { get; set; }
     public DbSet<Stock> Stocks { get; set; }
     public DbSet<StrapBraceletMaterial> StrapBraceletMaterials { get; set; }
@@ -77,6 +78,30 @@ public class DataContext : DbContext
             .Property(m => m.Type)
             .IsRequired();
         
+        modelBuilder.Entity<Photo>()
+            .HasIndex(p => p.Url)
+            .IsUnique();
+
+        modelBuilder.Entity<Photo>()
+            .Property(p => p.Url)
+            .IsRequired();
+        
+        modelBuilder.Entity<Photo>()
+            .HasIndex(p => p.IsMain)
+            .IsUnique();
+
+        modelBuilder.Entity<Photo>()
+            .Property(p => p.IsMain)
+            .IsRequired();
+        
+        modelBuilder.Entity<Photo>()
+            .HasIndex(p => p.PublicId)
+            .IsUnique();
+
+        modelBuilder.Entity<Photo>()
+            .Property(p => p.PublicId)
+            .IsRequired();
+        
         modelBuilder.Entity<PowerReserve>()
             .HasIndex(p => p.Duration)
             .IsUnique();
@@ -120,10 +145,6 @@ public class DataContext : DbContext
         modelBuilder.Entity<Watch>()
             .Property(w => w.Reference)
             .IsRequired();
-        
-        // modelBuilder.Entity<Watch>()
-        //     .Property(w => w.Stock)
-        //     .IsRequired();
 
         modelBuilder.Entity<WatchCaseMeasurements>()
             .HasIndex(w => new {w.Diameter, w.Length, w.LugWidth, w.Thickness})

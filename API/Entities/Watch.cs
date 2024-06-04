@@ -50,4 +50,6 @@ public class Watch
     public string OtherSpecifications { get; set; }
     [JsonIgnore]
     public decimal Cost { get; set; }
+
+    public List<Photo> Photos { get; set; } = new();
 }
