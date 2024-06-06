@@ -33,4 +33,11 @@ public class WatchController : BaseApiController
         
         return Ok(watch);
     }
+
+    // [HttpPut]
+    // public async Task<ActionResult> UpdateWatch(Watch watch)
+    // {
+    //     var oldWatch = _watchRepository.GetWatchByIdAsync(watch.Id);
+    //     
+    // }
 }
