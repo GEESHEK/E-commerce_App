@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
 
-public static class ApplicationServiceExtension
+public static class ApplicationServiceExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
@@ -15,6 +15,7 @@ public static class ApplicationServiceExtension
         });
         services.AddCors();
         services.AddScoped<IWatchRepository, WatchRepository>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         return services;
     }
