@@ -1,5 +1,6 @@
 ﻿using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -7,10 +8,12 @@ namespace API.Controllers;
 public class WatchController : BaseApiController
 {
     private readonly IWatchRepository _watchRepository;
+    private readonly IMapper _mapper;
 
-    public WatchController(IWatchRepository watchRepository)
+    public WatchController(IWatchRepository watchRepository, IMapper mapper)
     {
         _watchRepository = watchRepository;
+        _mapper = mapper;
     }
     
     [HttpGet]
