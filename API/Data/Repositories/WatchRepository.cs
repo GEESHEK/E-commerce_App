@@ -8,16 +8,16 @@ namespace API.Data.Repositories;
 
 public class WatchRepository : IWatchRepository
 {
-    private readonly DataContext _dataContext;
+    private readonly DataContext _context;
 
-    public WatchRepository(DataContext dataContext)
+    public WatchRepository(DataContext context)
     {
-        _dataContext = dataContext;
+        _context = context;
     }
     
-    public async Task<IEnumerable<Watch>> GetWatchesAsync()
+    public async Task<IEnumerable<Watch>> GetWatches()
     {
-        return await _dataContext.Watches
+        return await _context.Watches
             .Include(w => w.Brand)
             .Include(w => w.Calibre)
             .Include(w => w.CaseMaterial)
@@ -34,9 +34,9 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<Watch> GetWatchByIdAsync(int id)
+    public async Task<Watch> GetWatchById(int id)
     {
-        return await _dataContext.Watches
+        return await _context.Watches
             .Include(w => w.Brand)
             .Include(w => w.Calibre)
             .Include(w => w.CaseMaterial)
@@ -51,5 +51,12 @@ public class WatchRepository : IWatchRepository
             .Include(w => w.WatchType)
             .Include(w => w.WaterResistance)
             .SingleOrDefaultAsync(w => w.Id == id);
+    }
+
+    public async Task<Watch> AddWatch(Watch watch)
+    {
+        await _context.Watches.AddAsync(watch);
+
+        return watch;
     }
 }
