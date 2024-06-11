@@ -15,7 +15,7 @@ public class WatchController : BaseApiController
         _watchRepository = watchRepository;
         _mapper = mapper;
     }
-    
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Watch>>> GetWatches()
     {
@@ -28,16 +28,16 @@ public class WatchController : BaseApiController
     public async Task<ActionResult<Watch>> GetWatch(int id)
     {
         var watch = await _watchRepository.GetWatchById(id);
-        
+
         if (watch == null)
         {
             return NotFound();
         }
-        
+
         return Ok(watch);
     }
 
-    [HttpPost]
+    [HttpPost] //maybe change it to return bool
     public async Task<ActionResult<Watch>> CreateWatch(Watch watch)
     {
         // ModelState.IsValid: Checks if the model binding and validation passed.
@@ -46,15 +46,23 @@ public class WatchController : BaseApiController
         // {
         //     return BadRequest(ModelState);
         // }
+
+        if (watch == null)
+        {
+            return BadRequest();
+        }
+        
+        // if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
         
         //add validation to check if this watch already exists from its name or reference
 
-        // var watch1 = a
+        _watchRepository.AddWatch(watch);
 
-        var createdWatch = await _watchRepository.AddWatch(watch);
+        if (await _watchRepository.SaveAllAsync())
+            return CreatedAtAction(nameof(GetWatch), new { id = watch.Id }, watch);
 
-        return CreatedAtAction(nameof(GetWatch),
-            new { id = createdWatch.Id }, createdWatch);
+        return StatusCode(StatusCodes.Status500InternalServerError,
+            "Error creating new watch record");
     }
 
     // [HttpPut]

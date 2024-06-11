@@ -15,6 +15,11 @@ public class WatchRepository : IWatchRepository
         _context = context;
     }
     
+    public void AddWatch(Watch watch)
+    {
+        _context.Watches.Add(watch);
+    }
+    
     public async Task<IEnumerable<Watch>> GetWatches()
     {
         return await _context.Watches
@@ -52,11 +57,9 @@ public class WatchRepository : IWatchRepository
             .Include(w => w.WaterResistance)
             .SingleOrDefaultAsync(w => w.Id == id);
     }
-
-    public async Task<Watch> AddWatch(Watch watch)
+    
+    public async Task<bool> SaveAllAsync()
     {
-        await _context.Watches.AddAsync(watch);
-
-        return watch;
+        return await _context.SaveChangesAsync() > 0;
     }
 }

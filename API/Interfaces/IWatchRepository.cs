@@ -5,7 +5,8 @@ namespace API.Interfaces;
 
 public interface IWatchRepository
 {
+    void AddWatch(Watch watch);
     Task<IEnumerable<Watch>> GetWatches();
     Task<Watch> GetWatchById(int id);
-    Task<Watch> AddWatch(Watch watch);
+    Task<bool> SaveAllAsync();
 }
