@@ -32,8 +32,6 @@ public class Watch
     [JsonIgnore]
     public int PowerReserveId { get; set; }
     public PowerReserve PowerReserve { get; set; }
-    [JsonIgnore]
-    public int StockId { get; set; }
     public Stock Stock { get; set; }
     [JsonIgnore]
     public int StrapBraceletMaterialId { get; set; }
