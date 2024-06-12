@@ -9,5 +9,7 @@ public class Stock
     public int Id { get; set; }
     public int Quantity { get; set; }
     [JsonIgnore]
-    public List<Watch> Watches { get; set; } = new();
+    public int WatchId { get; set; }
+    [JsonIgnore]
+    public Watch Watch { get; set; }
 }
