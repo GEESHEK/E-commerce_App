@@ -47,10 +47,8 @@ public class WatchController : BaseApiController
         //     return BadRequest(ModelState);
         // }
 
-        if (watch == null)
-        {
-            return BadRequest();
-        }
+        if (watch == null) return BadRequest();
+        
         
         // if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
         
