@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using API.Entities;
 
 namespace API.DTOs;
 
@@ -28,7 +27,7 @@ public class CreateWatchDto
     [Required]
     public int PowerReserveId { get; set; }
     [Required]
-    public int Stock { get; set; } //come back to mapping this
+    public int Stock { get; set; }
     [Required]
     public int StrapBraceletMaterialId { get; set; }
     [Required]

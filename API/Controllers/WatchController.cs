@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ public class WatchController : BaseApiController
     }
 
     [HttpPost] //maybe change it to return bool
-    public async Task<ActionResult<Watch>> CreateWatch(Watch watch)
+    public async Task<ActionResult<Watch>> CreateWatch(CreateWatchDto createWatchDto)
     {
         // ModelState.IsValid: Checks if the model binding and validation passed.
         // BadRequest(ModelState): Returns a 400 Bad Request response if the model is invalid, including validation error messages.
@@ -47,7 +48,9 @@ public class WatchController : BaseApiController
         //     return BadRequest(ModelState);
         // }
 
-        if (watch == null) return BadRequest();
+        if (createWatchDto == null) return BadRequest();
+
+        var watch = _mapper.Map<Watch>(createWatchDto);
         
         
         // if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
