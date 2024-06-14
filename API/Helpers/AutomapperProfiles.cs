@@ -11,5 +11,8 @@ public class AutomapperProfiles : Profile
         CreateMap<CreateWatchDto, Watch>()
             .ForPath(w => w.Stock.Quantity,
                 o => o.MapFrom(x => x.Stock));
+        CreateMap<WatchUpdateDto, Watch>()
+            .ForPath(w => w.Stock.Quantity,
+                o => o.MapFrom(x => x.Stock));;
     }
 }

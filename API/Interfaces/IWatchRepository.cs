@@ -9,4 +9,5 @@ public interface IWatchRepository
     Task<IEnumerable<Watch>> GetWatches();
     Task<Watch> GetWatchById(int id);
     Task<bool> SaveAllAsync();
+    Task<bool> WatchExists(string reference);
 }

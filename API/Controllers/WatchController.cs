@@ -38,38 +38,36 @@ public class WatchController : BaseApiController
         return Ok(watch);
     }
 
-    [HttpPost] //maybe change it to return bool
+    [HttpPost]
     public async Task<ActionResult<Watch>> CreateWatch(CreateWatchDto createWatchDto)
     {
-        // ModelState.IsValid: Checks if the model binding and validation passed.
-        // BadRequest(ModelState): Returns a 400 Bad Request response if the model is invalid, including validation error messages.
-        // if (!ModelState.IsValid)
-        // {
-        //     return BadRequest(ModelState);
-        // }
-
         if (createWatchDto == null) return BadRequest();
 
+        if (await _watchRepository.WatchExists(createWatchDto.Reference))
+            return BadRequest("Watch reference already exists");
+
         var watch = _mapper.Map<Watch>(createWatchDto);
-        
-        
-        // if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
-        
-        //add validation to check if this watch already exists from its name or reference
 
         _watchRepository.AddWatch(watch);
 
         if (await _watchRepository.SaveAllAsync())
             return CreatedAtAction(nameof(GetWatch), new { id = watch.Id }, watch);
 
-        return StatusCode(StatusCodes.Status500InternalServerError,
-            "Error creating new watch record");
+        //Todo come back to catch other errors: look at notes if you return bool in save all then nothing can be caught
+        return BadRequest("Failed to add watch");
     }
 
-    // [HttpPut]
-    // public async Task<ActionResult> UpdateWatch(Watch watch)
-    // {
-    //     var oldWatch = _watchRepository.GetWatchByIdAsync(watch.Id);
-    //     
-    // }
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateWatch(int id, WatchUpdateDto watchUpdateDto)
+    {
+        var watch = await _watchRepository.GetWatchById(id);
+
+        if (watch == null) return NotFound();
+
+        _mapper.Map(watchUpdateDto, watch);
+        
+        if (await _watchRepository.SaveAllAsync()) return NoContent();
+        
+        return BadRequest("Failed to update watch");
+    }
 }

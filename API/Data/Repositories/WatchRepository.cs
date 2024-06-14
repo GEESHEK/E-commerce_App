@@ -1,8 +1,6 @@
 ﻿using API.Entities;
 using API.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace API.Data.Repositories;
 
@@ -61,5 +59,10 @@ public class WatchRepository : IWatchRepository
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;
+    }
+
+    public async Task<bool> WatchExists(string reference)
+    {
+        return await _context.Watches.AnyAsync(x => x.Reference.ToLower() == reference.ToLower());
     }
 }
