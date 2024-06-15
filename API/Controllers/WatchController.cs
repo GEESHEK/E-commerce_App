@@ -25,7 +25,7 @@ public class WatchController : BaseApiController
         return Ok(watches);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<Watch>> GetWatch(int id)
     {
         var watch = await _watchRepository.GetWatchById(id);
@@ -57,7 +57,7 @@ public class WatchController : BaseApiController
         return BadRequest("Failed to add watch");
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<ActionResult> UpdateWatch(int id, WatchUpdateDto watchUpdateDto)
     {
         var watch = await _watchRepository.GetWatchById(id);
@@ -65,9 +65,19 @@ public class WatchController : BaseApiController
         if (watch == null) return NotFound();
 
         _mapper.Map(watchUpdateDto, watch);
+
+        if (!_watchRepository.IsModified(watch)) return BadRequest("No changes to update");
         
         if (await _watchRepository.SaveAllAsync()) return NoContent();
         
         return BadRequest("Failed to update watch");
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteWatch(int id)
+    {
+        var watch = await _watchRepository.GetWatchById(id);
+
+        return null;
     }
 }

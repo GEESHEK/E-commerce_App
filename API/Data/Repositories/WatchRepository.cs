@@ -34,6 +34,7 @@ public class WatchRepository : IWatchRepository
             .Include(w => w.WatchCaseMeasurements)
             .Include(w => w.WatchType)
             .Include(w => w.WaterResistance)
+            .AsNoTracking()
             .ToListAsync();
     }
 
@@ -53,6 +54,7 @@ public class WatchRepository : IWatchRepository
             .Include(w => w.WatchCaseMeasurements)
             .Include(w => w.WatchType)
             .Include(w => w.WaterResistance)
+            //Tracking changes because put and delete will need it to check for changes
             .SingleOrDefaultAsync(w => w.Id == id);
     }
     
@@ -60,6 +62,11 @@ public class WatchRepository : IWatchRepository
     {
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public bool IsModified(Watch watch)
+    {
+        return _context.Entry(watch).State == EntityState.Modified;
+    } 
 
     public async Task<bool> WatchExists(string reference)
     {

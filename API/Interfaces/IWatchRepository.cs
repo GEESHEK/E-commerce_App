@@ -10,4 +10,5 @@ public interface IWatchRepository
     Task<Watch> GetWatchById(int id);
     Task<bool> SaveAllAsync();
     Task<bool> WatchExists(string reference);
+    bool IsModified(Watch watch);
 }
