@@ -17,7 +17,12 @@ public class WatchRepository : IWatchRepository
     {
         _context.Watches.Add(watch);
     }
-    
+
+    public void DeleteWatch(Watch watch)
+    {
+        _context.Watches.Remove(watch);
+    }
+
     public async Task<IEnumerable<Watch>> GetWatches()
     {
         return await _context.Watches

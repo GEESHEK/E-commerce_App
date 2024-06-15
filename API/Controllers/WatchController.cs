@@ -66,7 +66,7 @@ public class WatchController : BaseApiController
 
         _mapper.Map(watchUpdateDto, watch);
 
-        if (!_watchRepository.IsModified(watch)) return BadRequest("No changes to update");
+        if (!_watchRepository.IsModified(watch)) return BadRequest("No changes made");
         
         if (await _watchRepository.SaveAllAsync()) return NoContent();
         
@@ -78,6 +78,14 @@ public class WatchController : BaseApiController
     {
         var watch = await _watchRepository.GetWatchById(id);
 
-        return null;
+        if (watch == null) return NotFound();
+        
+        _watchRepository.DeleteWatch(watch);
+
+        if (await _watchRepository.SaveAllAsync()) return NoContent();
+        
+        return BadRequest("Problem deleting watch");
     }
+    
+    //Todo add photo or do this in it's own controller
 }
