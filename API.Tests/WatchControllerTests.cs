@@ -1,6 +1,9 @@
-﻿using API.Controllers;
+﻿using System.Net;
+using API.Controllers;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -8,14 +11,28 @@ namespace API.Tests;
 
 public class WatchControllerTests
 {
+    private readonly Mock<IWatchRepository> _watchRepo;
+    private readonly Mock<IMapper> _mapper;
+    // private readonly IMapper _mapper;
+
+    public WatchControllerTests()
+    {
+        _watchRepo = new Mock<IWatchRepository>();
+        _mapper = new Mock<IMapper>();
+        
+        //use this when we need to test if the mapper is working correctly
+        // var myProfile = new AutomapperProfiles();
+        // var configuration = new MapperConfiguration(config => config.AddProfile(myProfile));
+        // _mapper = new Mapper(configuration);
+    }
+    
     [Fact]
     public async Task GetWatches_ReturnsOkResult_WithListOFWatches()
     {
         // Arrange
-        var watchRepo = new Mock<IWatchRepository>();
-        watchRepo.Setup(repo => repo.GetWatchesAsync())
+        _watchRepo.Setup(repo => repo.GetWatches())
             .ReturnsAsync(GetTestWatches());
-        var watchController = new WatchController(watchRepo.Object);
+        var watchController = new WatchController(_watchRepo.Object, _mapper.Object);
         
         // Act
         var result = await watchController.GetWatches();
@@ -31,35 +48,34 @@ public class WatchControllerTests
     public async Task GetWatch_ReturnsNotFoundResult_WhenWatchDoesNotExist()
     {
         // Arrange
-        var watchRepo = new Mock<IWatchRepository>();
-        watchRepo.Setup(repo => repo.GetWatchByIdAsync(10))
+        _watchRepo.Setup(repo => repo.GetWatchById(10))
             .ReturnsAsync((Watch)null);
-        var controller = new WatchController(watchRepo.Object);
-
+        var controller = new WatchController(_watchRepo.Object, _mapper.Object);
+    
         // Act
         var result = await controller.GetWatch(10);
-
+    
         // Assert
         var actionResult = Assert.IsType<ActionResult<Watch>>(result);
         Assert.IsType<NotFoundResult>(actionResult.Result);
     }
-
+    
     [Fact]
     public async Task GetItem_ReturnsOkResult_WithItem()
     {
         // Arrange
         var watchRepo = new Mock<IWatchRepository>();
-        watchRepo.Setup(repo => repo.GetWatchByIdAsync(1))
+        watchRepo.Setup(repo => repo.GetWatchById(1))
             .ReturnsAsync(GetTestWatches().Find(w => w.Id == 1));
-        var controller = new WatchController(watchRepo.Object);
-
+        var controller = new WatchController(watchRepo.Object, _mapper.Object);
+    
         // Act
         var result = await controller.GetWatch(1);
-
+    
         // Assert
         var actionResult = Assert.IsType<ActionResult<Watch>>(result);
         var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var returnValue = Assert.IsType<Watch>(okResult.Value);
+        var returnValue = Assert.IsType<Watch>(okResult.Value); 
         Assert.Equal(1, returnValue.Id);
     }
 

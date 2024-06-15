@@ -1,23 +1,31 @@
 ﻿using API.Entities;
 using API.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace API.Data.Repositories;
 
 public class WatchRepository : IWatchRepository
 {
-    private readonly DataContext _dataContext;
+    private readonly DataContext _context;
 
-    public WatchRepository(DataContext dataContext)
+    public WatchRepository(DataContext context)
     {
-        _dataContext = dataContext;
+        _context = context;
     }
     
-    public async Task<IEnumerable<Watch>> GetWatchesAsync()
+    public void AddWatch(Watch watch)
     {
-        return await _dataContext.Watches
+        _context.Watches.Add(watch);
+    }
+
+    public void DeleteWatch(Watch watch)
+    {
+        _context.Watches.Remove(watch);
+    }
+
+    public async Task<IEnumerable<Watch>> GetWatches()
+    {
+        return await _context.Watches
             .Include(w => w.Brand)
             .Include(w => w.Calibre)
             .Include(w => w.CaseMaterial)
@@ -31,12 +39,13 @@ public class WatchRepository : IWatchRepository
             .Include(w => w.WatchCaseMeasurements)
             .Include(w => w.WatchType)
             .Include(w => w.WaterResistance)
+            .AsNoTracking()
             .ToListAsync();
     }
 
-    public async Task<Watch> GetWatchByIdAsync(int id)
+    public async Task<Watch> GetWatchById(int id)
     {
-        return await _dataContext.Watches
+        return await _context.Watches
             .Include(w => w.Brand)
             .Include(w => w.Calibre)
             .Include(w => w.CaseMaterial)
@@ -50,6 +59,22 @@ public class WatchRepository : IWatchRepository
             .Include(w => w.WatchCaseMeasurements)
             .Include(w => w.WatchType)
             .Include(w => w.WaterResistance)
+            //Tracking changes because put and delete will need it to check for changes
             .SingleOrDefaultAsync(w => w.Id == id);
+    }
+    
+    public async Task<bool> SaveAllAsync()
+    {
+        return await _context.SaveChangesAsync() > 0;
+    }
+
+    public bool IsModified(Watch watch)
+    {
+        return _context.Entry(watch).State == EntityState.Modified;
+    } 
+
+    public async Task<bool> WatchExists(string reference)
+    {
+        return await _context.Watches.AnyAsync(x => x.Reference.ToLower() == reference.ToLower());
     }
 }
