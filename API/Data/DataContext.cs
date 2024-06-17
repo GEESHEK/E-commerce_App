@@ -23,6 +23,7 @@ public class DataContext : DbContext
     public DbSet<PowerReserve> PowerReserves { get; set; }
     public DbSet<Stock> Stocks { get; set; }
     public DbSet<StrapBraceletMaterial> StrapBraceletMaterials { get; set; }
+    public DbSet<WatchCaseMeasurements> WatchCaseMeasurements { get; set; }
     public DbSet<WatchType> WatchTypes { get; set; }
     public DbSet<WaterResistance> WaterResistances { get; set; }
 
