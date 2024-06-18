@@ -86,10 +86,6 @@ public class DataContext : DbContext
         modelBuilder.Entity<Photo>()
             .Property(p => p.Url)
             .IsRequired();
-        
-        modelBuilder.Entity<Photo>()
-            .HasIndex(p => p.IsMain)
-            .IsUnique();
 
         modelBuilder.Entity<Photo>()
             .Property(p => p.IsMain)

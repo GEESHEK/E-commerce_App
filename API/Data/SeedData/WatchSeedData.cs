@@ -1,7 +1,9 @@
-﻿using API.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
+using API.Entities;
 
 namespace API.Data.SeedData;
 
+[ExcludeFromCodeCoverage]
 public static class WatchSeedData
 {
     public static List<Watch> GetWatchSeedData()
@@ -24,11 +26,13 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch1.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)999.99,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 1 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
@@ -51,11 +55,13 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch2.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)399.99,
                 PowerReserveId = 1,
+                Stock = new Stock {Quantity = 2},
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
@@ -65,7 +71,7 @@ public static class WatchSeedData
             new()
             {
                 Name = "TestWatch3",
-                BrandId = 1,
+                BrandId = 2,
                 CalibreId = 1,
                 CaseMaterialId = 1,
                 CrystalId = 1,
@@ -78,15 +84,17 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch3.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)499.99,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 3 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
-                WaterResistanceId = 1,
+                WaterResistanceId = 2,
                 OtherSpecifications = "Limited edition test watch 3",
             },
             new()
@@ -105,11 +113,13 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch4.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)199.99,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 4 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
@@ -119,7 +129,7 @@ public static class WatchSeedData
             new()
             {
                 Name = "TestWatch5",
-                BrandId = 1,
+                BrandId = 3,
                 CalibreId = 1,
                 CaseMaterialId = 1,
                 CrystalId = 1,
@@ -132,21 +142,23 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch5.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)399.99,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 5 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
-                WaterResistanceId = 1,
+                WaterResistanceId = 3,
                 OtherSpecifications = "Limited edition test watch 5",
             },
             new()
             {
                 Name = "TestWatch6",
-                BrandId = 1,
+                BrandId = 4,
                 CalibreId = 1,
                 CaseMaterialId = 1,
                 CrystalId = 1,
@@ -159,21 +171,23 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch6.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)1500.00,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 6 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
-                WaterResistanceId = 1,
+                WaterResistanceId = 4,
                 OtherSpecifications = "Limited edition test watch 6",
             },
             new()
             {
                 Name = "TestWatch7",
-                BrandId = 1,
+                BrandId = 4,
                 CalibreId = 1,
                 CaseMaterialId = 1,
                 CrystalId = 1,
@@ -186,11 +200,13 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch7.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)999.99,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 7 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
@@ -200,7 +216,7 @@ public static class WatchSeedData
             new()
             {
                 Name = "TestWatch8",
-                BrandId = 1,
+                BrandId = 5,
                 CalibreId = 1,
                 CaseMaterialId = 1,
                 CrystalId = 1,
@@ -213,11 +229,13 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch8.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)1999.99,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 8 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
@@ -240,11 +258,13 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch9.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)499.99,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 9 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
@@ -254,7 +274,7 @@ public static class WatchSeedData
             new()
             {
                 Name = "TestWatch10",
-                BrandId = 1,
+                BrandId = 5,
                 CalibreId = 1,
                 CaseMaterialId = 1,
                 CrystalId = 1,
@@ -267,11 +287,13 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch10.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)1750.00,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 10 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
@@ -294,11 +316,13 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch11.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)750.00,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 11 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
@@ -321,11 +345,13 @@ public static class WatchSeedData
                     new()
                     {
                         Url = "./assets/Watch12.png",
-                        IsMain = true
+                        IsMain = true,
+                        PublicId = ""
                     }
                 },
                 Price = (decimal)120.00,
                 PowerReserveId = 1,
+                Stock = new Stock { Quantity = 12 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,

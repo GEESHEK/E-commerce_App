@@ -26,7 +26,7 @@ public static class BrandSeedData
             {
                 Name = "Orient"
             },
-            new Brand()
+            new()
             {
                 Name = "Citizen"
             },

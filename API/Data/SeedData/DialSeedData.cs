@@ -45,6 +45,14 @@ public static class DialSeedData
             new()
             {
                 Colour = "Grey"
+            },
+            new()
+            {
+                Colour = "Silver"
+            },
+            new()
+            {
+                Colour = "Gold"
             }
         };
     }

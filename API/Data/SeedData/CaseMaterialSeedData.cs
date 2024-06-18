@@ -28,6 +28,10 @@ public static class CaseMaterialSeedData
             },
             new()
             {
+                Material = "Gold"
+            },
+            new()
+            {
                 Material = "Rubber"
             },
             new()

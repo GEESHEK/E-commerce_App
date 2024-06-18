@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240602093547_PostgresInitial")]
-    partial class PostgresInitial
+    [Migration("20240618204646_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,6 +144,41 @@ namespace API.Data.Migrations
                     b.ToTable("MovementTypes");
                 });
 
+            modelBuilder.Entity("API.Entities.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("WatchId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PublicId")
+                        .IsUnique();
+
+                    b.HasIndex("Url")
+                        .IsUnique();
+
+                    b.HasIndex("WatchId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("API.Entities.PowerReserve", b =>
                 {
                     b.Property<int>("Id")
@@ -152,9 +187,8 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Duration")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -175,7 +209,13 @@ namespace API.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
+                    b.Property<int>("WatchId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WatchId")
+                        .IsUnique();
 
                     b.ToTable("Stocks");
                 });
@@ -249,9 +289,6 @@ namespace API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("StockId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("StrapBraceletMaterialId")
                         .HasColumnType("integer");
 
@@ -282,8 +319,6 @@ namespace API.Data.Migrations
 
                     b.HasIndex("Reference")
                         .IsUnique();
-
-                    b.HasIndex("StockId");
 
                     b.HasIndex("StrapBraceletMaterialId");
 
@@ -352,9 +387,8 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Resistance")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Resistance")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -362,6 +396,28 @@ namespace API.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("WaterResistances");
+                });
+
+            modelBuilder.Entity("API.Entities.Photo", b =>
+                {
+                    b.HasOne("API.Entities.Watch", "Watch")
+                        .WithMany("Photos")
+                        .HasForeignKey("WatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Watch");
+                });
+
+            modelBuilder.Entity("API.Entities.Stock", b =>
+                {
+                    b.HasOne("API.Entities.Watch", "Watch")
+                        .WithOne("Stock")
+                        .HasForeignKey("API.Entities.Stock", "WatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Watch");
                 });
 
             modelBuilder.Entity("API.Entities.Watch", b =>
@@ -408,12 +464,6 @@ namespace API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Entities.Stock", "Stock")
-                        .WithMany("Watches")
-                        .HasForeignKey("StockId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("API.Entities.StrapBraceletMaterial", "StrapBraceletMaterial")
                         .WithMany("Watches")
                         .HasForeignKey("StrapBraceletMaterialId")
@@ -451,8 +501,6 @@ namespace API.Data.Migrations
                     b.Navigation("MovementType");
 
                     b.Navigation("PowerReserve");
-
-                    b.Navigation("Stock");
 
                     b.Navigation("StrapBraceletMaterial");
 
@@ -498,14 +546,16 @@ namespace API.Data.Migrations
                     b.Navigation("Watches");
                 });
 
-            modelBuilder.Entity("API.Entities.Stock", b =>
+            modelBuilder.Entity("API.Entities.StrapBraceletMaterial", b =>
                 {
                     b.Navigation("Watches");
                 });
 
-            modelBuilder.Entity("API.Entities.StrapBraceletMaterial", b =>
+            modelBuilder.Entity("API.Entities.Watch", b =>
                 {
-                    b.Navigation("Watches");
+                    b.Navigation("Photos");
+
+                    b.Navigation("Stock");
                 });
 
             modelBuilder.Entity("API.Entities.WatchCaseMeasurements", b =>
