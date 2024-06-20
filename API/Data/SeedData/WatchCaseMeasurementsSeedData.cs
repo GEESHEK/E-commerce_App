@@ -12,6 +12,13 @@ public static class WatchCaseMeasurementsSeedData
         {
             new()
             {
+                Diameter = 36, 
+                Length = 44, 
+                LugWidth = 18, 
+                Thickness = 8
+            },
+            new()
+            {
                 Diameter = 39, 
                 Length = 46, 
                 LugWidth = 20, 
@@ -26,11 +33,11 @@ public static class WatchCaseMeasurementsSeedData
             },
             new()
             {
-                Diameter = 36, 
-                Length = 44, 
-                LugWidth = 18, 
-                Thickness = 8
-            },
+                Diameter = 42, 
+                Length = 48, 
+                LugWidth = 22, 
+                Thickness = 14
+            }
         };
     }
 }

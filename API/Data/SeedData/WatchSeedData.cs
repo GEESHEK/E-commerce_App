@@ -27,10 +27,10 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch1.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch1"
                     }
                 },
-                Price = (decimal)999.99,
+                Price = 999.99m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 1 },
                 StrapBraceletMaterialId = 1,
@@ -38,6 +38,7 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 1,
                 OtherSpecifications = "Limited edition test watch 1",
+                Cost = 250m
             },
             new()
             {
@@ -56,10 +57,10 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch2.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch2"
                     }
                 },
-                Price = (decimal)399.99,
+                Price = 399.99m,
                 PowerReserveId = 1,
                 Stock = new Stock {Quantity = 2},
                 StrapBraceletMaterialId = 1,
@@ -67,6 +68,7 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 1,
                 OtherSpecifications = "Limited edition test watch 2",
+                Cost = 150m
             },
             new()
             {
@@ -85,10 +87,10 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch3.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch3"
                     }
                 },
-                Price = (decimal)499.99,
+                Price = 499.99m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 3 },
                 StrapBraceletMaterialId = 1,
@@ -96,6 +98,7 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 2,
                 OtherSpecifications = "Limited edition test watch 3",
+                Cost = 100m
             },
             new()
             {
@@ -114,10 +117,10 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch4.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch4"
                     }
                 },
-                Price = (decimal)199.99,
+                Price = 199.99m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 4 },
                 StrapBraceletMaterialId = 1,
@@ -125,14 +128,15 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 1,
                 OtherSpecifications = "Limited edition test watch 4",
+                Cost = 50m
             },
             new()
             {
                 Name = "TestWatch5",
                 BrandId = 3,
-                CalibreId = 1,
-                CaseMaterialId = 1,
-                CrystalId = 1,
+                CalibreId = 3,
+                CaseMaterialId = 4,
+                CrystalId = 2,
                 DialId = 1,
                 Lume = true,
                 Reference = "SKX105",
@@ -143,23 +147,24 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch5.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch5"
                     }
                 },
-                Price = (decimal)399.99,
-                PowerReserveId = 1,
+                Price = 399.99m,
+                PowerReserveId = 3,
                 Stock = new Stock { Quantity = 5 },
-                StrapBraceletMaterialId = 1,
-                WatchCaseMeasurementsId = 1,
-                WatchTypeId = 1,
-                WaterResistanceId = 3,
+                StrapBraceletMaterialId = 8,
+                WatchCaseMeasurementsId = 2,
+                WatchTypeId = 2,
+                WaterResistanceId = 4,
                 OtherSpecifications = "Limited edition test watch 5",
+                Cost = 75.00m
             },
             new()
             {
                 Name = "TestWatch6",
                 BrandId = 4,
-                CalibreId = 1,
+                CalibreId = 3,
                 CaseMaterialId = 1,
                 CrystalId = 1,
                 DialId = 1,
@@ -172,10 +177,10 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch6.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch6"
                     }
                 },
-                Price = (decimal)1500.00,
+                Price = 1500.00m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 6 },
                 StrapBraceletMaterialId = 1,
@@ -183,12 +188,13 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 4,
                 OtherSpecifications = "Limited edition test watch 6",
+                Cost = 750.00m
             },
             new()
             {
                 Name = "TestWatch7",
                 BrandId = 4,
-                CalibreId = 1,
+                CalibreId = 2,
                 CaseMaterialId = 1,
                 CrystalId = 1,
                 DialId = 1,
@@ -201,23 +207,24 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch7.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch7"
                     }
                 },
-                Price = (decimal)999.99,
+                Price = 999.99m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 7 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
-                WaterResistanceId = 1,
+                WaterResistanceId = 3,
                 OtherSpecifications = "Limited edition test watch 7",
+                Cost = 499.99m
             },
             new()
             {
                 Name = "TestWatch8",
                 BrandId = 5,
-                CalibreId = 1,
+                CalibreId = 2,
                 CaseMaterialId = 1,
                 CrystalId = 1,
                 DialId = 1,
@@ -230,23 +237,24 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch8.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch8"
                     }
                 },
-                Price = (decimal)1999.99,
+                Price = 1999.99m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 8 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
-                WaterResistanceId = 1,
+                WaterResistanceId = 3,
                 OtherSpecifications = "Limited edition test watch 8",
+                Cost = 1000.00m
             },
             new()
             {
                 Name = "TestWatch9",
                 BrandId = 1,
-                CalibreId = 1,
+                CalibreId = 2,
                 CaseMaterialId = 1,
                 CrystalId = 1,
                 DialId = 1,
@@ -259,25 +267,26 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch9.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch9"
                     }
                 },
-                Price = (decimal)499.99,
+                Price = 499.99m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 9 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
-                WaterResistanceId = 1,
+                WaterResistanceId = 3,
                 OtherSpecifications = "Limited edition test watch 9",
+                Cost = 350.00m
             },
             new()
             {
                 Name = "TestWatch10",
                 BrandId = 5,
                 CalibreId = 1,
-                CaseMaterialId = 1,
-                CrystalId = 1,
+                CaseMaterialId = 3,
+                CrystalId = 2,
                 DialId = 1,
                 Lume = true,
                 Reference = "SKX110",
@@ -288,52 +297,54 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch10.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch10"
                     }
                 },
-                Price = (decimal)1750.00,
+                Price = 1750.00m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 10 },
-                StrapBraceletMaterialId = 1,
-                WatchCaseMeasurementsId = 1,
+                StrapBraceletMaterialId = 3,
+                WatchCaseMeasurementsId = 3,
                 WatchTypeId = 1,
-                WaterResistanceId = 1,
+                WaterResistanceId = 2,
                 OtherSpecifications = "Limited edition test watch 10",
+                Cost = 1250.00m
             },
             new()
             {
                 Name = "TestWatch11",
-                BrandId = 1,
-                CalibreId = 1,
-                CaseMaterialId = 1,
-                CrystalId = 1,
-                DialId = 1,
+                BrandId = 2,
+                CalibreId = 2,
+                CaseMaterialId = 6,
+                CrystalId = 3,
+                DialId = 4,
                 Lume = true,
                 Reference = "SKX111",
-                MovementTypeId = 1,
+                MovementTypeId = 3,
                 Photos = new List<Photo>()
                 {
                     new()
                     {
                         Url = "./assets/Watch11.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch11"
                     }
                 },
-                Price = (decimal)750.00,
+                Price = 750.00m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 11 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
-                WaterResistanceId = 1,
+                WaterResistanceId = 4,
                 OtherSpecifications = "Limited edition test watch 11",
+                Cost = 500.00m
             },
             new()
             {
                 Name = "TestWatch12",
                 BrandId = 1,
-                CalibreId = 1,
+                CalibreId = 3,
                 CaseMaterialId = 1,
                 CrystalId = 1,
                 DialId = 1,
@@ -346,10 +357,10 @@ public static class WatchSeedData
                     {
                         Url = "./assets/Watch12.png",
                         IsMain = true,
-                        PublicId = ""
+                        PublicId = "TestWatch12"
                     }
                 },
-                Price = (decimal)120.00,
+                Price = 120.00m,
                 PowerReserveId = 1,
                 Stock = new Stock { Quantity = 12 },
                 StrapBraceletMaterialId = 1,
@@ -357,6 +368,7 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 1,
                 OtherSpecifications = "Limited edition test watch 12",
+                Cost = 45.00m
             }
         };
     }

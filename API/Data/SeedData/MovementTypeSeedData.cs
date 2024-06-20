@@ -16,7 +16,7 @@ public static class MovementTypeSeedData
             },
             new()
             {
-                Type = "'Manual Winding"
+                Type = "Manual Winding"
             },
             new()
             {
