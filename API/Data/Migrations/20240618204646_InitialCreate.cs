@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class PostgresInitial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -95,24 +95,11 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Duration = table.Column<string>(type: "text", nullable: false)
+                    Duration = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PowerReserves", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Stocks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Quantity = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stocks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -163,7 +150,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Resistance = table.Column<string>(type: "text", nullable: false)
+                    Resistance = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -187,7 +174,6 @@ namespace API.Data.Migrations
                     MovementTypeId = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     PowerReserveId = table.Column<int>(type: "integer", nullable: false),
-                    StockId = table.Column<int>(type: "integer", nullable: false),
                     StrapBraceletMaterialId = table.Column<int>(type: "integer", nullable: false),
                     WatchCaseMeasurementsId = table.Column<int>(type: "integer", nullable: false),
                     WatchTypeId = table.Column<int>(type: "integer", nullable: false),
@@ -241,12 +227,6 @@ namespace API.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Watches_Stocks_StockId",
-                        column: x => x.StockId,
-                        principalTable: "Stocks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Watches_StrapBraceletMaterials_StrapBraceletMaterialId",
                         column: x => x.StrapBraceletMaterialId,
                         principalTable: "StrapBraceletMaterials",
@@ -268,6 +248,48 @@ namespace API.Data.Migrations
                         name: "FK_Watches_WaterResistances_WaterResistanceId",
                         column: x => x.WaterResistanceId,
                         principalTable: "WaterResistances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Photos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Url = table.Column<string>(type: "text", nullable: false),
+                    IsMain = table.Column<bool>(type: "boolean", nullable: false),
+                    PublicId = table.Column<string>(type: "text", nullable: false),
+                    WatchId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photos_Watches_WatchId",
+                        column: x => x.WatchId,
+                        principalTable: "Watches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stocks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    WatchId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stocks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Stocks_Watches_WatchId",
+                        column: x => x.WatchId,
+                        principalTable: "Watches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -309,9 +331,32 @@ namespace API.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Photos_PublicId",
+                table: "Photos",
+                column: "PublicId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_Url",
+                table: "Photos",
+                column: "Url",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_WatchId",
+                table: "Photos",
+                column: "WatchId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PowerReserves_Duration",
                 table: "PowerReserves",
                 column: "Duration",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stocks_WatchId",
+                table: "Stocks",
+                column: "WatchId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -368,11 +413,6 @@ namespace API.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Watches_StockId",
-                table: "Watches",
-                column: "StockId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Watches_StrapBraceletMaterialId",
                 table: "Watches",
                 column: "StrapBraceletMaterialId");
@@ -409,6 +449,12 @@ namespace API.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Photos");
+
+            migrationBuilder.DropTable(
+                name: "Stocks");
+
+            migrationBuilder.DropTable(
                 name: "Watches");
 
             migrationBuilder.DropTable(
@@ -431,9 +477,6 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "PowerReserves");
-
-            migrationBuilder.DropTable(
-                name: "Stocks");
 
             migrationBuilder.DropTable(
                 name: "StrapBraceletMaterials");

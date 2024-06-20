@@ -165,9 +165,6 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsMain")
-                        .IsUnique();
-
                     b.HasIndex("PublicId")
                         .IsUnique();
 
@@ -187,9 +184,8 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Duration")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -388,9 +384,8 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Resistance")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Resistance")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

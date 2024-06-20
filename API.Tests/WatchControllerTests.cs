@@ -115,7 +115,7 @@ public class WatchControllerTests
                 Photos = watch1,
                 Price = (decimal)999.99,
                 PowerReserveId = 1,
-                PowerReserve = new PowerReserve { Id = 1, Duration = "40hrs" },
+                PowerReserve = new PowerReserve { Id = 1, Duration = 40 },
                 Stock = new Stock {Id = 1, Quantity = 10},
                 StrapBraceletMaterialId = 1,
                 StrapBraceletMaterial = new StrapBraceletMaterial { Id = 1, Material = "Steel" },
@@ -124,7 +124,7 @@ public class WatchControllerTests
                 WatchTypeId = 1,
                 WatchType = new WatchType { Id = 1, Type = "Gmt" },
                 WaterResistanceId = 1,
-                WaterResistance = new WaterResistance { Id = 1, Resistance = "100" },
+                WaterResistance = new WaterResistance { Id = 1, Resistance = 100 },
                 OtherSpecifications = "Limited edition Gmt watch"
             },
             new()
@@ -148,7 +148,7 @@ public class WatchControllerTests
                 Photos = watch2,
                 Price = (decimal)1000.50,
                 PowerReserveId = 2,
-                PowerReserve = new PowerReserve { Id = 2, Duration = "40hrs" },
+                PowerReserve = new PowerReserve { Id = 2, Duration = 40 },
                 Stock = new Stock {Id = 2, Quantity = 5},
                 StrapBraceletMaterialId = 2,
                 StrapBraceletMaterial = new StrapBraceletMaterial { Id = 2, Material = "Steel" },
@@ -157,7 +157,7 @@ public class WatchControllerTests
                 WatchTypeId = 2,
                 WatchType = new WatchType { Id = 2, Type = "Chronograph" },
                 WaterResistanceId = 2,
-                WaterResistance = new WaterResistance { Id = 2, Resistance = "200" },
+                WaterResistance = new WaterResistance { Id = 2, Resistance = 200 },
                 OtherSpecifications = "Limited edition chronograph watch"
             }
         };

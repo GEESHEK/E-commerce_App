@@ -23,6 +23,7 @@ public class DataContext : DbContext
     public DbSet<PowerReserve> PowerReserves { get; set; }
     public DbSet<Stock> Stocks { get; set; }
     public DbSet<StrapBraceletMaterial> StrapBraceletMaterials { get; set; }
+    public DbSet<WatchCaseMeasurements> WatchCaseMeasurements { get; set; }
     public DbSet<WatchType> WatchTypes { get; set; }
     public DbSet<WaterResistance> WaterResistances { get; set; }
 
@@ -85,10 +86,6 @@ public class DataContext : DbContext
         modelBuilder.Entity<Photo>()
             .Property(p => p.Url)
             .IsRequired();
-        
-        modelBuilder.Entity<Photo>()
-            .HasIndex(p => p.IsMain)
-            .IsUnique();
 
         modelBuilder.Entity<Photo>()
             .Property(p => p.IsMain)
