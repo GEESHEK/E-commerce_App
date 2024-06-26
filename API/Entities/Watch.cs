@@ -49,5 +49,7 @@ public class Watch
     [JsonIgnore]
     public decimal Cost { get; set; }
 
+    public DateOnly DateAdded { get; set; } = DateOnly.FromDateTime(DateTime.Today);
+
     public List<Photo> Photos { get; set; } = new();
 }
