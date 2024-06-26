@@ -113,7 +113,7 @@ public class WatchControllerTests
                 MovementTypeId = 1,
                 MovementType = new MovementType { Id = 1, Type = "Automatic" },
                 Photos = watch1,
-                Price = (decimal)999.99,
+                Price = 999.99m,
                 PowerReserveId = 1,
                 PowerReserve = new PowerReserve { Id = 1, Duration = 40 },
                 Stock = new Stock {Id = 1, Quantity = 10},
@@ -125,7 +125,9 @@ public class WatchControllerTests
                 WatchType = new WatchType { Id = 1, Type = "Gmt" },
                 WaterResistanceId = 1,
                 WaterResistance = new WaterResistance { Id = 1, Resistance = 100 },
-                OtherSpecifications = "Limited edition Gmt watch"
+                OtherSpecifications = "Limited edition Gmt watch",
+                Cost = 500.50m,
+                DateAdded = new DateOnly(2023, 09,10)
             },
             new()
             {
@@ -146,7 +148,7 @@ public class WatchControllerTests
                 MovementTypeId = 2,
                 MovementType = new MovementType { Id = 2, Type = "Automatic" },
                 Photos = watch2,
-                Price = (decimal)1000.50,
+                Price = 1000.50m,
                 PowerReserveId = 2,
                 PowerReserve = new PowerReserve { Id = 2, Duration = 40 },
                 Stock = new Stock {Id = 2, Quantity = 5},
@@ -158,7 +160,9 @@ public class WatchControllerTests
                 WatchType = new WatchType { Id = 2, Type = "Chronograph" },
                 WaterResistanceId = 2,
                 WaterResistance = new WaterResistance { Id = 2, Resistance = 200 },
-                OtherSpecifications = "Limited edition chronograph watch"
+                OtherSpecifications = "Limited edition chronograph watch",
+                Cost = 499.99m,
+                DateAdded = new DateOnly(2024, 05,10)
             }
         };
     }

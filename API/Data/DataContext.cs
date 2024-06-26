@@ -142,6 +142,10 @@ public class DataContext : DbContext
         modelBuilder.Entity<Watch>()
             .Property(w => w.Reference)
             .IsRequired();
+        
+        modelBuilder.Entity<Watch>()
+            .Property(w => w.DateAdded)
+            .IsRequired();
 
         modelBuilder.Entity<WatchCaseMeasurements>()
             .HasIndex(w => new {w.Diameter, w.Length, w.LugWidth, w.Thickness})

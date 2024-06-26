@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -179,7 +180,8 @@ namespace API.Data.Migrations
                     WatchTypeId = table.Column<int>(type: "integer", nullable: false),
                     WaterResistanceId = table.Column<int>(type: "integer", nullable: false),
                     OtherSpecifications = table.Column<string>(type: "text", nullable: true),
-                    Cost = table.Column<decimal>(type: "numeric", nullable: false)
+                    Cost = table.Column<decimal>(type: "numeric", nullable: false),
+                    DateAdded = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {

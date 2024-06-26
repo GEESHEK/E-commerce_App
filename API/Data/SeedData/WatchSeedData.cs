@@ -38,7 +38,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 1,
                 OtherSpecifications = "Limited edition test watch 1",
-                Cost = 250m
+                Cost = 250m,
+                DateAdded = new DateOnly(2023, 09,08)
             },
             new()
             {
@@ -68,7 +69,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 1,
                 OtherSpecifications = "Limited edition test watch 2",
-                Cost = 150m
+                Cost = 150m,
+                DateAdded = new DateOnly(2024, 06,26)
             },
             new()
             {
@@ -98,7 +100,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 2,
                 OtherSpecifications = "Limited edition test watch 3",
-                Cost = 100m
+                Cost = 100m,
+                DateAdded = new DateOnly(2023, 09,10)
             },
             new()
             {
@@ -128,7 +131,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 1,
                 OtherSpecifications = "Limited edition test watch 4",
-                Cost = 50m
+                Cost = 50m,
+                DateAdded = new DateOnly(2024, 06,10)
             },
             new()
             {
@@ -158,7 +162,8 @@ public static class WatchSeedData
                 WatchTypeId = 2,
                 WaterResistanceId = 4,
                 OtherSpecifications = "Limited edition test watch 5",
-                Cost = 75.00m
+                Cost = 75.00m,
+                DateAdded = new DateOnly(2022, 09,10)
             },
             new()
             {
@@ -218,7 +223,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 3,
                 OtherSpecifications = "Limited edition test watch 7",
-                Cost = 499.99m
+                Cost = 499.99m,
+                DateAdded = new DateOnly(2024, 04,04)
             },
             new()
             {
@@ -248,7 +254,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 3,
                 OtherSpecifications = "Limited edition test watch 8",
-                Cost = 1000.00m
+                Cost = 1000.00m,
+                DateAdded = new DateOnly(2023, 05,10)
             },
             new()
             {
@@ -278,7 +285,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 3,
                 OtherSpecifications = "Limited edition test watch 9",
-                Cost = 350.00m
+                Cost = 350.00m,
+                DateAdded = new DateOnly(2024, 02,10)
             },
             new()
             {
@@ -308,7 +316,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 2,
                 OtherSpecifications = "Limited edition test watch 10",
-                Cost = 1250.00m
+                Cost = 1250.00m,
+                DateAdded = new DateOnly(2023, 10,10)
             },
             new()
             {
@@ -338,7 +347,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 4,
                 OtherSpecifications = "Limited edition test watch 11",
-                Cost = 500.00m
+                Cost = 500.00m,
+                DateAdded = new DateOnly(2022, 09,10)
             },
             new()
             {
@@ -368,7 +378,8 @@ public static class WatchSeedData
                 WatchTypeId = 1,
                 WaterResistanceId = 1,
                 OtherSpecifications = "Limited edition test watch 12",
-                Cost = 45.00m
+                Cost = 45.00m,
+                DateAdded = new DateOnly(2023, 09,10)
             }
         };
     }
