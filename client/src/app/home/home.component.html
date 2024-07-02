@@ -1,13 +1,18 @@
-<h1>{{title}}</h1>
-<ul>
-  <li *ngFor="let watch of watches">
-    {{watch.id}}: {{watch.brand.name}} {{watch.price | currency: 'USD'}} {{watch.reference}}
-    <div *ngIf="watch.photos[0].url == './assets/Watch1.png'">
-      <img src="{{watch.photos[0].url}}" alt="watch1">
-    </div>
-<!--    please remove this in the future, all watches should have a picture or add it in as an || './assets/NoWatch.png'-->
-    <div *ngIf="watch.photos[0].url !=  './assets/Watch1.png'">
-      <img src="./assets/NoWatch.png" alt="No Image">
-    </div>
-  </li>
-</ul>
+<div class="container">
+  <img src="./assets/Banner.png" alt="watch banner">
+</div>
+<div class="container">
+  <ul>
+    <li *ngFor="let watch of watches">
+      {{watch.id}}: {{watch.brand.name}} {{watch.price | currency: 'USD'}} {{watch.reference}}
+      <div *ngIf="watch.photos[0].url == './assets/Watch1.png'">
+        <img src="{{watch.photos[0].url}}" alt="watch1">
+      </div>
+      <!--    please remove this in the future, all watches should have a picture or add it in as an || './assets/NoWatch.png'-->
+      <div *ngIf="watch.photos[0].url !=  './assets/Watch1.png'">
+        <img src="./assets/NoWatch.png" alt="No Image">
+      </div>
+    </li>
+  </ul>
+</div>
+
