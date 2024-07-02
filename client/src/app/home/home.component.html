@@ -1,7 +1,11 @@
-<div class="container">
+<div class="container banner">
   <img src="./assets/Banner.png" alt="watch banner">
 </div>
 <div class="container">
+  <h1>Categories</h1>
+</div>
+<div class="container">
+  <h1>New Releases</h1>
   <ul>
     <li *ngFor="let watch of watches">
       {{watch.id}}: {{watch.brand.name}} {{watch.price | currency: 'USD'}} {{watch.reference}}
