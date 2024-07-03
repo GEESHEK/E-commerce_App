@@ -1,4 +1,6 @@
-.banner img {
+img.home-banner {
   height: 100%;
   width: 100%;
+  /*due to nav-bar being fixed padding-top is required*/
+  padding-top: 57px;
 }

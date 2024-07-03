@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getWatches();
   }
-
+  //TODO this need to be moved to a service
   getWatches() {
     return this.http.get(this.baseUrl + '/watch').subscribe({
       next: (response) => (this.watches = response),
