@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { WatchService } from '../services/watch.service';
 
 @Component({
   selector: 'app-home',
@@ -12,14 +13,13 @@ export class HomeComponent implements OnInit {
   baseUrl = environment.apiUrl;
   watches: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private watchService: WatchService,
+  ) {}
 
   ngOnInit(): void {
-    this.getWatches();
-  }
-  //TODO this need to be moved to a service
-  getWatches() {
-    return this.http.get(this.baseUrl + '/watch').subscribe({
+    this.watchService.getWatches().subscribe({
       next: (response) => (this.watches = response),
       error: (error) => console.log(error),
     });

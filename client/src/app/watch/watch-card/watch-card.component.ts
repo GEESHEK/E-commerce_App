@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-watch-card',
   templateUrl: './watch-card.component.html',
-  styleUrls: ['./watch-card.component.css']
+  styleUrls: ['./watch-card.component.css'],
 })
 export class WatchCardComponent {
-
+  @Input() watch: any;
 }

@@ -3,20 +3,8 @@
   <h1>New Releases</h1>
   <div class="row row-cols-1 row-cols-md-4 g-4">
     <div *ngFor="let watch of watches" class="col">
-      <app-watch-card></app-watch-card>
+      <app-watch-card [watch]="watch"></app-watch-card>
     </div>
   </div>
-  <ul>
-    <li *ngFor="let watch of watches">
-      {{ watch.id }}: {{ watch.brand.name }} {{ watch.price | currency: 'USD' }} {{ watch.reference }}
-      <div *ngIf="watch.photos[0].url == './assets/Watch1.png'">
-        <img src="{{watch.photos[0].url}}" alt="watch1">
-      </div>
-      <!--    please remove this in the future, all watches should have a picture or add it in as an || './assets/NoWatch.png'-->
-      <div *ngIf="watch.photos[0].url !=  './assets/Watch1.png'">
-        <img src="./assets/NoWatch.png" alt="No Image">
-      </div>
-    </li>
-  </ul>
 </div>
 
