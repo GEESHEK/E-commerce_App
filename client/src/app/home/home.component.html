@@ -1,0 +1,10 @@
+<img class="home-banner" src="./assets/Banner.png" alt="watch banner">
+<div class="container">
+  <h1>New Releases</h1>
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div *ngFor="let watch of watches" class="col">
+      <app-watch-card [watch]="watch"></app-watch-card>
+    </div>
+  </div>
+</div>
+

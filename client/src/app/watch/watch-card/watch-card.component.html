@@ -1,0 +1,19 @@
+<div class="card" style="width: 18rem;">
+  <!--  Come back to change the img logic-->
+  <img *ngIf="watch.photos[0].url == './assets/Watch1.png';
+        else NoWatchImage"
+       src="./assets/Watch1.png" class="card-img-top"
+       alt="{{watch.brand.name + ' ' + watch.reference}}">
+  <ng-template #NoWatchImage>
+    <img src="./assets/NoWatch.png" class="card-img-top"
+         alt="{{watch.brand.name + ' ' + watch.reference}}">
+  </ng-template>
+  <div class="card-body">
+    <h5 class="card-title">{{ watch.id }}: {{ watch.brand.name }}</h5>
+    <p class="card-text">Price: {{ watch.price | currency: 'USD' }}
+      Reference: {{ watch.reference }}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+
