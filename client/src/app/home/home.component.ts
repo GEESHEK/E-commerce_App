@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { WatchService } from '../services/watch.service';
+import { WatchCard } from '../../models/watchCard';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +10,7 @@ import { WatchService } from '../services/watch.service';
 })
 export class HomeComponent implements OnInit {
   title = 'Home Page';
-  baseUrl = environment.apiUrl;
-  watches: any;
+  watchCards: WatchCard[] = [];
 
   constructor(
     private http: HttpClient,
@@ -19,8 +18,12 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.watchService.getWatches().subscribe({
-      next: (response) => (this.watches = response),
+    this.loadWatchCards();
+  }
+
+  loadWatchCards() {
+    this.watchService.getHomepageWatchCards().subscribe({
+      next: (response) => (this.watchCards = response),
       error: (error) => console.log(error),
     });
   }

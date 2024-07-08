@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { WatchCard } from '../../../models/watchCard';
 
 @Component({
   selector: 'app-watch-card',
@@ -6,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./watch-card.component.css'],
 })
 export class WatchCardComponent {
-  @Input() watch: any;
+  @Input() watchCard: WatchCard | undefined;
 }

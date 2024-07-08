@@ -10,19 +10,14 @@ import { HomeComponent } from './home/home.component';
 import { WatchCardComponent } from './watch/watch-card/watch-card.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    HomeComponent,
-    WatchCardComponent,
-  ],
+  declarations: [AppComponent, NavComponent, HomeComponent, WatchCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
