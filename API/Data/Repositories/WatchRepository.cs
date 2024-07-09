@@ -71,7 +71,18 @@ public class WatchRepository : IWatchRepository
     public bool IsModified(Watch watch)
     {
         return _context.Entry(watch).State == EntityState.Modified;
-    } 
+    }
+
+    public async Task<IEnumerable<Watch>> GetHomepageWatches()
+    {
+        return await _context.Watches
+            .Include(w => w.Brand)
+            .Include(w => w.Photos)
+            .OrderByDescending(x => x.DateAdded)
+            .AsNoTracking()
+            .Take(5)
+            .ToListAsync();
+    }
 
     public async Task<bool> WatchExists(string reference)
     {

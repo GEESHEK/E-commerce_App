@@ -13,6 +13,9 @@ public class AutomapperProfiles : Profile
                 o => o.MapFrom(x => x.Stock));
         CreateMap<WatchUpdateDto, Watch>()
             .ForPath(w => w.Stock.Quantity,
-                o => o.MapFrom(x => x.Stock));;
+                o => o.MapFrom(x => x.Stock));
+        CreateMap<Watch, HomepageWatches>();
+        // .ForPath(w => w.Brand,
+        //     o => o.MapFrom(x => x.Brand.Name));
     }
 }

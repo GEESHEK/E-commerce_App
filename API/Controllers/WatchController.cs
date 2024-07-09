@@ -87,5 +87,13 @@ public class WatchController : BaseApiController
         return BadRequest("Problem deleting watch");
     }
     
+    [HttpGet("homepage/watchCards")]
+    public async Task<ActionResult<IEnumerable<Watch>>> GetHomepageWatches()
+    {
+        var watches = await _watchRepository.GetHomepageWatches();
+
+        return Ok(watches);
+    }
+    
     //Todo add photo or do this in it's own controller
 }
