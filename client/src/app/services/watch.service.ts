@@ -17,7 +17,7 @@ export class WatchService {
 
   getHomepageWatchCards() {
     return this.http.get<WatchCard[]>(
-      this.baseUrl + '/watch/homepage/watchCards',
+      this.baseUrl + '/watch/homepage/watch-cards',
     );
   }
 }

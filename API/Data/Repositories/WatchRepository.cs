@@ -1,5 +1,8 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 using API.Interfaces;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories;
@@ -7,10 +10,12 @@ namespace API.Data.Repositories;
 public class WatchRepository : IWatchRepository
 {
     private readonly DataContext _context;
+    private readonly IMapper _mapper;
 
-    public WatchRepository(DataContext context)
+    public WatchRepository(DataContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
     
     public void AddWatch(Watch watch)
@@ -71,7 +76,18 @@ public class WatchRepository : IWatchRepository
     public bool IsModified(Watch watch)
     {
         return _context.Entry(watch).State == EntityState.Modified;
-    } 
+    }
+
+    public async Task<List<HomepageWatchDto>> GetHomepageWatches()
+    {
+        // The includes for Photo and Brand is handled in the AutomapperProfiles
+        return await _context.Watches
+            .OrderByDescending(x => x.DateAdded)
+            .Take(8)
+            .AsNoTracking()
+            .ProjectTo<HomepageWatchDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
 
     public async Task<bool> WatchExists(string reference)
     {

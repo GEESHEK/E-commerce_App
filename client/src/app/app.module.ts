@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { WatchCardComponent } from './watch/watch-card/watch-card.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent, NavComponent, HomeComponent, WatchCardComponent],
@@ -16,6 +17,7 @@ import { WatchCardComponent } from './watch/watch-card/watch-card.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NgOptimizedImage,
   ],
   providers: [],
   bootstrap: [AppComponent],
