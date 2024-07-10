@@ -4,3 +4,7 @@ img.home-banner {
   /*due to nav-bar being fixed padding-top is required*/
   padding-top: 57px;
 }
+
+.container {
+  padding: 50px 50px;
+}

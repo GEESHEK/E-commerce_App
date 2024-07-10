@@ -1,10 +1,12 @@
 <div class="card" style="width: 18rem;" *ngIf="watchCard">
-  <!--  Come back to change the img logic-->
-  <img src="{{watchCard.photoUrl || './assets/NoWatch.png'}}" alt="{{watchCard.brand + ' ' + watchCard.reference}}">
+  <img class="card-img-top"
+       src="{{watchCard.photoUrl || './assets/NoWatch.png'}}"
+       alt="{{watchCard.brand + ' ' + watchCard.reference}}"
+       onerror="this.onerror=null; this.src='./assets/NoWatch.png';">
   <div class="card-body">
-    <h5 class="card-title">{{ watchCard.id }}: {{ watchCard.brand }}</h5>
+    <h5 class="card-title">{{ watchCard.id }}: {{ watchCard.brand }} {{ watchCard.reference }}</h5>
     <p class="card-text">Price: {{ watchCard.price | currency: 'USD' }}
-      Reference: {{ watchCard.reference }}</p>
+    </p>
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>

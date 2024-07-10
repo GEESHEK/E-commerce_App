@@ -9,15 +9,16 @@ public class AutomapperProfiles : Profile
     public AutomapperProfiles()
     {
         CreateMap<CreateWatchDto, Watch>()
-            .ForPath(w => w.Stock.Quantity,
+            .ForPath(d => d.Stock.Quantity,
                 o => o.MapFrom(s => s.Stock));
         CreateMap<WatchUpdateDto, Watch>()
-            .ForPath(w => w.Stock.Quantity,
+            .ForPath(d => d.Stock.Quantity,
                 o => o.MapFrom(s => s.Stock));
+        //When you need to include relational data
         CreateMap<Watch, HomepageWatchDto>()
-            .ForPath(w => w.PhotoUrl,
-                o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url))
-        .ForPath(w => w.Brand,
-            o => o.MapFrom(s => s.Brand.Name));
+            .ForMember(d => d.Brand,
+                o => o.MapFrom(s => s.Brand.Name))
+            .ForMember(d => d.PhotoUrl,
+                o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url));
     }
 }

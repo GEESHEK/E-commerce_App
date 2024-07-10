@@ -39,7 +39,7 @@ public static class WatchSeedData
                 WaterResistanceId = 1,
                 OtherSpecifications = "Limited edition test watch 1",
                 Cost = 250m,
-                DateAdded = new DateOnly(2023, 09,08)
+                DateAdded = new DateOnly(2024, 07,10)
             },
             new()
             {

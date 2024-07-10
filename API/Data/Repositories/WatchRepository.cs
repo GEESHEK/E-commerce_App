@@ -80,16 +80,13 @@ public class WatchRepository : IWatchRepository
 
     public async Task<List<HomepageWatchDto>> GetHomepageWatches()
     {
-        var watches = await _context.Watches
-            .Include(w => w.Brand)
-            .Include(w => w.Photos)
+        // The includes for Photo and Brand is handled in the AutomapperProfiles
+        return await _context.Watches
             .OrderByDescending(x => x.DateAdded)
-            .Take(5)
+            .Take(8)
             .AsNoTracking()
-            // .ProjectTo<HomepageWatchDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<HomepageWatchDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
-
-        return _mapper.Map<List<HomepageWatchDto>>(watches);
     }
 
     public async Task<bool> WatchExists(string reference)

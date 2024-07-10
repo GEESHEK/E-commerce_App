@@ -87,7 +87,7 @@ public class WatchController : BaseApiController
         return BadRequest("Problem deleting watch");
     }
     
-    [HttpGet("homepage/watchCards")]
+    [HttpGet("homepage/watch-cards")]
     public async Task<ActionResult<List<HomepageWatchDto>>> GetHomepageWatches()
     {
         var homepageWatches = await _watchRepository.GetHomepageWatches();
