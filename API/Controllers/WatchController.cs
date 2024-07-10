@@ -88,11 +88,11 @@ public class WatchController : BaseApiController
     }
     
     [HttpGet("homepage/watchCards")]
-    public async Task<ActionResult<IEnumerable<Watch>>> GetHomepageWatches()
+    public async Task<ActionResult<List<HomepageWatchDto>>> GetHomepageWatches()
     {
-        var watches = await _watchRepository.GetHomepageWatches();
+        var homepageWatches = await _watchRepository.GetHomepageWatches();
 
-        return Ok(watches);
+        return Ok(homepageWatches);
     }
     
     //Todo add photo or do this in it's own controller

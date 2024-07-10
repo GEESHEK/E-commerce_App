@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Interfaces;
@@ -12,5 +13,5 @@ public interface IWatchRepository
     Task<bool> SaveAllAsync();
     Task<bool> WatchExists(string reference);
     bool IsModified(Watch watch);
-    Task<IEnumerable<Watch>> GetHomepageWatches();
+    Task<List<HomepageWatchDto>> GetHomepageWatches();
 }

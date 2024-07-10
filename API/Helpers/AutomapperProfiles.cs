@@ -10,12 +10,14 @@ public class AutomapperProfiles : Profile
     {
         CreateMap<CreateWatchDto, Watch>()
             .ForPath(w => w.Stock.Quantity,
-                o => o.MapFrom(x => x.Stock));
+                o => o.MapFrom(s => s.Stock));
         CreateMap<WatchUpdateDto, Watch>()
             .ForPath(w => w.Stock.Quantity,
-                o => o.MapFrom(x => x.Stock));
-        CreateMap<Watch, HomepageWatches>();
-        // .ForPath(w => w.Brand,
-        //     o => o.MapFrom(x => x.Brand.Name));
+                o => o.MapFrom(s => s.Stock));
+        CreateMap<Watch, HomepageWatchDto>()
+            .ForPath(w => w.PhotoUrl,
+                o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url))
+        .ForPath(w => w.Brand,
+            o => o.MapFrom(s => s.Brand.Name));
     }
 }
