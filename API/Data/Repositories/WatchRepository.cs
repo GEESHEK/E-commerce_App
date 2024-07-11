@@ -78,14 +78,23 @@ public class WatchRepository : IWatchRepository
         return _context.Entry(watch).State == EntityState.Modified;
     }
 
-    public async Task<List<HomepageWatchDto>> GetHomepageWatches()
+    public async Task<List<WatchCardDto>> GetHomepageWatchCards()
     {
         // The includes for Photo and Brand is handled in the AutomapperProfiles
         return await _context.Watches
             .OrderByDescending(x => x.DateAdded)
             .Take(8)
             .AsNoTracking()
-            .ProjectTo<HomepageWatchDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<List<WatchCardDto>> GetWatchCards()
+    {
+        return await _context.Watches
+            .OrderByDescending(x => x.DateAdded)
+            .AsNoTracking()
+            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
     }
 

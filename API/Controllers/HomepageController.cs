@@ -15,9 +15,9 @@ public class HomepageController : BaseApiController
     }
     
     [HttpGet("watch-cards")]
-    public async Task<ActionResult<List<HomepageWatchDto>>> GetHomepageWatches()
+    public async Task<ActionResult<List<WatchCardDto>>> GetHomepageWatches()
     {
-        var homepageWatches = await _watchRepository.GetHomepageWatches();
+        var homepageWatches = await _watchRepository.GetHomepageWatchCards();
 
         return Ok(homepageWatches);
     }
