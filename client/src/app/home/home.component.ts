@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WatchService } from '../services/watch.service';
 import { WatchCard } from '../../models/watchCard';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import { WatchCard } from '../../models/watchCard';
 })
 export class HomeComponent implements OnInit {
   title = 'Home Page';
-  watchCards: WatchCard[] = [];
+  watchCards$: Observable<WatchCard[]> | undefined;
 
   constructor(
     private http: HttpClient,
@@ -18,13 +19,13 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadWatchCards();
+    this.watchCards$ = this.watchService.getHomepageWatchCards();
   }
 
-  loadWatchCards() {
-    this.watchService.getHomepageWatchCards().subscribe({
-      next: (response) => (this.watchCards = response),
-      error: (error) => console.log(error),
-    });
-  }
+  // loadWatchCards() {
+  //   this.watchService.getHomepageWatchCards().subscribe({
+  //     next: (response) => (this.watchCards = response),
+  //     error: (error) => console.log(error),
+  //   });
+  // }
 }

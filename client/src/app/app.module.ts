@@ -9,9 +9,18 @@ import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { WatchCardComponent } from './watch/watch-card/watch-card.component';
 import { NgOptimizedImage } from '@angular/common';
+import { WatchPageComponent } from './watch/watch-page/watch-page.component';
+import { ImageFallbackDirective } from './directive/image-fallback.directive';
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, HomeComponent, WatchCardComponent],
+  declarations: [
+    AppComponent,
+    NavComponent,
+    HomeComponent,
+    WatchCardComponent,
+    WatchPageComponent,
+    ImageFallbackDirective,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

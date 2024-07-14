@@ -1,6 +1,6 @@
 ﻿namespace API.DTOs;
 
-public class HomepageWatchDto
+public class WatchCardDto
 {
     public int Id { get; set; }
     public string Brand { get; set; }

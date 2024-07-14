@@ -15,7 +15,7 @@ public class AutomapperProfiles : Profile
             .ForPath(d => d.Stock.Quantity,
                 o => o.MapFrom(s => s.Stock));
         //When you need to include relational data
-        CreateMap<Watch, HomepageWatchDto>()
+        CreateMap<Watch, WatchCardDto>()
             .ForMember(d => d.Brand,
                 o => o.MapFrom(s => s.Brand.Name))
             .ForMember(d => d.PhotoUrl,
