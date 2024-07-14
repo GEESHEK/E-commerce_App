@@ -3,7 +3,6 @@
        src="{{watchCard.photoUrl || './assets/NoWatch.png'}}"
        app-Image-fallback
        alt="{{watchCard.brand + ' ' + watchCard.reference}}">
-
   <div class="card-body">
     <h5 class="card-title">{{ watchCard.id }}: {{ watchCard.brand }} {{ watchCard.reference }}</h5>
     <p class="card-text">Price: {{ watchCard.price | currency: 'USD' }}
