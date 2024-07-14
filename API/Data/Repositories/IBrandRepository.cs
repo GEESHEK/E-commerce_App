@@ -1,0 +1,8 @@
+﻿using API.Entities;
+
+namespace API.Data.Repositories;
+
+public interface IBrandRepository
+{
+    Task<IEnumerable<Brand>> GetBrands();
+}
