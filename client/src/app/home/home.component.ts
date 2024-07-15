@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { WatchService } from '../services/watch.service';
 import { WatchCard } from '../../models/watchCard';
 import { Observable } from 'rxjs';
@@ -13,10 +12,7 @@ export class HomeComponent implements OnInit {
   title = 'Home Page';
   watchCards$: Observable<WatchCard[]> | undefined;
 
-  constructor(
-    private http: HttpClient,
-    private watchService: WatchService,
-  ) {}
+  constructor(private watchService: WatchService) {}
 
   ngOnInit(): void {
     this.watchCards$ = this.watchService.getHomepageWatchCards();
