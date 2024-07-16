@@ -11,6 +11,7 @@ import { WatchCardComponent } from './watch/watch-card/watch-card.component';
 import { NgOptimizedImage } from '@angular/common';
 import { WatchPageComponent } from './watch/watch-page/watch-page.component';
 import { ImageFallbackDirective } from './directive/image-fallback.directive';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ImageFallbackDirective } from './directive/image-fallback.directive';
     HttpClientModule,
     BrowserAnimationsModule,
     NgOptimizedImage,
+    BsDropdownModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
