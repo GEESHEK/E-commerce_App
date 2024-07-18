@@ -3,6 +3,8 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { WatchCard } from '../../models/watchCard';
 import { map, of } from 'rxjs';
+import { Brand } from '../../models/brand';
+import { Categories } from '../../models/categories';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +33,13 @@ export class WatchService {
 
   getWatchCards() {
     return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards');
+  }
+
+  getBrands() {
+    return this.http.get<Brand[]>(this.baseUrl + '/brand');
+  }
+
+  getCategories() {
+    return this.http.get<Categories[]>(this.baseUrl + '/category');
   }
 }

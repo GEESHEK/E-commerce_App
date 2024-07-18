@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="page">{{ page }}</h1>
+  <h1 *ngIf="pageType" class="page">{{ pageType + " watches" | titlecase}}</h1>
   <div class="row row-cols-1 row-cols-md-4 g-4">
     <div *ngFor="let watchCard of watchCards" class="col">
       <app-watch-card [watchCard]="watchCard"></app-watch-card>
