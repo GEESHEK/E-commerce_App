@@ -3,13 +3,13 @@
     <a class="navbar-brand" routerLink="/" routerLinkActive="active">JDM Watches</a>
     <ul class="navbar-nav nav-underline me-auto mb-2 mb-md-0">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/watches">All Watches</a>
+        <a class="nav-link" routerLink="/watches/all">All Watches</a>
       </li>
       <li class="nav-item dropdown" dropdown>
         <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Brands</a>
         <ul class="dropdown-menu" *dropdownMenu>
           <li *ngFor="let brand of brands$ | async">
-            <a class="dropdown-item" routerLink="{{brand.name}}">{{brand.name}}</a>
+            <a class="dropdown-item" routerLink="{{'/watches/' + brand.name}}">{{brand.name}}</a>
           </li>
         </ul>
       </li>
@@ -17,7 +17,7 @@
           <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Categories</a>
           <ul class="dropdown-menu" *dropdownMenu>
             <li *ngFor="let category of categories$ | async">
-              <a class="dropdown-item" routerLink="{{category.type}}">{{category.type}}</a>
+              <a class="dropdown-item" routerLink="{{'/watches/' + category.type}}">{{category.type}}</a>
             </li>
           </ul>
       </li>

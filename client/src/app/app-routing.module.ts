@@ -5,7 +5,7 @@ import { WatchPageComponent } from './watch/watch-page/watch-page.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'watches', component: WatchPageComponent },
+  { path: 'watches/:pageType', component: WatchPageComponent },
   { path: '**', component: HomeComponent, pathMatch: 'full' },
   //TODO add a route for not-found pathways
 ];
