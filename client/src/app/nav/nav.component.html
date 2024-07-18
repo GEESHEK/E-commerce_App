@@ -5,31 +5,27 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/watches">All Watches</a>
       </li>
-      <li class="nav-item">
-<!--        <a class="nav-link" routerLink="/brands">Brands</a>-->
-        <div class="btn-group" dropdown>
-          <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-                  aria-controls="dropdown-animated">
-            Brand <span class="caret"></span>
-          </button>
-          <ul *dropdownMenu class="dropdown-menu"
-              role="menu" aria-labelledby="button-animated">
-            <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Another action</a>
+      <li class="nav-item dropdown" dropdown>
+        <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Brands</a>
+        <ul class="dropdown-menu" *dropdownMenu>
+          <li>
+            <a href="" class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
+          </li>
+          <li>
+            <a href="" class="dropdown-item" >Logout</a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown" dropdown>
+          <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Categories</a>
+          <ul class="dropdown-menu" *dropdownMenu>
+            <li>
+              <a href="" class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
             </li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Something else
-              here</a></li>
+            <li>
+              <a href="" class="dropdown-item" >Logout</a>
+            </li>
           </ul>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/catergies">Categories</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/contact-us">Contact Us</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/about-us">About Us</a>
       </li>
     </ul>
     <form class="d-flex">
