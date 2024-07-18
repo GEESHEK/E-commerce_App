@@ -8,22 +8,16 @@
       <li class="nav-item dropdown" dropdown>
         <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Brands</a>
         <ul class="dropdown-menu" *dropdownMenu>
-          <li>
-            <a href="" class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
-          </li>
-          <li>
-            <a href="" class="dropdown-item" >Logout</a>
+          <li *ngFor="let brand of brands$ | async">
+            <a class="dropdown-item" routerLink="{{brand.name}}">{{brand.name}}</a>
           </li>
         </ul>
       </li>
       <li class="nav-item dropdown" dropdown>
           <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Categories</a>
           <ul class="dropdown-menu" *dropdownMenu>
-            <li>
-              <a href="" class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
-            </li>
-            <li>
-              <a href="" class="dropdown-item" >Logout</a>
+            <li *ngFor="let category of categories$ | async">
+              <a class="dropdown-item" routerLink="{{category.type}}">{{category.type}}</a>
             </li>
           </ul>
       </li>
