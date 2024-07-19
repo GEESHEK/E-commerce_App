@@ -1,6 +1,5 @@
 ﻿using API.DTOs;
 using API.Entities;
-using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -67,7 +66,16 @@ public class WatchRepository : IWatchRepository
             //Tracking changes because put and delete will need it to check for changes
             .SingleOrDefaultAsync(w => w.Id == id);
     }
-    
+
+    public async Task<WatchDetailDto> GetWatchDetailById(int id)
+    {
+        return await _context.Watches
+            .Where(w => w.Id == id)
+            .ProjectTo<WatchDetailDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .SingleOrDefaultAsync();
+    }
+
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;

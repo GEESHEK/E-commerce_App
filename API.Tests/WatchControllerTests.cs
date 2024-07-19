@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using API.Controllers;
+using API.Data.Repositories;
 using API.Entities;
 using API.Helpers;
-using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
