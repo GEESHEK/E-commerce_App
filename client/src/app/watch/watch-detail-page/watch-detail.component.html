@@ -1,0 +1,7 @@
+<div class="container" *ngIf="watchDetail && watchId">
+  <h1>{{"Watch Id " + watchId}}</h1>
+  <div *ngFor="let key of getObjectKeys(watchDetail)">
+    <strong >{{ key }}:</strong> {{watchDetail[key]}}
+  </div>
+</div>
+
