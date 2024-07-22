@@ -1,7 +1,5 @@
 ﻿using API.Data.Repositories;
 using API.DTOs;
-using API.Entities;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;

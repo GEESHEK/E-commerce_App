@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WatchService } from '../../services/watch.service';
 import { WatchDetail } from '../../../models/watchDetail';
+import { Photo } from '../../../models/photo';
 
 @Component({
   selector: 'app-watch-detail-page',
@@ -11,6 +12,7 @@ import { WatchDetail } from '../../../models/watchDetail';
 export class WatchDetailComponent implements OnInit {
   watchId: number | undefined;
   watchDetail: WatchDetail | undefined;
+  mainPhoto: Photo | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +30,8 @@ export class WatchDetailComponent implements OnInit {
       }
       this.loadWatchDetails();
     });
+    this.mainPhoto = this.getMainPhoto();
+    console.log('Main Photo:', this.mainPhoto);
   }
 
   loadWatchDetails(): void {
@@ -41,5 +45,10 @@ export class WatchDetailComponent implements OnInit {
 
   getObjectKeys(obj: any): (keyof WatchDetail)[] {
     return Object.keys(obj) as (keyof WatchDetail)[];
+  }
+
+  getMainPhoto(): Photo | undefined {
+    console.log('watch details ' + this.watchDetail?.brand);
+    return this.watchDetail?.photos.find((photo) => photo.isMain);
   }
 }
