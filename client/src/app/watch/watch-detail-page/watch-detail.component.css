@@ -1,0 +1,9 @@
+/*img {*/
+/*  object-fit: cover;*/
+/*  height: 100%; !* Adjust the height as needed *!*/
+/*  width: 100%; !* Make sure the image takes the full width of the card *!*/
+/*}*/
+
+.container {
+  padding: 50px 50px;
+}

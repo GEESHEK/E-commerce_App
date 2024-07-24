@@ -15,8 +15,8 @@ export class WatchDetailComponent implements OnInit {
   mainPhoto: Photo | undefined;
 
   constructor(
-    private route: ActivatedRoute,
     private watchService: WatchService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -30,14 +30,16 @@ export class WatchDetailComponent implements OnInit {
       }
       this.loadWatchDetails();
     });
-    this.mainPhoto = this.getMainPhoto();
-    console.log('Main Photo:', this.mainPhoto);
   }
 
   loadWatchDetails(): void {
     if (this.watchId != null) {
       this.watchService.getWatchDetailById(this.watchId).subscribe({
-        next: (response) => (this.watchDetail = response),
+        next: (response) => {
+          this.watchDetail = response;
+          this.mainPhoto = this.getMainPhoto();
+          console.log('Main Photo:', this.mainPhoto);
+        },
         error: (error) => console.log(error),
       });
     }

@@ -1,12 +1,20 @@
-<div class="container" *ngIf="watchDetail && watchId">
+<div class="container" *ngIf="watchDetail">
   <div class="row">
-    <div class="col" *ngIf="mainPhoto">
-      <img src="{{mainPhoto.url}}" alt="{{watchDetail.brand + ' ' + watchDetail.reference}}">
+    <div class="col-8" *ngIf="mainPhoto">
+      <img src="{{mainPhoto.url || './assets/NoWatch.png'}}"
+           app-Image-fallback
+           alt="{{watchDetail.brand + ' ' + watchDetail.reference}}">
     </div>
-    <div class="col">
-      <h1>{{ "Watch Id " + watchId }}</h1>
+    <div class="col-4">
+      <h1>{{ watchDetail.brand + " " + watchDetail.reference }}</h1>
       <div *ngFor="let key of getObjectKeys(watchDetail)">
         <strong>{{ key }}:</strong> {{ watchDetail[key] }}
+      </div>
+      <div class="d-grid gap-2 d-md-block mt-4">
+        <button type="button" class="btn btn-success btn-lg col-8 me-4">Add To Cart</button>
+        <button type="button" class="btn btn-danger btn-lg col-2">
+          <i class="fa fa-heart-o" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
   </div>
