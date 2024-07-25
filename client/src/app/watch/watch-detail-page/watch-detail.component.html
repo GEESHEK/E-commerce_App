@@ -18,5 +18,24 @@
       </div>
     </div>
   </div>
+  <div class="container" *ngIf="watchDetail">
+    <accordion [isAnimated]="true">
+      <accordion-group heading="Case Measurements">
+        <p>{{"Diameter " + watchDetail.diameter}}</p>
+        <p>{{"Thickness " + watchDetail.thickness}}</p>
+        <p>{{"Length " + watchDetail.length}}</p>
+        <p>{{"LugWidth " + watchDetail.lugWidth}}</p>
+      </accordion-group>
+      <accordion-group heading="Another group">
+        <p>Some content</p>
+      </accordion-group>
+      <accordion-group heading="Another group">
+        <p>Some content</p>
+      </accordion-group>
+      <accordion-group heading="Another group">
+        <p>Some content</p>
+      </accordion-group>
+    </accordion>
+  </div>
 </div>
 
