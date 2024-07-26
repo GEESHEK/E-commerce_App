@@ -3,6 +3,7 @@
 export interface WatchDetail {
   id: number;
   brand: string;
+  name: string;
   calibre: string;
   caseMaterial: string;
   crystal: string;

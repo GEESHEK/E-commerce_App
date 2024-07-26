@@ -45,10 +45,6 @@ export class WatchDetailComponent implements OnInit {
     }
   }
 
-  getObjectKeys(obj: any): (keyof WatchDetail)[] {
-    return Object.keys(obj) as (keyof WatchDetail)[];
-  }
-
   getMainPhoto(): Photo | undefined {
     console.log('watch details ' + this.watchDetail?.brand);
     return this.watchDetail?.photos.find((photo) => photo.isMain);

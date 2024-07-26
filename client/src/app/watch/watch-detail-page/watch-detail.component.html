@@ -6,10 +6,17 @@
            alt="{{watchDetail.brand + ' ' + watchDetail.reference}}">
     </div>
     <div class="col-4">
-      <h1>{{ watchDetail.brand + " " + watchDetail.reference }}</h1>
-      <div *ngFor="let key of getObjectKeys(watchDetail)">
-        <strong>{{ key }}:</strong> {{ watchDetail[key] }}
-      </div>
+      <h3>{{ watchDetail.brand + " " + watchDetail.name + " "  + watchDetail.reference}}</h3>
+      <h5><a>Reviews </a>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+      </h5>
+      <hr>
+      <h3>{{"Price: " + (watchDetail.price | currency: 'USD') }}</h3>
+      <h3>{{"Stock: " + (watchDetail.stock) }}</h3>
       <div class="d-grid gap-2 d-md-block mt-4">
         <button type="button" class="btn btn-success btn-lg col-8 me-4">Add To Cart</button>
         <button type="button" class="btn btn-danger btn-lg col-2">
