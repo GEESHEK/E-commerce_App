@@ -6,7 +6,8 @@ img.home-banner {
 }
 
 .container {
-  padding: 50px 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 h1 {

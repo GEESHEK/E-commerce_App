@@ -5,5 +5,15 @@
 /*}*/
 
 .container {
-  padding: 50px 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+h2 {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+#specifications {
+  padding: 50px;
 }

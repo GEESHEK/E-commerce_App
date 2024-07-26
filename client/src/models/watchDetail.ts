@@ -18,9 +18,8 @@ export interface WatchDetail {
   thickness: number;
   length: number;
   lugWidth: number;
-  photoUrl: string;
   watchType: string;
   waterResistance: number;
-  otherSpecification: string;
+  otherSpecifications: string;
   photos: Photo[];
 }

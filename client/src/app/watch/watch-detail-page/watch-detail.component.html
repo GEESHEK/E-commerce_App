@@ -18,22 +18,28 @@
       </div>
     </div>
   </div>
-  <div class="container" *ngIf="watchDetail">
+  <div id="specifications">
+    <h2>Specifications</h2>
     <accordion [isAnimated]="true">
-      <accordion-group heading="Case Measurements">
-        <p>{{"Diameter " + watchDetail.diameter}}</p>
-        <p>{{"Thickness " + watchDetail.thickness}}</p>
-        <p>{{"Length " + watchDetail.length}}</p>
-        <p>{{"LugWidth " + watchDetail.lugWidth}}</p>
+      <accordion-group heading="Movement">
+        <p>{{"Calibre: " + watchDetail.calibre}}</p>
+        <p>{{"Movement Type: " + watchDetail.movementType}}</p>
+        <p>{{"Power Reserve: " + watchDetail.powerReserve + " Hours"}}</p>
       </accordion-group>
-      <accordion-group heading="Another group">
-        <p>Some content</p>
+      <accordion-group heading="Exterior">
+        <p>{{"Dial Colour: " + watchDetail.dial}}</p>
+        <p>{{"Crystal Type: " + watchDetail.crystal}}</p>
+        <p>{{"Lume: " + (watchDetail.lume ? 'Yes' : 'No')}}</p>
+        <p>{{"Case Material: " + watchDetail.caseMaterial}}</p>
+        <p>{{"Strap/Bracelet: " + watchDetail.strapBraceletMaterial}}</p>
+        <p>{{"Case Diameter: " + watchDetail.diameter + "mm"}}</p>
+        <p>{{"Case Thickness: " + watchDetail.thickness + "mm"}}</p>
+        <p>{{"Case Length: " + watchDetail.length + "mm"}}</p>
+        <p>{{"Case LugWidth: " + watchDetail.lugWidth + "mm"}}</p>
       </accordion-group>
-      <accordion-group heading="Another group">
-        <p>Some content</p>
-      </accordion-group>
-      <accordion-group heading="Another group">
-        <p>Some content</p>
+      <accordion-group heading="Other Specifications">
+        <p>{{"Water Resistance: " + watchDetail.waterResistance + "bar"}}</p>
+        <p>{{"Other Specifications: " + watchDetail.otherSpecifications}}</p>
       </accordion-group>
     </accordion>
   </div>
