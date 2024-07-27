@@ -5,6 +5,7 @@ import { WatchCard } from '../../models/watchCard';
 import { map, of } from 'rxjs';
 import { Brand } from '../../models/brand';
 import { Categories } from '../../models/categories';
+import { WatchDetail } from '../../models/watchDetail';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,12 @@ export class WatchService {
 
   getWatchCards() {
     return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards');
+  }
+
+  getWatchDetailById(id: number) {
+    return this.http.get<WatchDetail>(
+      this.baseUrl + '/watch/watch-detail/' + id,
+    );
   }
 
   getBrands() {

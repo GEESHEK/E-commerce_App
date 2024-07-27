@@ -12,6 +12,8 @@ import { NgOptimizedImage } from '@angular/common';
 import { WatchPageComponent } from './watch/watch-page/watch-page.component';
 import { ImageFallbackDirective } from './directive/image-fallback.directive';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { WatchDetailComponent } from './watch/watch-detail-page/watch-detail.component';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     WatchCardComponent,
     WatchPageComponent,
     ImageFallbackDirective,
+    WatchDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     BrowserAnimationsModule,
     NgOptimizedImage,
     BsDropdownModule.forRoot(),
+    AccordionModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

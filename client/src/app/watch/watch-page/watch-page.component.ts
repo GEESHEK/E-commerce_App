@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { WatchCard } from '../../../models/watchCard';
-import { HttpClient } from '@angular/common/http';
 import { WatchService } from '../../services/watch.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -14,7 +13,6 @@ export class WatchPageComponent implements OnInit {
   watchCards: WatchCard[] = [];
 
   constructor(
-    private http: HttpClient,
     private route: ActivatedRoute,
     private watchService: WatchService,
   ) {}

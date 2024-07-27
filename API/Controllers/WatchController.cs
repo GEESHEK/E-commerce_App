@@ -1,6 +1,6 @@
-﻿using API.DTOs;
+﻿using API.Data.Repositories;
+using API.DTOs;
 using API.Entities;
-using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -93,6 +93,19 @@ public class WatchController : BaseApiController
         var watchCards = await _watchRepository.GetWatchCards();
 
         return Ok(watchCards);
+    }
+    
+    [HttpGet("watch-detail/{id:int}")]
+    public async Task<ActionResult<WatchDetailDto>> GetWatchDetailById(int id)
+    {
+        var watchDetail = await _watchRepository.GetWatchDetailById(id);
+
+        if (watchDetail == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(watchDetail);
     }
     
     //Todo add photo or do this in it's own controller

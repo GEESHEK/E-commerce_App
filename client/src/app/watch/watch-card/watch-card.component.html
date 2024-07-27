@@ -7,6 +7,6 @@
     <h5 class="card-title">{{ watchCard.id }}: {{ watchCard.brand }} {{ watchCard.reference }}</h5>
     <p class="card-text">Price: {{ watchCard.price | currency: 'USD' }}
     </p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <a class="btn btn-primary w-100" routerLink="{{'/watch/' +  watchCard.id}}">View Detail</a>
   </div>
 </div>

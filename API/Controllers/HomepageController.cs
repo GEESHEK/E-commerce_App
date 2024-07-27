@@ -1,7 +1,5 @@
-﻿using API.DTOs;
-using API.Entities;
-using API.Interfaces;
-using AutoMapper;
+﻿using API.Data.Repositories;
+using API.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;

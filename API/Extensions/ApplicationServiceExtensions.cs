@@ -1,6 +1,5 @@
 ﻿using API.Data;
 using API.Data.Repositories;
-using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;

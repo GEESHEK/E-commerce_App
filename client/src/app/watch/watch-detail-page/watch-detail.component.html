@@ -1,0 +1,75 @@
+<div class="container" *ngIf="watchDetail">
+  <div class="row">
+    <div class="col-8" *ngIf="mainPhoto">
+      <img src="{{mainPhoto.url || './assets/NoWatch.png'}}"
+           app-Image-fallback
+           alt="{{watchDetail.brand + ' ' + watchDetail.reference}}">
+    </div>
+    <div class="col-4">
+      <h4>{{ watchDetail.brand + " " + watchDetail.name + " "  + watchDetail.reference}}</h4>
+      <h6 class="mb-4"><a>Reviews </a>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <i class="fa fa-star" aria-hidden="true"></i>
+      </h6>
+      <h3>{{"Price: " + (watchDetail.price | currency: 'USD') }}</h3>
+      <h6 class="stock-indicator mb-4" *ngIf="watchDetail.stock > 1 && watchDetail.stock <= 5">5 or less is remaining</h6>
+      <h6 class="stock-indicator mb-4" *ngIf="watchDetail.stock == 1">Last One Available</h6>
+      <div class="d-grid gap-2 d-md-block mt-4">
+        <button *ngIf="watchDetail.stock > 0" type="button" class="btn btn-success btn-lg col-8 me-4">Add To Cart</button>
+        <button *ngIf="watchDetail.stock == 0" [disabled]="watchDetail.stock == 0" type="button" class="btn btn-secondary btn-lg col-8 me-4">Out Of Stock</button>
+        <button type="button" class="btn btn-danger btn-lg col-2">
+          <i class="fa fa-heart-o" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="mt-5">
+        <h5>Details:</h5>
+        <ul>
+          <li>{{"Manufacturer: " + watchDetail.brand}}</li>
+          <li>{{"Reference: " + watchDetail.reference}}</li>
+          <li>{{"Movement: " + watchDetail.movementType}}</li>
+          <li>{{"Diameter: " + watchDetail.diameter}}</li>
+          <li>{{"Case Length: " + watchDetail.length}}</li>
+          <li>{{"Crystal: " + watchDetail.crystal}}</li>
+          <li>{{"Water Resistance: " + watchDetail.waterResistance}}</li>
+          <li>{{"Shipping World Wide"}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="description">
+    <h2>Description</h2>
+    <p>Work in progress ..... add random text here</p>
+  </div>
+  <div id="specifications">
+    <h2>Specifications</h2>
+    <accordion [isAnimated]="true" [closeOthers]="true">
+      <accordion-group class="a1" heading="Movement">
+        <p>{{"Calibre: " + watchDetail.calibre}}</p>
+        <p>{{"Movement Type: " + watchDetail.movementType}}</p>
+        <p>{{"Power Reserve: " + watchDetail.powerReserve + " Hours"}}</p>
+      </accordion-group>
+      <accordion-group heading="Exterior">
+        <p>{{"Dial Colour: " + watchDetail.dial}}</p>
+        <p>{{"Crystal Type: " + watchDetail.crystal}}</p>
+        <p>{{"Lume: " + (watchDetail.lume ? 'Yes' : 'No')}}</p>
+        <p>{{"Case Material: " + watchDetail.caseMaterial}}</p>
+        <p>{{"Strap/Bracelet: " + watchDetail.strapBraceletMaterial}}</p>
+        <p>{{"Case Diameter: " + watchDetail.diameter + "mm"}}</p>
+        <p>{{"Case Thickness: " + watchDetail.thickness + "mm"}}</p>
+        <p>{{"Case Length: " + watchDetail.length + "mm"}}</p>
+        <p>{{"Case LugWidth: " + watchDetail.lugWidth + "mm"}}</p>
+      </accordion-group>
+      <accordion-group heading="Other Specifications">
+        <p>{{"Water Resistance: " + watchDetail.waterResistance + "bar"}}</p>
+        <p>{{"Other Specifications: " + watchDetail.otherSpecifications}}</p>
+      </accordion-group>
+    </accordion>
+  </div>
+  <div id="reviews">
+    <h2>Reviews ... Work in progress</h2>
+  </div>
+</div>
+
