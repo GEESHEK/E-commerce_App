@@ -14,6 +14,22 @@ h2 {
   padding-bottom: 20px;
 }
 
-#specifications {
-  padding: 50px;
+#specifications ,#description {
+  margin: 50px;
+}
+
+.stock-indicator {
+  color: red;
+  animation: glow 5s infinite;
+}
+
+@keyframes glow {
+  to {
+    text-shadow: 0 0 1px red;
+  }
+}
+
+.a1 {
+  text-decoration: none;
+  color: red;
 }
