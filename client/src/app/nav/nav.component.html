@@ -3,9 +3,9 @@
     <a class="navbar-brand" routerLink="/" routerLinkActive="active">JDM Watches</a>
     <ul class="navbar-nav nav-underline me-auto mb-2 mb-md-0">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/watches/all">All Watches</a>
+        <a class="nav-link d-none d-lg-block" routerLink="/watches/all">All Watches</a>
       </li>
-      <li class="nav-item dropdown" dropdown>
+      <li class="nav-item dropdown d-none d-lg-block" dropdown>
         <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Brands</a>
         <ul class="dropdown-menu" *dropdownMenu>
           <li *ngFor="let brand of brands$ | async">
@@ -13,7 +13,7 @@
           </li>
         </ul>
       </li>
-      <li class="nav-item dropdown" dropdown>
+      <li class="nav-item dropdown d-none d-xl-block" dropdown>
           <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Categories</a>
           <ul class="dropdown-menu" *dropdownMenu>
             <li *ngFor="let category of categories$ | async">
@@ -22,11 +22,9 @@
           </ul>
       </li>
     </ul>
-    <form class="d-flex">
-      <input class="form-control me-2" type="text" placeholder="Username">
-      <input class="form-control me-2" type="password" placeholder="Password">
-      <button class="btn btn-outline-success me-2" type="submit">Login</button>
+    <div class="d-flex">
+      <button class="btn btn-outline-success me-2"><i class="fa fa-user" ></i></button>
       <button class="btn btn-outline-danger"><i class="fa fa-shopping-cart"></i></button>
-    </form>
+    </div>
   </div>
 </nav>
