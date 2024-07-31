@@ -20,8 +20,10 @@ public class Watch
     [JsonIgnore]
     public int CrystalId { get; set; }
     public Crystal Crystal { get; set; }
+    public string Description { get; set; }
     [JsonIgnore]
     public int DialId { get; set; }
+
     public Dial Dial { get; set; }
     public bool Lume { get; set; }
     public string Reference { get; set; }

@@ -9,6 +9,7 @@ public class WatchUpdateDto
     public int CalibreId { get; set; }
     public int CaseMaterialId { get; set; }
     public int CrystalId { get; set; }
+    public string Description { get; set; }
     public int DialId { get; set; }
     public bool Lume { get; set; }
     public string Reference { get; set; }

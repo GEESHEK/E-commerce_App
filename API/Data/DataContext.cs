@@ -124,6 +124,10 @@ public class DataContext : DbContext
             .IsUnique();
         
         modelBuilder.Entity<Watch>()
+            .Property(w => w.Description)
+            .IsRequired();
+        
+        modelBuilder.Entity<Watch>()
             .Property(w => w.Name)
             .IsRequired();
         
