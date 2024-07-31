@@ -15,6 +15,8 @@ public class CreateWatchDto
     [Required]
     public int CrystalId { get; set; }
     [Required]
+    public string Description { get; set; }
+    [Required]
     public int DialId { get; set; }
     [Required]
     public bool Lume { get; set; }

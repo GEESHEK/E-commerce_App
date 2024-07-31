@@ -7,6 +7,7 @@ export interface WatchDetail {
   calibre: string;
   caseMaterial: string;
   crystal: string;
+  description: string;
   dial: string;
   lume: boolean;
   reference: string;

@@ -10,6 +10,7 @@ public class WatchDetailDto
     public string Calibre { get; set; }
     public string CaseMaterial { get; set; }
     public string Crystal { get; set; }
+    public string Description { get; set; }
     public string Dial { get; set; }
     public bool Lume { get; set; }
     public string Reference { get; set; }
