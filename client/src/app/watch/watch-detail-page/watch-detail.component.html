@@ -1,7 +1,7 @@
 <div class="container" *ngIf="watchDetail">
   <div class="row">
-    <div class="col-8" *ngIf="mainPhoto">
-      <img src="{{mainPhoto.url || './assets/NoWatch.png'}}"
+    <div class="col-8 main-photo" *ngIf="mainPhoto">
+      <img class="rounded mx-auto d-block" src="{{mainPhoto.url || './assets/NoWatch.png'}}"
            app-Image-fallback
            alt="{{watchDetail.brand + ' ' + watchDetail.reference}}">
     </div>
