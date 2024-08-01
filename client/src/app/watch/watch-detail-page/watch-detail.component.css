@@ -4,18 +4,19 @@
 /*  width: 100%; !* Make sure the image takes the full width of the card *!*/
 /*}*/
 
-.container {
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
-
 h2 {
   text-align: center;
   padding-bottom: 20px;
 }
 
-#specifications ,#description {
-  margin: 50px;
+.container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.main-photo img {
+  max-width: 100%;
+  height: auto;
 }
 
 .stock-indicator {
@@ -32,4 +33,8 @@ h2 {
 .a1 {
   text-decoration: none;
   color: red;
+}
+
+#specifications, #description {
+  margin: 50px;
 }
