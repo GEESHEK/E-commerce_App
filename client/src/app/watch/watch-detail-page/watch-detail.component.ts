@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WatchService } from '../../services/watch.service';
 import { WatchDetail } from '../../../models/watchDetail';
 import { Photo } from '../../../models/photo';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-watch-detail-page',
@@ -16,6 +17,7 @@ export class WatchDetailComponent implements OnInit {
 
   constructor(
     private watchService: WatchService,
+    private cartService: CartService,
     private route: ActivatedRoute,
   ) {}
 
@@ -48,5 +50,9 @@ export class WatchDetailComponent implements OnInit {
   getMainPhoto(): Photo | undefined {
     console.log('watch details ' + this.watchDetail?.brand);
     return this.watchDetail?.photos.find((photo) => photo.isMain);
+  }
+
+  addToCart(id: number): void {
+    this.cartService.addToCart(id);
   }
 }

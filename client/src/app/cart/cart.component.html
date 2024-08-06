@@ -1,36 +1,40 @@
 <div class="container">
-  <div class="row">
+  <div class="row gx-lg-5">
     <div class="col-lg-9">
-      <h1>Shopping Basket</h1>
+      <h1>Shopping Cart</h1>
       <hr/>
+      <!--TODO NgFor to loop over the watches          -->
       <div class="row">
         <div class="col-lg-4 main-photo">
-          <img class="mx-auto d-block" src="./assets/Watch1.png">
+          <img class="mx-auto d-block" src="./assets/Watch1.png" alt="come back to add watch name">
         </div>
         <div class="col-lg-6">
           <h5>Product Title</h5>
+<!--TODO Add this function in when API is created          -->
           <h6>In stock (green) or less than 5 left or last one</h6>
           <h6>Color: Red</h6>
           <div class="dropdown" dropdown>
-            <button type="button" class="btn btn-secondary dropdown-toggle" dropdownToggle>Qty</button>
+            <button type="button" class="btn btn-secondary dropdown-toggle me-2 mt-lg-2" dropdownToggle>Qty</button>
             <ul class="dropdown-menu" *dropdownMenu>
               <li *ngFor="let qty of quantity">
                 <a class="dropdown-item">{{qty}}</a>
               </li>
             </ul>
+            <button type="button" class="btn btn-danger mt-lg-2">Remove</button>
           </div>
         </div>
         <div class="col-lg-2">
           <h5>$Price</h5>
         </div>
         <hr/>
+        <h4 class="text-end d-none d-lg-block">{{"Subtotal (" + watchIds.length + " items): $Total" }}</h4>
     </div>
   </div>
   <div class="col-lg-3">
-    <h3>Items (n) in cart</h3>
-    <h3>{{"Subtotal (" + watchIds.length + "): $Total" }}</h3>
-    <button type="button" class="btn btn-success">Proceed To Checkout</button>
+    <h4>{{"Subtotal (" + watchIds.length + " items): $Total" }}</h4>
+    <button type="button" class="btn btn-success mt-lg-2">Proceed To Checkout</button>
   </div>
   </div>
 </div>
+
 
