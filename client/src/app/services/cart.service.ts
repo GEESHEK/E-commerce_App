@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +9,8 @@ import { environment } from '../../environments/environment';
 export class CartService {
   baseUrl = environment.apiUrl;
   private watchCartIds: number[] = [];
+  private itemsInCart = new BehaviorSubject<number>(this.watchCartIds.length);
+  itemsInCart$ = this.itemsInCart.asObservable();
 
   constructor(private http: HttpClient) {}
 

@@ -9,22 +9,27 @@
         <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Brands</a>
         <ul class="dropdown-menu" *dropdownMenu>
           <li *ngFor="let brand of brands$ | async">
-            <a class="dropdown-item" routerLink="{{'/watches/' + brand.name}}">{{brand.name}}</a>
+            <a class="dropdown-item" routerLink="{{'/watches/' + brand.name}}">{{ brand.name }}</a>
           </li>
         </ul>
       </li>
       <li class="nav-item dropdown d-none d-xl-block" dropdown>
-          <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Categories</a>
-          <ul class="dropdown-menu" *dropdownMenu>
-            <li *ngFor="let category of categories$ | async">
-              <a class="dropdown-item" routerLink="{{'/watches/' + category.type}}">{{category.type}}</a>
-            </li>
-          </ul>
+        <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Categories</a>
+        <ul class="dropdown-menu" *dropdownMenu>
+          <li *ngFor="let category of categories$ | async">
+            <a class="dropdown-item" routerLink="{{'/watches/' + category.type}}">{{ category.type }}</a>
+          </li>
+        </ul>
       </li>
     </ul>
     <div class="d-flex">
-      <button class="btn btn-outline-success me-2"><i class="fa fa-user" ></i></button>
-      <button class="btn btn-outline-danger" routerLink="/cart"><i class="fa fa-shopping-cart"></i></button>
+      <button class="btn btn-outline-success me-2"><i class="fa fa-user"></i></button>
+      <button class="btn btn-outline-danger position-relative" routerLink="/cart">
+        <i class="fa fa-shopping-cart"></i>
+        <span *ngIf="itemsInCart > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
+          {{ itemsInCart }}
+        </span>
+      </button>
     </div>
   </div>
 </nav>
