@@ -13,7 +13,7 @@ import { CartService } from '../services/cart.service';
 export class NavComponent implements OnInit {
   brands$: Observable<Brand[]> | undefined;
   categories$: Observable<Categories[]> | undefined;
-  itemsInCart: number = 99;
+  itemsInCart: number = 0;
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -24,10 +24,15 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.brands$ = this.watchService.getBrands();
     this.categories$ = this.watchService.getCategories();
-    // this.subscription = this.cartService.itemsInCart$.subscribe(
-    //   (count: number) => {
-    //     this.itemsInCart = count;
-    //   },
-    // );
+    this.getCartItemCount();
+  }
+
+  private getCartItemCount() {
+    this.subscription = this.cartService.itemCount$.subscribe({
+      next: (count: number) => {
+        this.itemsInCart = count;
+      },
+      error: (error) => console.log(error),
+    });
   }
 }

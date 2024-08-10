@@ -9,16 +9,19 @@ import { BehaviorSubject } from 'rxjs';
 export class CartService {
   baseUrl = environment.apiUrl;
   private watchCartIds: number[] = [];
-  private itemsInCart = new BehaviorSubject<number>(this.watchCartIds.length);
-  itemsInCart$ = this.itemsInCart.asObservable();
+  //give initial value to observable
+  private itemCount = new BehaviorSubject<number>(this.watchCartIds.length);
+  itemCount$ = this.itemCount.asObservable();
 
   constructor(private http: HttpClient) {}
 
   // TODO api to retrieve watch pic, name and price
   // To check stock and buy watch, orders table
 
-  addToCart(id: number) {
+  add(id: number) {
     this.watchCartIds.push(id);
     console.log('Adding to Cart! Watch count is ' + this.watchCartIds.length);
+    //this is needed to update the behaviourSubject
+    this.itemCount.next(this.watchCartIds.length);
   }
 }
