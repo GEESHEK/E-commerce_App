@@ -10,8 +10,10 @@ export class CartService {
   baseUrl = environment.apiUrl;
   private watchCartIds: number[] = [];
   //give initial value to observable
-  private itemCount = new BehaviorSubject<number>(this.watchCartIds.length);
-  itemCount$ = this.itemCount.asObservable();
+  private itemCountSource = new BehaviorSubject<number>(
+    this.watchCartIds.length,
+  );
+  itemCount$ = this.itemCountSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -22,6 +24,6 @@ export class CartService {
     this.watchCartIds.push(id);
     console.log('Adding to Cart! Watch count is ' + this.watchCartIds.length);
     //this is needed to update the behaviourSubject
-    this.itemCount.next(this.watchCartIds.length);
+    this.itemCountSource.next(this.watchCartIds.length);
   }
 }
