@@ -8,11 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CartService implements OnInit {
   baseUrl = environment.apiUrl;
-  private watchCartIds: number[] = this.getWatchCartIdsFromStorage();
-  //give initial value to observable
-  private itemCountSource = new BehaviorSubject<number>(
-    this.watchCartIds.length,
-  );
+  private cartIds: number[] = this.getCartIdsFromStorage();
+  private itemCountSource = new BehaviorSubject<number>(this.cartIds.length);
   itemCount$ = this.itemCountSource.asObservable();
 
   constructor(private http: HttpClient) {}
@@ -22,52 +19,50 @@ export class CartService implements OnInit {
     this.updateItemCount();
   }
 
-  add(id: number) {
-    this.watchCartIds.push(id);
-    console.log('Adding to Cart! Watch count is ' + this.watchCartIds.length);
-    //this is needed to update the behaviourSubject
-    // this.itemCountSource.next(this.watchCartIds.length);
+  addItem(id: number) {
+    this.cartIds.push(id);
+    console.log('Adding to Cart! Item count is ' + this.cartIds.length);
     this.updateItemCount();
-    this.saveWatchCartIdsToStorage();
+    this.saveCartIdsToStorage();
   }
 
   removeOneItem(id: number) {
-    const index = this.watchCartIds.indexOf(id);
+    const index = this.cartIds.indexOf(id);
 
     // Check if the id is found in the array
     if (index !== -1) {
       // Remove the item at the found index
-      this.watchCartIds.splice(index, 1);
+      this.cartIds.splice(index, 1);
       this.updateItemCount();
-      this.saveWatchCartIdsToStorage(); // Or whichever storage method you're using
+      this.saveCartIdsToStorage(); // Or whichever storage method you're using
     }
   }
 
-  // Method to remove an item from the watchCartIds array
-  removeAllSpecificIdOccurrences(id: number) {
-    this.watchCartIds = this.watchCartIds.filter((item) => item !== id);
+  // Method to remove an item from the cartIds array
+  removeAllOccurrencesOfAnItem(id: number) {
+    this.cartIds = this.cartIds.filter((item) => item !== id);
     this.updateItemCount();
-    this.saveWatchCartIdsToStorage();
+    this.saveCartIdsToStorage();
   }
 
   removeAllItems() {
-    localStorage.removeItem('watchCartIds');
+    localStorage.removeItem('cartIds');
     this.updateItemCount();
   }
 
-  // Method to update the itemCountSource based on the current length of watchCartIds
+  // Method to update the itemCountSource based on the current length of cartIds
   private updateItemCount() {
-    this.itemCountSource.next(this.watchCartIds.length);
+    this.itemCountSource.next(this.cartIds.length);
   }
 
-  // Method to save the watchCartIds array to localStorage
-  private saveWatchCartIdsToStorage() {
-    localStorage.setItem('watchCartIds', JSON.stringify(this.watchCartIds));
+  // Method to save the cartIds array to localStorage
+  private saveCartIdsToStorage() {
+    localStorage.setItem('cartIds', JSON.stringify(this.cartIds));
   }
 
-  // Method to retrieve the watchCartIds array from localStorage
-  private getWatchCartIdsFromStorage(): number[] {
-    const storedCartIds = localStorage.getItem('watchCartIds');
+  // Method to retrieve the cartIds array from localStorage
+  private getCartIdsFromStorage(): number[] {
+    const storedCartIds = localStorage.getItem('cartIds');
     return storedCartIds ? JSON.parse(storedCartIds) : [];
   }
 }

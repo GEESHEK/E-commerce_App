@@ -53,6 +53,6 @@ export class WatchDetailComponent implements OnInit {
   }
 
   addToCart(id: number): void {
-    this.cartService.add(id);
+    this.cartService.addItem(id);
   }
 }
