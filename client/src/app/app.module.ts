@@ -14,6 +14,7 @@ import { ImageFallbackDirective } from './directive/image-fallback.directive';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { WatchDetailComponent } from './watch/watch-detail-page/watch-detail.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     WatchPageComponent,
     ImageFallbackDirective,
     WatchDetailComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
