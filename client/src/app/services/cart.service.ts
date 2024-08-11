@@ -47,11 +47,13 @@ export class CartService implements OnInit {
 
   removeAllItems() {
     localStorage.removeItem('cartIds');
+    this.cartIds = [];
     this.updateItemCount();
   }
 
   // Method to update the itemCountSource based on the current length of cartIds
   private updateItemCount() {
+    console.log('in the updateItemCount ' + this.cartIds.length);
     this.itemCountSource.next(this.cartIds.length);
   }
 
