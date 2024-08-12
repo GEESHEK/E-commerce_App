@@ -88,7 +88,7 @@ public class WatchController : BaseApiController
     }
 
     [HttpGet("watch-cards")]
-    public async Task<ActionResult> GetWatchCards()
+    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards()
     {
         var watchCards = await _watchRepository.GetWatchCards();
 

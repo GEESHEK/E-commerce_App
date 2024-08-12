@@ -51,6 +51,13 @@ public class AutomapperProfiles : Profile
                 opt => opt.MapFrom(src => src.WatchType.Type))
             .ForMember(dest => dest.WaterResistance,
                 opt => opt.MapFrom(src => src.WaterResistance.Resistance));
+        CreateMap<Watch, CartWatchDto>()
+            .ForMember(dest => dest.Brand,
+                opt => opt.MapFrom(src => src.Brand.Name))
+            .ForMember(dest => dest.PhotoUrl,
+                opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
+            .ForMember(dest => dest.Stock,
+                opt => opt.MapFrom(src => src.Stock.Quantity));
 
     }
 }
