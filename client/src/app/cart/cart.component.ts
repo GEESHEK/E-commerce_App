@@ -31,6 +31,10 @@ export class CartComponent implements OnInit {
     });
   }
 
+  updatePage(): void {
+    //When a watch is added or removed the page should be updated
+  }
+
   removeAnItemFromCart(id: number): void {
     this.cartService.removeOneItem(id);
   }

@@ -48,7 +48,7 @@ export class WatchService {
     ids.forEach((id) => {
       params = params.append('id', id);
     });
-    console.log('inside getcartWatches');
+
     return this.http.get<any[]>(this.baseUrl + '/cart/watches', { params });
   }
 
