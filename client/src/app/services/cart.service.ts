@@ -19,6 +19,10 @@ export class CartService implements OnInit {
     this.updateItemCount();
   }
 
+  getItemIds(): number[] {
+    return this.cartIds;
+  }
+
   addItem(id: number) {
     this.cartIds.push(id);
     console.log('Adding to Cart! Item count is ' + this.cartIds.length);
@@ -29,12 +33,10 @@ export class CartService implements OnInit {
   removeOneItem(id: number) {
     const index = this.cartIds.indexOf(id);
 
-    // Check if the id is found in the array
     if (index !== -1) {
-      // Remove the item at the found index
       this.cartIds.splice(index, 1);
       this.updateItemCount();
-      this.saveCartIdsToStorage(); // Or whichever storage method you're using
+      this.saveCartIdsToStorage();
     }
   }
 
@@ -53,7 +55,6 @@ export class CartService implements OnInit {
 
   // Method to update the itemCountSource based on the current length of cartIds
   private updateItemCount() {
-    console.log('in the updateItemCount ' + this.cartIds.length);
     this.itemCountSource.next(this.cartIds.length);
   }
 

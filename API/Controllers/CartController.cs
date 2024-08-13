@@ -14,10 +14,10 @@ public class CartController : BaseApiController
     }
     
     [HttpGet("watches")]
-    public async Task<ActionResult<IEnumerable<CartWatchDto>>> GetWatches([FromQuery] List<int> ids)
+    public async Task<ActionResult<IEnumerable<CartWatchDto>>> GetWatches([FromQuery(Name = "id")] List<int> ids)
     {
-        var watchCards = await _watchRepository.GetCartWatches(ids);
+        var cartWatches = await _watchRepository.GetCartWatches(ids);
 
-        return Ok(watchCards);
+        return Ok(cartWatches);
     }
 }
