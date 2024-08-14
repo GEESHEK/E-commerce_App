@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { WatchService } from '../services/watch.service';
+import { CartWatch } from '../../models/cartWatch';
 
 @Component({
   selector: 'app-cart',
@@ -9,8 +10,8 @@ import { WatchService } from '../services/watch.service';
 })
 export class CartComponent implements OnInit {
   itemIds: number[] = [];
-  items: any[] = [];
-  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  items: CartWatch[] = [];
+  totalPrice: number = 0;
 
   constructor(
     private cartService: CartService,
@@ -26,7 +27,10 @@ export class CartComponent implements OnInit {
 
   loadItems(ids: number[]) {
     this.watchService.getCartWatches(ids).subscribe({
-      next: (response) => (this.items = response),
+      next: (response) => {
+        this.items = response;
+        this.totalPrice = this.calculateTotalPrice(this.items);
+      },
       error: (error) => console.log(error),
     });
   }
@@ -45,5 +49,13 @@ export class CartComponent implements OnInit {
 
   removeAllItemsFromCart(): void {
     this.cartService.removeAllItems();
+  }
+
+  createRange(stock: number): number[] {
+    return Array.from({ length: stock }, (_, i) => i + 1);
+  }
+
+  calculateTotalPrice(items: CartWatch[]): number {
+    return items.reduce((total, items) => total + items.price, 0);
   }
 }
