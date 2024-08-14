@@ -54,6 +54,8 @@ public class AutomapperProfiles : Profile
         CreateMap<Watch, CartWatchDto>()
             .ForMember(dest => dest.Brand,
                 opt => opt.MapFrom(src => src.Brand.Name))
+            .ForMember(dest => dest.Dial,
+                opt => opt.MapFrom(src => src.Dial.Colour))
             .ForMember(dest => dest.PhotoUrl,
                 opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
             .ForMember(dest => dest.Stock,
