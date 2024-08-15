@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Brand } from '../../models/brand';
 import { Categories } from '../../models/categories';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { WatchService } from '../services/watch.service';
 import { CartService } from '../services/cart.service';
 
@@ -14,7 +14,6 @@ export class NavComponent implements OnInit {
   brands$: Observable<Brand[]> | undefined;
   categories$: Observable<Categories[]> | undefined;
   itemsInCart: number = 0;
-  private subscription: Subscription = new Subscription();
 
   constructor(
     private watchService: WatchService,
@@ -28,7 +27,7 @@ export class NavComponent implements OnInit {
   }
 
   private getCartItemCount() {
-    this.subscription = this.cartService.itemCount$.subscribe({
+    this.cartService.itemCount$.subscribe({
       next: (count: number) => {
         this.itemsInCart = count;
       },

@@ -45,10 +45,17 @@ export class WatchService {
 
   getCartWatches(ids: number[]) {
     let params = new HttpParams();
+    let cartIds: string = '';
 
-    ids.forEach((id) => {
-      params = params.append('id', id);
+    ids.forEach((id, index) => {
+      if (index === 0) {
+        cartIds = `${id}`;
+      } else {
+        cartIds += `,${id}`;
+      }
     });
+
+    params = params.append('ids', cartIds);
 
     return this.http.get<CartWatch[]>(this.baseUrl + '/cart/watches', {
       params,

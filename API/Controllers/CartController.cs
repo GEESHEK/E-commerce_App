@@ -14,9 +14,24 @@ public class CartController : BaseApiController
     }
     
     [HttpGet("watches")]
-    public async Task<ActionResult<IEnumerable<CartWatchDto>>> GetWatches([FromQuery(Name = "id")] List<int> ids)
+    public async Task<ActionResult<IEnumerable<CartWatchDto>>> GetWatches([FromQuery] string ids)
     {
-        var cartWatches = await _watchRepository.GetCartWatches(ids);
+        var idsArray = ids.Split(",");
+        var watchIds = new List<int>();
+
+        foreach (var idStr in idsArray)
+        {
+            if (int.TryParse(idStr, out var id))
+            {
+                watchIds.Add(id);
+            }
+            else
+            {
+                return BadRequest($"Invalid ID value: {idStr}");
+            }
+        }
+        
+        var cartWatches = await _watchRepository.GetCartWatches(watchIds);
 
         return Ok(cartWatches);
     }

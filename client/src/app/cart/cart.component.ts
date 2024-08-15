@@ -24,7 +24,8 @@ export class CartComponent implements OnInit {
       this.loadItems(this.itemIds);
     }
   }
-
+  //Todo some safety for when the stock is zero in the shopping cart e.g. when stock = 0
+  //Add to order controller and something on the cart page so that it is greyed out and is not calculated
   loadItems(ids: number[]) {
     this.watchService.getCartWatches(ids).subscribe({
       next: (response) => {
@@ -35,16 +36,15 @@ export class CartComponent implements OnInit {
     });
   }
 
-  updatePage(): void {
-    //When a watch is added or removed the page should be updated
-  }
-
   removeAnItemFromCart(id: number): void {
     this.cartService.removeOneItem(id);
   }
 
   removeAllOccurrencesFromCart(id: number): void {
     this.cartService.removeAllOccurrencesOfAnItem(id);
+    this.itemIds = this.cartService.getItemIds();
+    this.items = this.items.filter((item) => item.id !== id);
+    this.totalPrice = this.calculateTotalPrice(this.items);
   }
 
   removeAllItemsFromCart(): void {
@@ -58,4 +58,7 @@ export class CartComponent implements OnInit {
   calculateTotalPrice(items: CartWatch[]): number {
     return items.reduce((total, items) => total + items.price, 0);
   }
+
+  //method to add qty to the watch object and remove it
+  //count the ids, what if we change it on drop down from 1 to 3, add 2 of those ids etc.
 }

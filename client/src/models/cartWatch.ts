@@ -7,4 +7,5 @@
   price: number;
   stock: number;
   photoUrl: string;
+  quantity: number;
 }
