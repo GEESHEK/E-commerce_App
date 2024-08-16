@@ -17,14 +17,16 @@
           <h6 class="stock-indicator mb-4" *ngIf="item.stock == 1">Last One Available</h6>
           <h6>{{ "Color: " + item.dial }}</h6>
           <div class="dropdown" dropdown>
-            <button type="button" class="btn btn-secondary dropdown-toggle me-2 mt-lg-2" dropdownToggle>Qty</button>
+            <button type="button" class="btn btn-secondary dropdown-toggle me-2 mt-lg-2" dropdownToggle>
+              {{"Qty: " + calculateItemCount(item.id)}}
+            </button>
             <ul class="dropdown-menu" *dropdownMenu>
               <li *ngFor="let qty of createRange(item.stock)">
                 <a class="dropdown-item">{{ qty }}</a>
               </li>
             </ul>
             <button type="button" class="btn btn-danger mt-lg-2" (click)="removeAllOccurrencesFromCart(item.id)">
-              Remove All
+              Delete
             </button>
           </div>
         </div>
