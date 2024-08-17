@@ -37,6 +37,7 @@ export class CartService implements OnInit {
       this.cartIds.splice(index, 1);
       this.updateItemCount();
       this.saveCartIdsToStorage();
+      console.log('Removing from Cart! Item count is ' + this.cartIds.length);
     }
   }
 

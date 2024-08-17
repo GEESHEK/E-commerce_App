@@ -22,7 +22,7 @@
             </button>
             <ul class="dropdown-menu" *dropdownMenu>
               <li *ngFor="let qty of createRange(item.stock)">
-                <a class="dropdown-item">{{ qty }}</a>
+                <a class="dropdown-item" (click)="updateItemQuantity(item.id,qty,item.stock)">{{ qty }}</a>
               </li>
             </ul>
             <button type="button" class="btn btn-danger mt-lg-2" (click)="removeAllOccurrencesFromCart(item.id)">

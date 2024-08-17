@@ -59,8 +59,6 @@ export class CartComponent implements OnInit {
     return items.reduce((total, items) => total + items.price, 0);
   }
 
-  //method to add qty to the watch object and remove it
-  //count the ids, what if we change it on drop down from 1 to 3, add 2 of those ids etc.
   updateItemQuantity(id: number, updatedQty: number, inStock: number): void {
     let itemCount = this.calculateItemCount(id);
 
@@ -71,14 +69,14 @@ export class CartComponent implements OnInit {
     if (updatedQty > itemCount) {
       let excess = updatedQty - itemCount;
       for (let i = 0; i < excess; i++) {
-        this.itemIds.push(id);
+        this.cartService.addItem(id);
       }
     }
 
     if (updatedQty < itemCount) {
-      this.itemIds = this.itemIds.filter((ids) => ids !== id);
-      for (let i = 0; i < updatedQty; i++) {
-        this.itemIds.push(id);
+      let excess = itemCount - updatedQty;
+      for (let i = 0; i < excess; i++) {
+        this.cartService.removeOneItem(id);
       }
     }
   }
