@@ -56,7 +56,17 @@ export class CartComponent implements OnInit {
   }
 
   calculateTotalPrice(items: CartWatch[]): number {
-    return items.reduce((total, items) => total + items.price, 0);
+    let totalPrice = 0;
+
+    if (items.length <= 0) {
+      return 0;
+    }
+
+    for (const itemId of this.itemIds) {
+      totalPrice += items.find((x) => x.id === itemId)?.price ?? 0;
+    }
+
+    return totalPrice;
   }
 
   updateItemQuantity(id: number, updatedQty: number, inStock: number): void {
@@ -79,6 +89,8 @@ export class CartComponent implements OnInit {
         this.cartService.removeOneItem(id);
       }
     }
+
+    this.totalPrice = this.calculateTotalPrice(this.items);
   }
 
   calculateItemCount(id: number): number {
