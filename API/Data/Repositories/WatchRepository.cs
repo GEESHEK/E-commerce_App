@@ -1,4 +1,5 @@
-﻿using API.DTOs;
+﻿using System.Collections.Immutable;
+using API.DTOs;
 using API.Entities;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -86,7 +87,7 @@ public class WatchRepository : IWatchRepository
         return _context.Entry(watch).State == EntityState.Modified;
     }
 
-    public async Task<List<WatchCardDto>> GetHomepageWatchCards()
+    public async Task<IEnumerable<WatchCardDto>> GetHomepageWatchCards()
     {
         // The includes for Photo and Brand is handled in the AutomapperProfiles
         return await _context.Watches
@@ -97,12 +98,21 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<List<WatchCardDto>> GetWatchCards()
+    public async Task<IEnumerable<WatchCardDto>> GetWatchCards()
     {
         return await _context.Watches
             .OrderByDescending(x => x.DateAdded)
             .AsNoTracking()
             .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<CartWatchDto>> GetCartWatches(List<int> ids)
+    {
+        return await _context.Watches
+            .Where(x => ids.Contains(x.Id))
+            .AsNoTracking()
+            .ProjectTo<CartWatchDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
     }
 

@@ -13,6 +13,7 @@ public interface IWatchRepository
     Task<bool> SaveAllAsync();
     Task<bool> WatchExists(string reference);
     bool IsModified(Watch watch);
-    Task<List<WatchCardDto>> GetHomepageWatchCards();
-    Task<List<WatchCardDto>> GetWatchCards();
+    Task<IEnumerable<WatchCardDto>> GetHomepageWatchCards();
+    Task<IEnumerable<WatchCardDto>> GetWatchCards();
+    Task<IEnumerable<CartWatchDto>> GetCartWatches(List<int> ids);
 }

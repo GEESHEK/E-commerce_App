@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { WatchCard } from '../../models/watchCard';
 import { map, of } from 'rxjs';
 import { Brand } from '../../models/brand';
 import { Categories } from '../../models/categories';
 import { WatchDetail } from '../../models/watchDetail';
+import { CartWatch } from '../../models/cartWatch';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,25 @@ export class WatchService {
     return this.http.get<WatchDetail>(
       this.baseUrl + '/watch/watch-detail/' + id,
     );
+  }
+
+  getCartWatches(ids: number[]) {
+    let params = new HttpParams();
+    let cartIds: string = '';
+
+    ids.forEach((id, index) => {
+      if (index === 0) {
+        cartIds = `${id}`;
+      } else {
+        cartIds += `,${id}`;
+      }
+    });
+
+    params = params.append('ids', cartIds);
+
+    return this.http.get<CartWatch[]>(this.baseUrl + '/cart/watches', {
+      params,
+    });
   }
 
   getBrands() {

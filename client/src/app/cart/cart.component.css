@@ -8,4 +8,17 @@
   height: auto;
 }
 
+.out-of-stock {
+  opacity: 0.5;
+}
 
+.stock-indicator {
+  color: red;
+  animation: glow 5s infinite;
+}
+
+@keyframes glow {
+  to {
+    text-shadow: 0 0 1px red;
+  }
+}
