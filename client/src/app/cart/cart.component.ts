@@ -12,6 +12,7 @@ export class CartComponent implements OnInit {
   itemIds: number[] = [];
   items: CartWatch[] = [];
   totalPrice: number = 0;
+  itemLabel: string = '';
 
   constructor(
     private cartService: CartService,
@@ -23,14 +24,15 @@ export class CartComponent implements OnInit {
     if (this.itemIds.length > 0) {
       this.loadItems(this.itemIds);
     }
+    console.log('how many items are in cartwatch[]: ' + this.items.length);
   }
-  //Todo some safety for when the stock is zero in the shopping cart e.g. when stock = 0
-  //Add to order controller and something on the cart page so that it is greyed out and is not calculated
+
   loadItems(ids: number[]) {
     this.watchService.getCartWatches(ids).subscribe({
       next: (response) => {
         this.items = response;
         this.totalPrice = this.calculateTotalPrice(this.items);
+        this.singleOrPluralItemString();
       },
       error: (error) => console.log(error),
     });
@@ -90,10 +92,15 @@ export class CartComponent implements OnInit {
       }
     }
 
+    this.singleOrPluralItemString();
     this.totalPrice = this.calculateTotalPrice(this.items);
   }
 
   calculateItemCount(id: number): number {
     return this.itemIds.filter((ids) => ids === id).length;
+  }
+
+  singleOrPluralItemString(): void {
+    this.itemLabel = this.itemIds.length > 1 ? 'items' : 'item';
   }
 }

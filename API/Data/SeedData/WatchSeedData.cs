@@ -344,7 +344,7 @@ public static class WatchSeedData
             new()
             {
                 Name = "TestWatch11",
-                BrandId = 2,
+                BrandId = 5,
                 CalibreId = 2,
                 CaseMaterialId = 6,
                 CrystalId = 3,
@@ -364,7 +364,7 @@ public static class WatchSeedData
                 },
                 Price = 750.00m,
                 PowerReserveId = 1,
-                Stock = new Stock { Quantity = 11 },
+                Stock = new Stock { Quantity = 0 },
                 StrapBraceletMaterialId = 1,
                 WatchCaseMeasurementsId = 1,
                 WatchTypeId = 1,
