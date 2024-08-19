@@ -15,11 +15,11 @@
         <i class="fa fa-star" aria-hidden="true"></i>
       </h6>
       <h3>{{"Price: " + (watchDetail.price | currency: 'USD') }}</h3>
-      <h6 class="stock-indicator mb-4" *ngIf="watchDetail.stock > 1 && watchDetail.stock <= 5">Less Than Five Remaining</h6>
-      <h6 class="stock-indicator mb-4" *ngIf="watchDetail.stock == 1">Last One Available</h6>
+      <h6 class="stock-indicator mb-4" *ngIf="isStockBetween1And5(watchDetail)">Less Than Five Remaining</h6>
+      <h6 class="stock-indicator mb-4" *ngIf="watchDetail.stock == 1 || isStockEqual1(watchDetail)">Last One Available</h6>
       <div class="d-grid gap-2 d-md-block mt-4">
-        <button *ngIf="watchDetail.stock > 0" type="button" class="btn btn-success btn-lg col-8 me-4" (click)="addToCart(watchDetail.id)">Add To Cart</button>
-        <button *ngIf="watchDetail.stock == 0" [disabled]="watchDetail.stock == 0" type="button" class="btn btn-secondary btn-lg col-8 me-4">Out Of Stock</button>
+        <button *ngIf="watchDetail.stock > 0 && !isQtyInCartEqualToStock(watchDetail)" type="button" class="btn btn-success btn-lg col-8 me-4" (click)="addToCart(watchDetail.id)">Add To Cart</button>
+        <button *ngIf="watchDetail.stock == 0 || isQtyInCartEqualToStock(watchDetail)" [disabled]="watchDetail.stock == 0 || isQtyInCartEqualToStock(watchDetail)" type="button" class="btn btn-secondary btn-lg col-8 me-4">Out Of Stock</button>
         <button type="button" class="btn btn-danger btn-lg col-2">
           <i class="fa fa-heart-o" aria-hidden="true"></i>
         </button>
