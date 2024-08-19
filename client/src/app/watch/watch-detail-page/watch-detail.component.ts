@@ -55,4 +55,22 @@ export class WatchDetailComponent implements OnInit {
   addToCart(id: number): void {
     this.cartService.addItem(id);
   }
+
+  isQtyInCartEqualToStock(watch: WatchDetail): boolean {
+    return this.cartService.calculateItemCount(watch.id) == watch.stock;
+  }
+
+  isStockBetween1And5(watch: WatchDetail): boolean {
+    let stockRemaining =
+      watch.stock - this.cartService.calculateItemCount(watch.id);
+
+    return stockRemaining > 1 && stockRemaining <= 5;
+  }
+
+  isStockEqual1(watch: WatchDetail): boolean {
+    let stockRemaining =
+      watch.stock - this.cartService.calculateItemCount(watch.id);
+
+    return stockRemaining == 1;
+  }
 }

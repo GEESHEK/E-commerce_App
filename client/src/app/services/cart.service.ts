@@ -69,4 +69,8 @@ export class CartService implements OnInit {
     const storedCartIds = localStorage.getItem('cartIds');
     return storedCartIds ? JSON.parse(storedCartIds) : [];
   }
+
+  calculateItemCount(id: number): number {
+    return this.cartIds.filter((ids) => ids === id).length;
+  }
 }
