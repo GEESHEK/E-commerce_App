@@ -5,12 +5,12 @@
       <hr/>
       <div class="row" *ngFor="let item of items">
         <div class="col-lg-4 main-photo">
-          <a routerLink="{{'/watch/' +  item.id}}">
+          <a routerLink="/watch/{{item.id}}">
             <img class="mx-auto d-block" [ngClass]="{ 'out-of-stock': item?.stock == 0 }" src="{{item.photoUrl}}" alt="come back to add watch name">
           </a>
         </div>
         <div class="col-lg-6">
-          <a class="text-decoration-none text-body" routerLink="{{'/watch/' +  item.id}}">
+          <a class="text-decoration-none text-body" routerLink="/watch/{{item.id}}">
             <h5 >{{ item.brand + " " + item.name + " " + item.reference }}</h5>
           </a>
           <h6 class="stock-indicator mb-4" *ngIf="item.stock > 1 && item.stock <= 5">Less Than Five Remaining</h6>
