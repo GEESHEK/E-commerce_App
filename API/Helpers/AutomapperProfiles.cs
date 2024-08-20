@@ -19,7 +19,9 @@ public class AutomapperProfiles : Profile
             .ForMember(dest => dest.Brand,
                 opt => opt.MapFrom(src => src.Brand.Name))
             .ForMember(dest => dest.PhotoUrl,
-                opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url));
+                opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
+            .ForMember(dest => dest.Stock,
+                opt => opt.MapFrom(src => src.Stock.Quantity));
         CreateMap<Watch, WatchDetailDto>()
             .ForMember(dest => dest.Brand,
                 opt => opt.MapFrom(src => src.Brand.Name))

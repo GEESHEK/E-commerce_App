@@ -4,4 +4,5 @@
   reference: string;
   photoUrl: string;
   price: number;
+  stock: number;
 }

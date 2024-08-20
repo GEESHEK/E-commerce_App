@@ -1,12 +1,14 @@
-<div class="card" style="width: 18rem;" *ngIf="watchCard">
-  <img class="card-img-top"
-       src="{{watchCard.photoUrl || './assets/NoWatch.png'}}"
-       app-Image-fallback
-       alt="{{watchCard.brand + ' ' + watchCard.reference}}">
+<div class="card clickable-card" style="width: 18rem;" *ngIf="watchCard" [routerLink]="['/watch/' + watchCard.id]">
+  <div class="position-relative">
+    <img class="card-img-top"
+         src="{{watchCard.photoUrl || './assets/NoWatch.png'}}"
+         app-Image-fallback
+         alt="{{watchCard.brand + ' ' + watchCard.reference}}">
+    <h5 class="position-absolute bottom-0 start-0 w-100 text-center bg-danger text-white" *ngIf="watchCard.stock == 0 || isQtyInCartEqualToStock(watchCard)">Out Of Stock</h5>
+  </div>
   <div class="card-body">
     <h5 class="card-title">{{ watchCard.id }}: {{ watchCard.brand }} {{ watchCard.reference }}</h5>
     <p class="card-text">Price: {{ watchCard.price | currency: 'USD' }}
     </p>
-    <a class="btn btn-primary w-100" routerLink="{{'/watch/' +  watchCard.id}}">View Detail</a>
   </div>
 </div>
