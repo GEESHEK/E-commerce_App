@@ -16,4 +16,9 @@ public class CategoryRepository : ICategoryRepository
     {
         return await _context.WatchTypes.AsNoTracking().ToListAsync();
     }
+
+    public async Task<bool> CategoryExists(int id)
+    {
+        return await _context.WatchTypes.AnyAsync(x => x.Id == id);
+    }
 }
