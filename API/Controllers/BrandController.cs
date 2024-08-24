@@ -14,7 +14,7 @@ public class BrandController : BaseApiController
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<Brand>>> GetWatchBrands()
+    public async Task<ActionResult<IEnumerable<Brand>>> GetWatchBrands()
     {
         var brands = await _brandRepository.GetBrands();
 

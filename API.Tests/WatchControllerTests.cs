@@ -14,14 +14,14 @@ public class WatchControllerTests
     private readonly Mock<IWatchRepository> _watchRepo;
     private readonly Mock<IMapper> _mapper;
     private readonly Mock<IBrandRepository> _brandRepo;
-    private readonly Mock<ICategoryRepository> _categoryRepo;
+    private readonly Mock<IWatchTypeRepository> _watchTypeRepo;
     // private readonly IMapper _mapper;
 
     public WatchControllerTests()
     {
         _watchRepo = new Mock<IWatchRepository>();
         _brandRepo = new Mock<IBrandRepository>();
-        _categoryRepo = new Mock<ICategoryRepository>();
+        _watchTypeRepo = new Mock<IWatchTypeRepository>();
         _mapper = new Mock<IMapper>();
         
         //use this when we need to test if the mapper is working correctly
@@ -37,7 +37,7 @@ public class WatchControllerTests
         _watchRepo.Setup(repo => repo.GetWatches())
             .ReturnsAsync(GetTestWatches());
         var watchController = new WatchController(_watchRepo.Object, _brandRepo.Object, 
-            _categoryRepo.Object, _mapper.Object);
+            _watchTypeRepo.Object, _mapper.Object);
         
         // Act
         var result = await watchController.GetWatches();
@@ -56,7 +56,7 @@ public class WatchControllerTests
         _watchRepo.Setup(repo => repo.GetWatchById(10))
             .ReturnsAsync((Watch)null!);
         var controller = new WatchController(_watchRepo.Object, _brandRepo.Object, 
-            _categoryRepo.Object, _mapper.Object);
+            _watchTypeRepo.Object, _mapper.Object);
     
         // Act
         var result = await controller.GetWatch(10);
@@ -73,7 +73,7 @@ public class WatchControllerTests
         _watchRepo.Setup(repo => repo.GetWatchById(1))
             .ReturnsAsync(GetTestWatches().Find(w => w.Id == 1));
         var controller = new WatchController(_watchRepo.Object, _brandRepo.Object, 
-            _categoryRepo.Object, _mapper.Object);
+            _watchTypeRepo.Object, _mapper.Object);
     
         // Act
         var result = await controller.GetWatch(1);
@@ -98,8 +98,6 @@ public class WatchControllerTests
         
         return new List<Watch>
         {
-       
-            
             new()
             {
                 Id = 1,

@@ -17,5 +17,5 @@ public interface IWatchRepository
     Task<IEnumerable<WatchCardDto>> GetWatchCards();
     Task<IEnumerable<CartWatchDto>> GetCartWatches(List<int> ids);
     Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandId(int brandId);
-    Task<IEnumerable<WatchCardDto>> GetWatchCardsByCategoryId(int categoryId);
+    Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypeId);
 }

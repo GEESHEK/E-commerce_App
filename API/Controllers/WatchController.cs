@@ -10,15 +10,15 @@ public class WatchController : BaseApiController
 {
     private readonly IWatchRepository _watchRepository;
     private readonly IBrandRepository _brandRepository;
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly IWatchTypeRepository _watchTypeRepository;
     private readonly IMapper _mapper;
 
     public WatchController(IWatchRepository watchRepository, IBrandRepository brandRepository,
-        ICategoryRepository categoryRepository, IMapper mapper)
+        IWatchTypeRepository watchTypeRepository, IMapper mapper)
     {
         _watchRepository = watchRepository;
         _brandRepository = brandRepository;
-        _categoryRepository = categoryRepository;
+        _watchTypeRepository = watchTypeRepository;
         _mapper = mapper;
     }
 
@@ -123,12 +123,12 @@ public class WatchController : BaseApiController
         return Ok(watchCards);
     }
 
-    [HttpGet("by-category/{categoryId:int}/watch-cards")]
-    public async Task<ActionResult<WatchCardDto>> GetWatchCardsByCategoryId(int categoryId)
+    [HttpGet("by-watchType/{watchTypesId:int}/watch-cards")]
+    public async Task<ActionResult<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypesId)
     {
-        if (!await _categoryRepository.CategoryExists(categoryId)) return NotFound("Category not found");
+        if (!await _watchTypeRepository.WatchTypeExists(watchTypesId)) return NotFound("Watch type not found");
 
-        var watchCards = await _watchRepository.GetWatchCardsByCategoryId(categoryId);
+        var watchCards = await _watchRepository.GetWatchCardsByWatchTypeId(watchTypesId);
 
         return Ok(watchCards);
     }

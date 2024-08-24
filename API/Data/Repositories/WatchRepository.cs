@@ -125,10 +125,10 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByCategoryId(int categoryId)
+    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypeId)
     {
         return await _context.Watches
-            .Where(x => x.WatchTypeId == categoryId)
+            .Where(x => x.WatchTypeId == watchTypeId)
             .AsNoTracking()
             .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
