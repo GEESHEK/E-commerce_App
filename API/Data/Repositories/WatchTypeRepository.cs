@@ -21,4 +21,9 @@ public class WatchTypeRepository : IWatchTypeRepository
     {
         return await _context.WatchTypes.AnyAsync(x => x.Id == id);
     }
+
+    public async Task<bool> WatchTypeExists(string watchType)
+    {
+        return await _context.WatchTypes.AnyAsync(x => x.Type == watchType);
+    }
 }

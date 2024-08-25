@@ -125,10 +125,30 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandName(string brand)
+    {
+        return await _context.Watches
+            .Where(x => x.Brand.Name == brand)
+            .OrderByDescending(x => x.DateAdded)
+            .AsNoTracking()
+            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
     public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypeId)
     {
         return await _context.Watches
             .Where(x => x.WatchTypeId == watchTypeId)
+            .AsNoTracking()
+            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeName(string watchTypeName)
+    {
+        return await _context.Watches
+            .Where(x => x.WatchType.Type == watchTypeName)
+            .OrderByDescending(x => x.DateAdded)
             .AsNoTracking()
             .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
             .ToListAsync();

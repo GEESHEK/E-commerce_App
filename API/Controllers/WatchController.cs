@@ -93,11 +93,27 @@ public class WatchController : BaseApiController
     }
 
     [HttpGet("watch-cards")]
-    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards()
+    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards([FromQuery] string brand, [FromQuery] string watchType)
     {
-        var watchCards = await _watchRepository.GetWatchCards();
+        //TODO sending up both query parameters don't work for now, fix this in pagination
+        
+        Console.Write("watch card method ----------------" + brand, watchType);
+        
+        if (!string.IsNullOrEmpty(brand))
+        {
+            if (!await _brandRepository.BrandExists(brand)) return NotFound("Brand not found");
 
-        return Ok(watchCards);
+            return Ok(await _watchRepository.GetWatchCardsByBrandName(brand));
+        }
+        
+        if (!string.IsNullOrEmpty(watchType))
+        {
+            if (!await _watchTypeRepository.WatchTypeExists(watchType)) return NotFound("Watch type not found");
+
+            return Ok(await _watchRepository.GetWatchCardsByWatchTypeName(watchType));
+        }
+        
+        return Ok(await _watchRepository.GetWatchCards());
     }
 
     [HttpGet("watch-detail/{id:int}")]
@@ -113,7 +129,7 @@ public class WatchController : BaseApiController
         return Ok(watchDetail);
     }
 
-    [HttpGet("by-brand/{brandId:int}/watch-cards")]
+    [HttpGet("by-brand/{brandId:int}")]
     public async Task<ActionResult<WatchCardDto>> GetWatchCardsByBrandId(int brandId)
     {
         if (!await _brandRepository.BrandExists(brandId)) return NotFound("Brand not found");
@@ -123,7 +139,7 @@ public class WatchController : BaseApiController
         return Ok(watchCards);
     }
 
-    [HttpGet("by-watchType/{watchTypesId:int}/watch-cards")]
+    [HttpGet("by-watchType/{watchTypesId:int}")]
     public async Task<ActionResult<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypesId)
     {
         if (!await _watchTypeRepository.WatchTypeExists(watchTypesId)) return NotFound("Watch type not found");
