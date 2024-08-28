@@ -17,7 +17,7 @@ public class WatchRepository : IWatchRepository
         _context = context;
         _mapper = mapper;
     }
-    
+
     public void AddWatch(Watch watch)
     {
         _context.Watches.Add(watch);
@@ -113,6 +113,44 @@ public class WatchRepository : IWatchRepository
             .Where(x => ids.Contains(x.Id))
             .AsNoTracking()
             .ProjectTo<CartWatchDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandId(int brandId)
+    {
+        return await _context.Watches
+            .Where(x => x.BrandId == brandId)
+            .AsNoTracking()
+            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandName(string brand)
+    {
+        return await _context.Watches
+            .Where(x => x.Brand.Name == brand)
+            .OrderByDescending(x => x.DateAdded)
+            .AsNoTracking()
+            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypeId)
+    {
+        return await _context.Watches
+            .Where(x => x.WatchTypeId == watchTypeId)
+            .AsNoTracking()
+            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeName(string watchTypeName)
+    {
+        return await _context.Watches
+            .Where(x => x.WatchType.Type == watchTypeName)
+            .OrderByDescending(x => x.DateAdded)
+            .AsNoTracking()
+            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
     }
 

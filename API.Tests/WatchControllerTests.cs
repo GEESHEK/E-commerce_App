@@ -13,11 +13,15 @@ public class WatchControllerTests
 {
     private readonly Mock<IWatchRepository> _watchRepo;
     private readonly Mock<IMapper> _mapper;
+    private readonly Mock<IBrandRepository> _brandRepo;
+    private readonly Mock<IWatchTypeRepository> _watchTypeRepo;
     // private readonly IMapper _mapper;
 
     public WatchControllerTests()
     {
         _watchRepo = new Mock<IWatchRepository>();
+        _brandRepo = new Mock<IBrandRepository>();
+        _watchTypeRepo = new Mock<IWatchTypeRepository>();
         _mapper = new Mock<IMapper>();
         
         //use this when we need to test if the mapper is working correctly
@@ -27,12 +31,13 @@ public class WatchControllerTests
     }
     
     [Fact]
-    public async Task GetWatches_ReturnsOkResult_WithListOFWatches()
+    public async Task GetWatches_ReturnsOkResult_WithListOfWatches()
     {
         // Arrange
         _watchRepo.Setup(repo => repo.GetWatches())
             .ReturnsAsync(GetTestWatches());
-        var watchController = new WatchController(_watchRepo.Object, _mapper.Object);
+        var watchController = new WatchController(_watchRepo.Object, _brandRepo.Object, 
+            _watchTypeRepo.Object, _mapper.Object);
         
         // Act
         var result = await watchController.GetWatches();
@@ -49,8 +54,9 @@ public class WatchControllerTests
     {
         // Arrange
         _watchRepo.Setup(repo => repo.GetWatchById(10))
-            .ReturnsAsync((Watch)null);
-        var controller = new WatchController(_watchRepo.Object, _mapper.Object);
+            .ReturnsAsync((Watch)null!);
+        var controller = new WatchController(_watchRepo.Object, _brandRepo.Object, 
+            _watchTypeRepo.Object, _mapper.Object);
     
         // Act
         var result = await controller.GetWatch(10);
@@ -64,10 +70,10 @@ public class WatchControllerTests
     public async Task GetItem_ReturnsOkResult_WithItem()
     {
         // Arrange
-        var watchRepo = new Mock<IWatchRepository>();
-        watchRepo.Setup(repo => repo.GetWatchById(1))
+        _watchRepo.Setup(repo => repo.GetWatchById(1))
             .ReturnsAsync(GetTestWatches().Find(w => w.Id == 1));
-        var controller = new WatchController(watchRepo.Object, _mapper.Object);
+        var controller = new WatchController(_watchRepo.Object, _brandRepo.Object, 
+            _watchTypeRepo.Object, _mapper.Object);
     
         // Act
         var result = await controller.GetWatch(1);
@@ -92,8 +98,6 @@ public class WatchControllerTests
         
         return new List<Watch>
         {
-       
-            
             new()
             {
                 Id = 1,

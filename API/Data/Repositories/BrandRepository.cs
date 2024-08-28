@@ -16,4 +16,14 @@ public class BrandRepository : IBrandRepository
     {
         return await _context.Brands.AsNoTracking().ToListAsync();
     }
+
+    public async Task<bool> BrandExists(int id)
+    {
+        return await _context.Brands.AnyAsync(x => x.Id == id);
+    }
+
+    public async Task<bool> BrandExists(string brand)
+    {
+        return await _context.Brands.AnyAsync(x => x.Name == brand);
+    }
 }

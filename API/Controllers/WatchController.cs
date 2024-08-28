@@ -9,11 +9,16 @@ namespace API.Controllers;
 public class WatchController : BaseApiController
 {
     private readonly IWatchRepository _watchRepository;
+    private readonly IBrandRepository _brandRepository;
+    private readonly IWatchTypeRepository _watchTypeRepository;
     private readonly IMapper _mapper;
 
-    public WatchController(IWatchRepository watchRepository, IMapper mapper)
+    public WatchController(IWatchRepository watchRepository, IBrandRepository brandRepository,
+        IWatchTypeRepository watchTypeRepository, IMapper mapper)
     {
         _watchRepository = watchRepository;
+        _brandRepository = brandRepository;
+        _watchTypeRepository = watchTypeRepository;
         _mapper = mapper;
     }
 
@@ -67,9 +72,9 @@ public class WatchController : BaseApiController
         _mapper.Map(watchUpdateDto, watch);
 
         if (!_watchRepository.IsModified(watch)) return BadRequest("No changes made");
-        
+
         if (await _watchRepository.SaveAllAsync()) return NoContent();
-        
+
         return BadRequest("Failed to update watch");
     }
 
@@ -79,22 +84,35 @@ public class WatchController : BaseApiController
         var watch = await _watchRepository.GetWatchById(id);
 
         if (watch == null) return NotFound();
-        
+
         _watchRepository.DeleteWatch(watch);
 
         if (await _watchRepository.SaveAllAsync()) return NoContent();
-        
+
         return BadRequest("Problem deleting watch");
     }
 
     [HttpGet("watch-cards")]
-    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards()
+    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards([FromQuery] string brand, [FromQuery] string watchType)
     {
-        var watchCards = await _watchRepository.GetWatchCards();
+        //TODO sending up both query parameters don't work for now, fix this in pagination
+        if (!string.IsNullOrEmpty(brand))
+        {
+            if (!await _brandRepository.BrandExists(brand)) return NotFound("Brand not found");
 
-        return Ok(watchCards);
+            return Ok(await _watchRepository.GetWatchCardsByBrandName(brand));
+        }
+        
+        if (!string.IsNullOrEmpty(watchType))
+        {
+            if (!await _watchTypeRepository.WatchTypeExists(watchType)) return NotFound("Watch type not found");
+
+            return Ok(await _watchRepository.GetWatchCardsByWatchTypeName(watchType));
+        }
+        
+        return Ok(await _watchRepository.GetWatchCards());
     }
-    
+
     [HttpGet("watch-detail/{id:int}")]
     public async Task<ActionResult<WatchDetailDto>> GetWatchDetailById(int id)
     {
@@ -107,6 +125,26 @@ public class WatchController : BaseApiController
 
         return Ok(watchDetail);
     }
-    
+
+    [HttpGet("by-brand/{brandId:int}")]
+    public async Task<ActionResult<WatchCardDto>> GetWatchCardsByBrandId(int brandId)
+    {
+        if (!await _brandRepository.BrandExists(brandId)) return NotFound("Brand not found");
+
+        var watchCards = await _watchRepository.GetWatchCardsByBrandId(brandId);
+
+        return Ok(watchCards);
+    }
+
+    [HttpGet("by-watchType/{watchTypesId:int}")]
+    public async Task<ActionResult<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypesId)
+    {
+        if (!await _watchTypeRepository.WatchTypeExists(watchTypesId)) return NotFound("Watch type not found");
+
+        var watchCards = await _watchRepository.GetWatchCardsByWatchTypeId(watchTypesId);
+
+        return Ok(watchCards);
+    }
+
     //Todo add photo or do this in it's own controller
 }

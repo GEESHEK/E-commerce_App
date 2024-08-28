@@ -7,7 +7,7 @@ import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'watches/:pageType', component: WatchPageComponent },
+  { path: 'watches/:filter/:pageType', component: WatchPageComponent },
   { path: 'watch/:watchId', component: WatchDetailComponent },
   { path: 'cart', component: CartComponent },
   { path: '**', component: HomeComponent, pathMatch: 'full' },
