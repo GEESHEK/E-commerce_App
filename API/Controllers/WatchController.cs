@@ -96,9 +96,6 @@ public class WatchController : BaseApiController
     public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards([FromQuery] string brand, [FromQuery] string watchType)
     {
         //TODO sending up both query parameters don't work for now, fix this in pagination
-        
-        Console.Write("watch card method ----------------" + brand, watchType);
-        
         if (!string.IsNullOrEmpty(brand))
         {
             if (!await _brandRepository.BrandExists(brand)) return NotFound("Brand not found");

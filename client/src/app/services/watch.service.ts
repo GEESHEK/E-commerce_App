@@ -33,7 +33,25 @@ export class WatchService {
       );
   }
 
-  getWatchCards() {
+  getWatchCards(brand?: string, watchType?: string) {
+    let params = new HttpParams();
+
+    if (typeof brand !== 'undefined') {
+      params = params.append('brand', brand);
+
+      return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards', {
+        params: params,
+      });
+    }
+
+    if (typeof watchType !== 'undefined') {
+      params = params.append('watchType', watchType);
+
+      return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards', {
+        params: params,
+      });
+    }
+
     return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards');
   }
 
@@ -67,6 +85,6 @@ export class WatchService {
   }
 
   getCategories() {
-    return this.http.get<Categories[]>(this.baseUrl + '/category');
+    return this.http.get<Categories[]>(this.baseUrl + '/watchType');
   }
 }
