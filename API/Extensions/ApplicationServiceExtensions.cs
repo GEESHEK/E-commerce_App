@@ -16,6 +16,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IWatchRepository, WatchRepository>();
         services.AddScoped<IBrandRepository, BrandRepository>();
         services.AddScoped<IWatchTypeRepository, WatchTypeRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         return services;

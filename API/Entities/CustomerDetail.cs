@@ -1,5 +1,9 @@
-﻿namespace API.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
+namespace API.Entities;
+
+[ExcludeFromCodeCoverage]
 public class CustomerDetail
 {
     public int Id { get; set; }
@@ -11,4 +15,8 @@ public class CustomerDetail
     public string CustomerZipCode { get; set; }
     public string CustomerCity { get; set; }
     public string CustomerCountry { get; set; }
+    [JsonIgnore]
+    public int OrderId { get; set; }
+    [JsonIgnore]
+    public Order Order { get; set; }
 }
