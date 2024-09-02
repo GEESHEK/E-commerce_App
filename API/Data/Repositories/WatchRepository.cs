@@ -1,6 +1,5 @@
-﻿using System.Collections.Immutable;
-using API.DTOs;
-using API.Entities;
+﻿using API.DTOs;
+using API.Entities.Watch;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;

@@ -1,9 +1,16 @@
-﻿using API.Entities;
+﻿using API.Entities.Order;
 
 namespace API.Data.Repositories;
 
 public class OrderRepository : IOrderRepository
 {
+    private readonly DataContext _dataContext;
+
+    public OrderRepository(DataContext dataContext)
+    {
+        _dataContext = dataContext;
+    }
+
     public Task<IEnumerable<Order>> GetOrder()
     {
         throw new NotImplementedException();
