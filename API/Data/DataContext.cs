@@ -213,7 +213,7 @@ public class DataContext : DbContext
             .IsRequired();
         
         modelBuilder.Entity<CustomerDetail>()
-            .Property(c => c.Phone)
+            .Property(c => c.PhoneNumber)
             .IsRequired();
         
         modelBuilder.Entity<CustomerDetail>()
