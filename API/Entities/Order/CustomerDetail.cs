@@ -14,8 +14,5 @@ public class CustomerDetail
     public string ZipCode { get; set; }
     public string City { get; set; }
     public string Country { get; set; }
-    // [JsonIgnore]
-    // public int OrderId { get; set; }
-    // [JsonIgnore]
-    // public Order Order { get; set; }
+    public List<Order> Orders { get; set; }
 }

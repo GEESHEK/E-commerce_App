@@ -30,6 +30,7 @@ public class DataContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<Item> Items { get; set; }
     public DbSet<ItemType> ItemTypes { get; set; }
+    public DbSet<StatusType> StatusTypes { get; set; }
     public DbSet<CustomerDetail> CustomerDetails { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -252,6 +253,14 @@ public class DataContext : DbContext
             .HasIndex(i => i.Type)
             .IsUnique();
         
+        modelBuilder.Entity<StatusType>()
+            .Property(s => s.Status)
+            .IsRequired();
+        
+        modelBuilder.Entity<StatusType>()
+            .HasIndex(s => s.Status)
+            .IsUnique();
+        
         modelBuilder.Entity<Order>()
             .Property(i => i.HasUser)
             .IsRequired();
@@ -269,7 +278,7 @@ public class DataContext : DbContext
             .IsRequired();
         
         modelBuilder.Entity<Order>()
-            .Property(i => i.Status)
+            .Property(i => i.StatusType)
             .IsRequired();
         
         modelBuilder.Entity<Order>()
