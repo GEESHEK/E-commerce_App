@@ -22,6 +22,14 @@ public class OrderController : BaseApiController
         
         return Ok(orders);
     }
+    
+    [HttpGet("status/{statusId:int}")]
+    public async Task<ActionResult<IEnumerable<Order>>> GetOrdersByStatus(int statusId)
+    {
+        var orders = await _orderRepository.GetOrdersByStatus(statusId);
+        
+        return Ok(orders);
+    }
 
 
     [HttpPost]

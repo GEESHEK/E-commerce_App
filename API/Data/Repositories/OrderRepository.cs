@@ -27,6 +27,16 @@ public class OrderRepository : IOrderRepository
         throw new NotImplementedException();
     }
 
+    public async Task<IEnumerable<Order>> GetOrdersByStatus(int statusId)
+    {
+        return await _context.Orders.Where(w => w.StatusTypeId == statusId)
+            .Include(o => o.CustomerDetail)
+            .Include(o => o.StatusType)
+            .Include(o => o.Items)
+            .ThenInclude(i => i.ItemType)
+            .AsNoTracking().ToListAsync();
+    }
+
     public async Task<bool> AddOrder(Order order)
     {
         return true;
