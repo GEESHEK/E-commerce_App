@@ -1,19 +1,25 @@
 ﻿using API.Entities.OrderEntities;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories;
 
 public class OrderRepository : IOrderRepository
 {
-    private readonly DataContext _dataContext;
+    private readonly DataContext _context;
 
-    public OrderRepository(DataContext dataContext)
+    public OrderRepository(DataContext context)
     {
-        _dataContext = dataContext;
+        _context = context;
     }
 
-    public Task<IEnumerable<Order>> GetOrder()
+    public async Task<IEnumerable<Order>> GetOrders()
     {
-        throw new NotImplementedException();
+        return await _context.Orders
+            .Include(o => o.CustomerDetail)
+            .Include(o => o.StatusType)
+            .Include(o => o.Items)
+            .ThenInclude(i => i.ItemType)
+            .AsNoTracking().ToListAsync();
     }
 
     public Task<Order> GetOrderById()

@@ -15,11 +15,18 @@ public class OrderController : BaseApiController
         _watchRepository = watchRepository;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+    {
+        var orders = await _orderRepository.GetOrders();
+        
+        return Ok(orders);
+    }
+
+
     [HttpPost]
     public async Task<bool> AddOrder(Order order)
     {
         return await _orderRepository.AddOrder(order);
     }
-    
-    
 }

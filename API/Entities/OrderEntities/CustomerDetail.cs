@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace API.Entities.OrderEntities;
 
@@ -15,5 +16,6 @@ public class CustomerDetail
     public string ZipCode { get; set; }
     public string City { get; set; }
     public string Country { get; set; }
+    [JsonIgnore]
     public List<Order> Orders { get; set; }
 }
