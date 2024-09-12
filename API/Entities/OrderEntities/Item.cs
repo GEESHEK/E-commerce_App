@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-namespace API.Entities.Order;
+namespace API.Entities.OrderEntities;
 
 [ExcludeFromCodeCoverage]
 public class Item

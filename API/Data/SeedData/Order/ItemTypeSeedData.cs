@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using API.Entities.Order;
+using API.Entities.OrderEntities;
 
 namespace API.Data.SeedData.Order;
 

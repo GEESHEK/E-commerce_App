@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using API.Entities.Order;
-using API.Entities.Watch;
+using API.Entities.OrderEntities;
+using API.Entities.WatchEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;

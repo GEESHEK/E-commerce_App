@@ -1,5 +1,5 @@
 ﻿using API.Data.Repositories;
-using API.Entities.Order;
+using API.Entities.OrderEntities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;

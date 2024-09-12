@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace API.Entities.Order;
+namespace API.Entities.OrderEntities;
 
 [ExcludeFromCodeCoverage]
 public class CustomerDetail
@@ -15,4 +15,5 @@ public class CustomerDetail
     public string City { get; set; }
     public string Country { get; set; }
     public List<Order> Orders { get; set; }
+    public Order Order { get; set; }
 }

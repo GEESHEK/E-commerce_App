@@ -1,14 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using API.Entities.Order;
+using API.Entities.OrderEntities;
 
 namespace API.Data.SeedData.Order;
 
 [ExcludeFromCodeCoverage]
 public static class OrderSeedData
 {
-    public static List<Entities.Order.Order> GetOrderSeedData()
+    public static List<Entities.OrderEntities.Order> GetOrderSeedData()
     {
-        return new List<Entities.Order.Order>()
+        return new List<Entities.OrderEntities.Order>()
         {
             new()
             {

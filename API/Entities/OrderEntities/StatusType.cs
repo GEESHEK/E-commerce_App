@@ -1,4 +1,4 @@
-namespace API.Entities.Order;
+namespace API.Entities.OrderEntities;
 
 public class StatusType
 {

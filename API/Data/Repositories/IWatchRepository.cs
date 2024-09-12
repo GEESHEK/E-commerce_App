@@ -1,5 +1,5 @@
 ﻿using API.DTOs;
-using API.Entities.Watch;
+using API.Entities.WatchEntities;
 
 namespace API.Data.Repositories;
 

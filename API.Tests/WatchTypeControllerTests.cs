@@ -1,7 +1,7 @@
 ﻿using API.Controllers;
 using API.Data.Repositories;
 using API.Data.SeedData.Watch;
-using API.Entities.Watch;
+using API.Entities.WatchEntities;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 

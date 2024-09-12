@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using API.Entities.Watch;
+using API.Entities.WatchEntities;
 
 namespace API.Data.SeedData.Watch;
 

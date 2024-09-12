@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-namespace API.Entities.Watch;
+namespace API.Entities.WatchEntities;
 
 [ExcludeFromCodeCoverage]
-public class PowerReserve
+public class WaterResistance
 {
     public int Id { get; set; }
-    public int Duration { get; set; }
+    public int Resistance { get; set; }
     [JsonIgnore]
     public List<Watch> Watches { get; set; } = new();
 }

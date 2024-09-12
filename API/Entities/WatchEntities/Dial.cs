@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-namespace API.Entities.Watch;
+namespace API.Entities.WatchEntities;
 
 [ExcludeFromCodeCoverage]
 public class Dial

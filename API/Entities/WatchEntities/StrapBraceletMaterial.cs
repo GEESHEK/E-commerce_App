@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-namespace API.Entities.Watch;
+namespace API.Entities.WatchEntities;
 
 [ExcludeFromCodeCoverage]
-public class CaseMaterial
+public class StrapBraceletMaterial
 {
     public int Id { get; set; }
     public string Material { get; set; }

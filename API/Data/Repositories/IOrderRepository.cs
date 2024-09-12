@@ -1,4 +1,4 @@
-﻿using API.Entities.Order;
+﻿using API.Entities.OrderEntities;
 
 namespace API.Data.Repositories;
 

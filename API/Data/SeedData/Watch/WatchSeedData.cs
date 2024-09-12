@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using API.Entities.Watch;
+using API.Entities.WatchEntities;
 
 namespace API.Data.SeedData.Watch;
 
@@ -18,9 +18,9 @@ public static class WatchSeedData
                                 "future. Inspired by iconic designs and reimagined with modern technology, these " +
                                 "timepieces offer a unique blend of tradition and cutting-edge functionality.";
 
-    public static List<Entities.Watch.Watch> GetWatchSeedData()
+    public static List<Entities.WatchEntities.Watch> GetWatchSeedData()
     {
-        return new List<Entities.Watch.Watch>
+        return new List<Entities.WatchEntities.Watch>
         {
             new()
             {

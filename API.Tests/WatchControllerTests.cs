@@ -1,6 +1,6 @@
 ﻿using API.Controllers;
 using API.Data.Repositories;
-using API.Entities.Watch;
+using API.Entities.WatchEntities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

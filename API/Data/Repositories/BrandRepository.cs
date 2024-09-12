@@ -1,4 +1,4 @@
-﻿using API.Entities.Watch;
+﻿using API.Entities.WatchEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories;

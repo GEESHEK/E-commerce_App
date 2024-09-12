@@ -1,16 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-namespace API.Entities.Watch;
+namespace API.Entities.WatchEntities;
 
 [ExcludeFromCodeCoverage]
-public class Photo
+public class Stock
 {
     public int Id { get; set; }
-    public string Url { get; set; }
-    public bool IsMain { get; set; }
-    [JsonIgnore]
-    public string PublicId { get; set; }
+    public int Quantity { get; set; }
     [JsonIgnore]
     public int WatchId { get; set; }
     [JsonIgnore]

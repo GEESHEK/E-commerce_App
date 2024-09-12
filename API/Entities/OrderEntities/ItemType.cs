@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace API.Entities.Order;
+namespace API.Entities.OrderEntities;
 
 [ExcludeFromCodeCoverage]
 public class ItemType

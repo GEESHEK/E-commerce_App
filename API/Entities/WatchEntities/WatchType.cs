@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-namespace API.Entities.Watch;
+namespace API.Entities.WatchEntities;
 
 [ExcludeFromCodeCoverage]
-public class StrapBraceletMaterial
+public class WatchType
 {
     public int Id { get; set; }
-    public string Material { get; set; }
+    public string Type { get; set; }
     [JsonIgnore]
     public List<Watch> Watches { get; set; } = new();
 }
