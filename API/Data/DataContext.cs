@@ -254,10 +254,6 @@ public class DataContext : DbContext
             .IsUnique();
         
         modelBuilder.Entity<Order>()
-            .Property(i => i.HasUser)
-            .IsRequired();
-        
-        modelBuilder.Entity<Order>()
             .Property(i => i.DateTime)
             .IsRequired();
         

@@ -12,7 +12,6 @@ public static class OrderSeedData
         {
             new()
             {
-                HasUser = false,
                 Reference = "Ref1",
                 CustomerDetailId = 1,
                 StatusTypeId = 1,
@@ -35,7 +34,6 @@ public static class OrderSeedData
             },
             new()
             {
-                HasUser = false,
                 Reference = "Ref2",
                 CustomerDetailId = 2,
                 StatusTypeId = 2,
@@ -58,7 +56,6 @@ public static class OrderSeedData
             },
             new()
             {
-                HasUser = false,
                 Reference = "Ref3",
                 CustomerDetailId = 3,
                 StatusTypeId = 3,
@@ -75,7 +72,6 @@ public static class OrderSeedData
             },
             new()
             {
-                HasUser = false,
                 Reference = "Ref4",
                 CustomerDetailId = 4,
                 StatusTypeId = 4,
@@ -92,7 +88,6 @@ public static class OrderSeedData
             },
             new()
             {
-                HasUser = false,
                 Reference = "Ref5",
                 CustomerDetailId = 5,
                 StatusTypeId = 5,
@@ -109,7 +104,6 @@ public static class OrderSeedData
             },
             new()
             {
-                HasUser = false,
                 Reference = "Ref6",
                 CustomerDetailId = 6,
                 StatusTypeId = 6,
@@ -126,7 +120,6 @@ public static class OrderSeedData
             },
             new()
             {
-                HasUser = false,
                 Reference = "Ref7",
                 CustomerDetailId = 7,
                 StatusTypeId = 7,

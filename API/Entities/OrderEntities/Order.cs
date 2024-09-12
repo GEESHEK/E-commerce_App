@@ -7,8 +7,6 @@ namespace API.Entities.OrderEntities;
 public class Order
 {
     public int Id { get; set; }
-    public bool HasUser { get; set; }
-    // public User User { get; set; }
     public DateTime DateTime { get; set; } = DateTime.UtcNow;
     public string Reference { get; set; }
     [JsonIgnore]

@@ -6,6 +6,7 @@ namespace API.Entities.OrderEntities;
 public class CustomerDetail
 {
     public int Id { get; set; }
+    // public User? User { get; set; }
     public string FirstName { get; set; }
     public string Surname { get; set; }
     public string Email { get; set; }
