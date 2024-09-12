@@ -234,15 +234,7 @@ public class DataContext : DbContext
             .IsRequired();
         
         modelBuilder.Entity<Item>()
-            .Property(i => i.ItemType)
-            .IsRequired();
-        
-        modelBuilder.Entity<Item>()
             .Property(i => i.Quantity)
-            .IsRequired();
-        
-        modelBuilder.Entity<Item>()
-            .Property(i => i.Order)
             .IsRequired();
         
         modelBuilder.Entity<ItemType>()
@@ -274,19 +266,7 @@ public class DataContext : DbContext
             .IsRequired();
         
         modelBuilder.Entity<Order>()
-            .Property(i => i.CustomerDetail)
-            .IsRequired();
-        
-        modelBuilder.Entity<Order>()
-            .Property(i => i.StatusType)
-            .IsRequired();
-        
-        modelBuilder.Entity<Order>()
             .Property(i => i.Total)
-            .IsRequired();
-        
-        modelBuilder.Entity<Order>()
-            .Property(i => i.Items)
             .IsRequired();
     }
 }

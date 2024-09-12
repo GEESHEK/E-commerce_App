@@ -15,5 +15,4 @@ public class CustomerDetail
     public string City { get; set; }
     public string Country { get; set; }
     public List<Order> Orders { get; set; }
-    public Order Order { get; set; }
 }

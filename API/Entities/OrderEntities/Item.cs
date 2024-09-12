@@ -10,8 +10,11 @@ public class Item
     public int ProductId { get; set; }
     [JsonIgnore]
     public int ItemTypeId { get; set; }
+    [JsonIgnore]
     public ItemType ItemType { get; set; }
     public int Quantity { get; set; }
+    [JsonIgnore]
+    public int OrderId { get; set; }
     [JsonIgnore]
     public Order Order { get; set; }
 }
