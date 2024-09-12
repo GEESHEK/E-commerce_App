@@ -34,7 +34,6 @@ public static class Seed
     {
         if (await context.Orders.AnyAsync()) return;
         
-        // await context.Items.AddRangeAsync(StatusTypeSeedData.GetItemSeedData());
         await context.StatusTypes.AddRangeAsync(StatusTypeSeedData.GetStatusTypeSeedData());
         await context.ItemTypes.AddRangeAsync(ItemTypeSeedData.GetItemTypeSeedData());
         await context.CustomerDetails.AddRangeAsync(CustomerDetailSeedData.GetCustomerDetailSeedData());
