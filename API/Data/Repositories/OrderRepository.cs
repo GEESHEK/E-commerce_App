@@ -37,9 +37,9 @@ public class OrderRepository : IOrderRepository
             .AsNoTracking().ToListAsync();
     }
 
-    public async Task<bool> AddOrder(Order order)
+    public void CreateOrder(Order order)
     {
-        return true;
+        _context.Orders.Add(order);
     }
 
     public Task UpdateOrder(Order order)

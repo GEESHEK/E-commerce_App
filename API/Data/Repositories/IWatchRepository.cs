@@ -12,6 +12,7 @@ public interface IWatchRepository
     Task<WatchDetailDto> GetWatchDetailById(int id);
     Task<bool> SaveAllAsync();
     Task<bool> WatchExists(string reference);
+    Task<bool> WatchExists(int id);
     bool IsModified(Watch watch);
     Task<IEnumerable<WatchCardDto>> GetHomepageWatchCards();
     Task<IEnumerable<WatchCardDto>> GetWatchCards();

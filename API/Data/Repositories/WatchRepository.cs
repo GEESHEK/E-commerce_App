@@ -157,4 +157,9 @@ public class WatchRepository : IWatchRepository
     {
         return await _context.Watches.AnyAsync(x => x.Reference.ToLower() == reference.ToLower());
     }
+    
+    public async Task<bool> WatchExists(int id)
+    {
+       return await _context.Watches.AnyAsync(x => x.Id == id);
+    }
 }

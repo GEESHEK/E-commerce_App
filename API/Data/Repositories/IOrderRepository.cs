@@ -7,7 +7,7 @@ public interface IOrderRepository
     Task<IEnumerable<Order>> GetOrders();
     Task<Order> GetOrderById();
     Task<IEnumerable<Order>> GetOrdersByStatus(int statusId);
-    Task<bool> AddOrder(Order order);
+    void CreateOrder(Order order);
     Task UpdateOrder(Order order);
     Task DeleteOrder(Order order);
 }
