@@ -258,10 +258,6 @@ public class DataContext : DbContext
             .IsRequired();
         
         modelBuilder.Entity<Order>()
-            .Property(i => i.Reference)
-            .IsRequired();
-        
-        modelBuilder.Entity<Order>()
             .Property(i => i.Total)
             .IsRequired();
     }

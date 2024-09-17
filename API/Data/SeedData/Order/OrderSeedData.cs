@@ -12,7 +12,6 @@ public static class OrderSeedData
         {
             new()
             {
-                Reference = "Ref1",
                 CustomerDetailId = 1,
                 StatusTypeId = 1,
                 Total = 2545.00m,
@@ -34,7 +33,6 @@ public static class OrderSeedData
             },
             new()
             {
-                Reference = "Ref2",
                 CustomerDetailId = 2,
                 StatusTypeId = 2,
                 Total = 2545.00m,
@@ -56,7 +54,6 @@ public static class OrderSeedData
             },
             new()
             {
-                Reference = "Ref3",
                 CustomerDetailId = 3,
                 StatusTypeId = 3,
                 Total = 750.00m,
@@ -72,7 +69,6 @@ public static class OrderSeedData
             },
             new()
             {
-                Reference = "Ref4",
                 CustomerDetailId = 4,
                 StatusTypeId = 4,
                 Total = 300.00m,
@@ -88,7 +84,6 @@ public static class OrderSeedData
             },
             new()
             {
-                Reference = "Ref5",
                 CustomerDetailId = 5,
                 StatusTypeId = 5,
                 Total = 499.99m,
@@ -104,7 +99,6 @@ public static class OrderSeedData
             },
             new()
             {
-                Reference = "Ref6",
                 CustomerDetailId = 6,
                 StatusTypeId = 6,
                 Total = 500.00m,
@@ -120,7 +114,6 @@ public static class OrderSeedData
             },
             new()
             {
-                Reference = "Ref7",
                 CustomerDetailId = 7,
                 StatusTypeId = 7,
                 Total = 1000.00m,

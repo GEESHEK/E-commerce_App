@@ -8,7 +8,6 @@ public class Order
 {
     public int Id { get; set; }
     public DateTime DateTime { get; set; } = DateTime.UtcNow;
-    public string Reference { get; set; }
     [JsonIgnore]
     public int CustomerDetailId { get; set; }
     public CustomerDetail CustomerDetail { get; set; }

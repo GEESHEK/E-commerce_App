@@ -133,10 +133,6 @@ namespace API.Data.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Reference")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
