@@ -1,5 +1,5 @@
 ﻿using API.Data.Repositories;
-using API.Entities;
+using API.Entities.WatchEntities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;

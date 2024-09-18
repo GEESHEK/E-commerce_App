@@ -1,4 +1,4 @@
-﻿using API.Entities;
+﻿using API.Entities.WatchEntities;
 
 namespace API.DTOs;
 

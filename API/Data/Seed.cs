@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using API.Data.SeedData;
-using API.Entities;
+using API.Data.SeedData.Order;
+using API.Data.SeedData.Watch;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
@@ -27,6 +27,20 @@ public static class Seed
         
         await context.Watches.AddRangeAsync(WatchSeedData.GetWatchSeedData());
 
+        await context.SaveChangesAsync();
+    }
+
+    public static async Task SeedOrder(DataContext context)
+    {
+        if (await context.Orders.AnyAsync()) return;
+        
+        await context.StatusTypes.AddRangeAsync(StatusTypeSeedData.GetStatusTypeSeedData());
+        await context.ItemTypes.AddRangeAsync(ItemTypeSeedData.GetItemTypeSeedData());
+        await context.CustomerDetails.AddRangeAsync(CustomerDetailSeedData.GetCustomerDetailSeedData());
+        await context.SaveChangesAsync();
+        
+        await context.Orders.AddRangeAsync(OrderSeedData.GetOrderSeedData());
+        
         await context.SaveChangesAsync();
     }
 } 

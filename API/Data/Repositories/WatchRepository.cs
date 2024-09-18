@@ -1,6 +1,5 @@
-﻿using System.Collections.Immutable;
-using API.DTOs;
-using API.Entities;
+﻿using API.DTOs;
+using API.Entities.WatchEntities;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -157,5 +156,10 @@ public class WatchRepository : IWatchRepository
     public async Task<bool> WatchExists(string reference)
     {
         return await _context.Watches.AnyAsync(x => x.Reference.ToLower() == reference.ToLower());
+    }
+    
+    public async Task<bool> WatchExists(int id)
+    {
+       return await _context.Watches.AnyAsync(x => x.Id == id);
     }
 }

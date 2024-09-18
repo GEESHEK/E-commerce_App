@@ -1,6 +1,6 @@
 ﻿using API.Data.Repositories;
 using API.DTOs;
-using API.Entities;
+using API.Entities.WatchEntities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,12 +51,15 @@ public class WatchController : BaseApiController
         if (await _watchRepository.WatchExists(createWatchDto.Reference))
             return BadRequest("Watch reference already exists");
 
-        var watch = _mapper.Map<Watch>(createWatchDto);
+        var mapWatch = _mapper.Map<Watch>(createWatchDto);
 
-        _watchRepository.AddWatch(watch);
+        _watchRepository.AddWatch(mapWatch);
 
         if (await _watchRepository.SaveAllAsync())
-            return CreatedAtAction(nameof(GetWatch), new { id = watch.Id }, watch);
+        {
+            var watch = await _watchRepository.GetWatchById(mapWatch.Id);
+            return CreatedAtAction(nameof(GetWatch), new { id = mapWatch.Id }, watch);
+        }
 
         //Todo come back to catch other errors: look at notes if you return bool in save all then nothing can be caught
         return BadRequest("Failed to add watch");

@@ -1,5 +1,5 @@
 ﻿using API.DTOs;
-using API.Entities;
+using API.Entities.WatchEntities;
 using AutoMapper;
 
 namespace API.Helpers;

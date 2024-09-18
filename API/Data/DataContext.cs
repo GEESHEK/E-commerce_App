@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using API.Entities;
+using API.Entities.OrderEntities;
+using API.Entities.WatchEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
@@ -26,6 +27,11 @@ public class DataContext : DbContext
     public DbSet<WatchCaseMeasurements> WatchCaseMeasurements { get; set; }
     public DbSet<WatchType> WatchTypes { get; set; }
     public DbSet<WaterResistance> WaterResistances { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<Item> Items { get; set; }
+    public DbSet<ItemType> ItemTypes { get; set; }
+    public DbSet<StatusType> StatusTypes { get; set; }
+    public DbSet<CustomerDetail> CustomerDetails { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -185,6 +191,74 @@ public class DataContext : DbContext
         
         modelBuilder.Entity<WaterResistance>()
             .Property(w => w.Resistance)
+            .IsRequired();
+        
+        modelBuilder.Entity<CustomerDetail>()
+            .Property(c => c.FirstName)
+            .IsRequired();
+        
+        modelBuilder.Entity<CustomerDetail>()
+            .Property(c => c.Surname)
+            .IsRequired();
+        
+        modelBuilder.Entity<CustomerDetail>()
+            .Property(c => c.Email)
+            .IsRequired();
+
+        modelBuilder.Entity<CustomerDetail>()
+            .HasIndex(c => c.Email)
+            .IsUnique();
+        
+        modelBuilder.Entity<CustomerDetail>()
+            .Property(c => c.Address)
+            .IsRequired();
+        
+        modelBuilder.Entity<CustomerDetail>()
+            .Property(c => c.PhoneNumber)
+            .IsRequired();
+        
+        modelBuilder.Entity<CustomerDetail>()
+            .Property(c => c.ZipCode)
+            .IsRequired();
+        
+        modelBuilder.Entity<CustomerDetail>()
+            .Property(c => c.City)
+            .IsRequired();
+        
+        modelBuilder.Entity<CustomerDetail>()
+            .Property(c => c.Country)
+            .IsRequired();
+        
+        modelBuilder.Entity<Item>()
+            .Property(i => i.ProductId)
+            .IsRequired();
+        
+        modelBuilder.Entity<Item>()
+            .Property(i => i.Quantity)
+            .IsRequired();
+        
+        modelBuilder.Entity<ItemType>()
+            .Property(i => i.Type)
+            .IsRequired();
+
+        modelBuilder.Entity<ItemType>()
+            .HasIndex(i => i.Type)
+            .IsUnique();
+        
+        modelBuilder.Entity<StatusType>()
+            .Property(s => s.Status)
+            .IsRequired();
+        
+        modelBuilder.Entity<StatusType>()
+            .HasIndex(s => s.Status)
+            .IsUnique();
+        
+        modelBuilder.Entity<Order>()
+            .Property(i => i.DateTime)
+            .IsRequired();
+        
+        modelBuilder.Entity<Order>()
+            .Property(i => i.Total)
             .IsRequired();
     }
 }
