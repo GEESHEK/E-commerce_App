@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.Entities.OrderEntities;
 using API.Entities.WatchEntities;
 using AutoMapper;
 
@@ -62,6 +63,10 @@ public class AutomapperProfiles : Profile
                 opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
             .ForMember(dest => dest.Stock,
                 opt => opt.MapFrom(src => src.Stock.Quantity));
-
+        CreateMap<OrderDto, Order>()
+            .ForMember(dest => dest.CustomerDetail,
+                opt => opt.MapFrom(src => src.CustomerDetail))
+            .ForMember(dest => dest.Items,
+                opt => opt.MapFrom(src => src.Items));
     }
 }

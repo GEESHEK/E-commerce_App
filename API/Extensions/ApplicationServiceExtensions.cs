@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.Data.Repositories;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
@@ -17,6 +18,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IBrandRepository, BrandRepository>();
         services.AddScoped<IWatchTypeRepository, WatchTypeRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IOrderService, OrderService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         return services;

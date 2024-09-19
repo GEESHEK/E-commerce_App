@@ -58,11 +58,20 @@ public class OrderController : BaseApiController
             }
         }
         
-        var order = _mapper.Map<Order>(orderDto);
+        var mappedOrder = _mapper.Map<Order>(orderDto);
         
-        _orderRepository.CreateOrder(order);
+        _orderRepository.CreateOrder(mappedOrder);
+        
+        
+        //TODO send mapped Order to OrderService, 
+
+        if (await _orderRepository.SaveAllAsync())
+        {
+            // var 
+        }
 
         return Ok("Success");
         // return await _orderRepository.CreateOrder(orderDto);
     }
+    
 }
