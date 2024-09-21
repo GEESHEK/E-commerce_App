@@ -106,12 +106,19 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<CartWatchDto>> GetCartWatches(List<int> ids)
+    public async Task<IEnumerable<CartWatchDto>> GetCartWatchesByIds(List<int> ids)
     {
         return await _context.Watches
             .Where(x => ids.Contains(x.Id))
             .AsNoTracking()
             .ProjectTo<CartWatchDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<List<Watch>> GetWatchesByIds(List<int> ids)
+    {
+        return await _context.Watches
+            .Where(x => ids.Contains(x.Id))
             .ToListAsync();
     }
 

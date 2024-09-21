@@ -1,6 +1,7 @@
 ﻿using API.Data.Repositories;
 using API.DTOs;
 using API.Entities.OrderEntities;
+using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,13 +11,15 @@ public class OrderController : BaseApiController
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IWatchRepository _watchRepository;
+    private readonly IOrderService _orderService;
     private readonly IMapper _mapper;
 
     public OrderController(IOrderRepository orderRepository, IWatchRepository watchRepository,
-        IMapper mapper)
+        IOrderService orderService, IMapper mapper)
     {
         _orderRepository = orderRepository;
         _watchRepository = watchRepository;
+        _orderService = orderService;
         _mapper = mapper;
     }
 
@@ -24,15 +27,15 @@ public class OrderController : BaseApiController
     public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
     {
         var orders = await _orderRepository.GetOrders();
-        
+
         return Ok(orders);
     }
-    
+
     [HttpGet("status/{statusId:int}")]
     public async Task<ActionResult<IEnumerable<Order>>> GetOrdersByStatus(int statusId)
     {
         var orders = await _orderRepository.GetOrdersByStatus(statusId);
-        
+
         return Ok(orders);
     }
 
@@ -41,7 +44,9 @@ public class OrderController : BaseApiController
     public async Task<ActionResult<OrderDto>> CreateOrder(OrderDto orderDto)
     {
         if (orderDto == null) return BadRequest();
-        
+
+        List<int> watchIds = new List<int>();
+
         //check if itemTypes exists
 
         foreach (var item in orderDto.Items)
@@ -53,16 +58,26 @@ public class OrderController : BaseApiController
                     return BadRequest("Watch does not exist");
                 case 2 or 3: //when await > different product repo
                     return BadRequest("These item types are not being sold yet");
-                default:
+                case > 4:
                     return BadRequest("Unknown item type");
             }
+
+            watchIds.Add(item.ProductId);
         }
+
+        watchIds = watchIds.Distinct().ToList();
+        var watches = await _watchRepository.GetWatchesByIds(watchIds);
         
+        //call the service to check watch availability and reduced the watch by item purchased
+
         var mappedOrder = _mapper.Map<Order>(orderDto);
-        
+
         _orderRepository.CreateOrder(mappedOrder);
-        
-        
+
+        //Add total to the order
+
+        //create the cost
+
         //TODO send mapped Order to OrderService, 
 
         if (await _orderRepository.SaveAllAsync())
@@ -73,5 +88,4 @@ public class OrderController : BaseApiController
         return Ok("Success");
         // return await _orderRepository.CreateOrder(orderDto);
     }
-    
 }
