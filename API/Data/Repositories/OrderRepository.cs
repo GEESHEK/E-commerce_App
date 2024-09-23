@@ -22,9 +22,14 @@ public class OrderRepository : IOrderRepository
             .AsNoTracking().ToListAsync();
     }
 
-    public Task<Order> GetOrderById()
+    public async Task<Order> GetOrderById(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Orders
+            .Include(o => o.CustomerDetail)
+            .Include(o => o.StatusType)
+            .Include(o => o.Items)
+            .ThenInclude(i => i.ItemType)
+            .SingleOrDefaultAsync(o => o.Id == id);
     }
 
     public async Task<IEnumerable<Order>> GetOrdersByStatus(int statusId)

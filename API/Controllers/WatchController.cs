@@ -62,7 +62,7 @@ public class WatchController : BaseApiController
         }
 
         //Todo come back to catch other errors: look at notes if you return bool in save all then nothing can be caught
-        return BadRequest("Failed to add watch");
+        return BadRequest("Failed to create watch");
     }
 
     [HttpPut("{id:int}")]

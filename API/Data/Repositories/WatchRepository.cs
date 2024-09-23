@@ -118,6 +118,19 @@ public class WatchRepository : IWatchRepository
     public async Task<List<Watch>> GetWatchesByIds(List<int> ids)
     {
         return await _context.Watches
+            .Include(w => w.Brand)
+            .Include(w => w.Calibre)
+            .Include(w => w.CaseMaterial)
+            .Include(w => w.Crystal)
+            .Include(w => w.Dial)
+            .Include(w => w.MovementType)
+            .Include(w => w.Photos)
+            .Include(w => w.PowerReserve)
+            .Include(w => w.Stock)
+            .Include(w => w.StrapBraceletMaterial)
+            .Include(w => w.WatchCaseMeasurements)
+            .Include(w => w.WatchType)
+            .Include(w => w.WaterResistance)
             .Where(x => ids.Contains(x.Id))
             .ToListAsync();
     }

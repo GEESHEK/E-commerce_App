@@ -38,6 +38,19 @@ public class OrderController : BaseApiController
 
         return Ok(orders);
     }
+    
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Order>> GetOrder(int id)
+    {
+        var order = await _orderRepository.GetOrderById(id);
+
+        if (order == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(order);
+    }
 
     [HttpPost]
     public async Task<ActionResult<OrderDto>> CreateOrder(OrderDto orderDto)
@@ -74,24 +87,37 @@ public class OrderController : BaseApiController
         
         //call the service to check watch availability and reduced the watch by item purchased
         var mappedOrder = _mapper.Map<Order>(orderDto);
+
+        var totalPrice = 0m;
         
-        await _orderService.CheckAndReduceWatchQuantity(watches, mappedOrder);
-
-
-        _orderRepository.CreateOrder(mappedOrder);
+        try
+        {
+            totalPrice = await _orderService.ReduceWatchQuantityAndReturnTotalPrice(watches, mappedOrder);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
 
         //Add total to the order
+        mappedOrder.Total = totalPrice;
 
-        //create the cost
+        if (totalPrice <= 0)
+        {
+            return BadRequest("Invalid order total");
+        }
+        
+        _orderRepository.CreateOrder(mappedOrder);
+        
 
         //TODO send mapped Order to OrderService, 
 
         if (await _orderRepository.SaveAllAsync())
         {
-            // var 
+           var order = await _orderRepository.GetOrderById(mappedOrder.Id);
+           return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
         }
 
-        return Ok("Success");
-        // return await _orderRepository.CreateOrder(orderDto);
+        return BadRequest("Failed to create order");
     }
 }

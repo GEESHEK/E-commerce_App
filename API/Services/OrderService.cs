@@ -13,8 +13,10 @@ public class OrderService : IOrderService
         _watchRepository = watchRepository;
     }
 
-    public async Task<List<Watch>> CheckAndReduceWatchQuantity(List<Watch> watches, Order order)
+    public async Task<decimal> ReduceWatchQuantityAndReturnTotalPrice(List<Watch> watches, Order order)
     {
+        var totalPrice = 0m;
+        
         if (watches == null || !watches.Any())
         {
             throw new ArgumentException("Watches cannot be null or empty", nameof(watches));
@@ -40,42 +42,14 @@ public class OrderService : IOrderService
             }
             
             watch.Stock.Quantity -= quantityToReduceBy;
+            
+            totalPrice += quantityToReduceBy * watch.Price;
         }
-
+        
         //TODO unit of work pattern
         await _watchRepository.SaveAllAsync();
 
-        return watches;
+        return totalPrice;
     }
-
-    public Task<decimal> CalculateTotalPrice(List<Item> items)
-    {
-        var totalPrice = 0m;
-
-        var orderQ  = items[0].Quantity;
-        
-        //retrieve watch 
-        
-        // if (watches == null)
-        // {
-        //     return Task.FromResult(0m);
-        // }
-        //
-        // foreach (var watch in watches)
-        // {
-        //     totalPrice += (watch.Price);
-        // }
-        
-        return Task.FromResult(totalPrice);
-    }
-
-    public Task<IEnumerable<Watch>> GetWatchesById()
-    {
-        return null;
-    }
-
-    public Task<decimal> CalculateTotalPrice(IEnumerable<Watch> watches)
-    {
-        throw new NotImplementedException();
-    }
+    
 }
