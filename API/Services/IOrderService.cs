@@ -5,6 +5,6 @@ namespace API.Services;
 
 public interface IOrderService
 {
-    Task<List<Watch>> CheckAndReduceWatchQuantity(List<Watch> watches, List<Item> items);
+    Task<List<Watch>> CheckAndReduceWatchQuantity(List<Watch> watches, Order order);
     Task<decimal> CalculateTotalPrice(IEnumerable<Watch> watches);
 }

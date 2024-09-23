@@ -39,7 +39,6 @@ public class OrderController : BaseApiController
         return Ok(orders);
     }
 
-
     [HttpPost]
     public async Task<ActionResult<OrderDto>> CreateOrder(OrderDto orderDto)
     {
@@ -67,10 +66,17 @@ public class OrderController : BaseApiController
 
         watchIds = watchIds.Distinct().ToList();
         var watches = await _watchRepository.GetWatchesByIds(watchIds);
+
+        if (watches.Count == 0)
+        {
+            return BadRequest("No watches were found");
+        }
         
         //call the service to check watch availability and reduced the watch by item purchased
-
         var mappedOrder = _mapper.Map<Order>(orderDto);
+        
+        await _orderService.CheckAndReduceWatchQuantity(watches, mappedOrder);
+
 
         _orderRepository.CreateOrder(mappedOrder);
 
