@@ -52,14 +52,12 @@ public class OrderService : IOrderService
         return totalPrice;
     }
 
-    public Order AddPriceToOrderItems(List<Watch> watches, Order order)
+    public void AddPriceToOrderItems(List<Watch> watches, Order order)
     {
         foreach (var item in order.Items)
         {
             item.Price = watches.Find(x => x.Id == item.ProductId)!.Price;
         }
-        
-        return order;
     }
     
 }
