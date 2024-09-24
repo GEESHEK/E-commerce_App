@@ -84,6 +84,9 @@ namespace API.Data.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 

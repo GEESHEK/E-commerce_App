@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240917194259_AddedOrderEntities")]
-    partial class AddedOrderEntities
+    [Migration("20240924180445_AddedOrderEntity")]
+    partial class AddedOrderEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,9 @@ namespace API.Data.Migrations
 
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");

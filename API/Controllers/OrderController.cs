@@ -107,11 +107,10 @@ public class OrderController : BaseApiController
             return BadRequest("Invalid order total");
         }
         
+        _orderService.AddPriceToOrderItems(watches, mappedOrder);
+        
         _orderRepository.CreateOrder(mappedOrder);
         
-
-        //TODO send mapped Order to OrderService, 
-
         if (await _orderRepository.SaveAllAsync())
         {
            var order = await _orderRepository.GetOrderById(mappedOrder.Id);
