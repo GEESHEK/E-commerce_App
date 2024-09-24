@@ -31,7 +31,7 @@ public class CartController : BaseApiController
             }
         }
         
-        var cartWatches = await _watchRepository.GetCartWatches(watchIds);
+        var cartWatches = await _watchRepository.GetCartWatchesByIds(watchIds);
 
         return Ok(cartWatches);
     }

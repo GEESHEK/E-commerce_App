@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.Entities.OrderEntities;
 using API.Entities.WatchEntities;
 using AutoMapper;
 
@@ -36,9 +37,9 @@ public class AutomapperProfiles : Profile
             .ForMember(dest => dest.MovementType,
                 opt => opt.MapFrom(src => src.MovementType.Type))
             .ForMember(dest => dest.PowerReserve,
-            opt => opt.MapFrom(src => src.PowerReserve.Duration)) 
+                opt => opt.MapFrom(src => src.PowerReserve.Duration))
             .ForMember(dest => dest.Stock,
-                opt => opt.MapFrom(src => src.Stock.Quantity)) 
+                opt => opt.MapFrom(src => src.Stock.Quantity))
             .ForMember(dest => dest.StrapBraceletMaterial,
                 opt => opt.MapFrom(src => src.StrapBraceletMaterial.Material))
             .ForMember(dest => dest.Diameter,
@@ -62,6 +63,8 @@ public class AutomapperProfiles : Profile
                 opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
             .ForMember(dest => dest.Stock,
                 opt => opt.MapFrom(src => src.Stock.Quantity));
-
+        CreateMap<OrderDto, Order>();
+        CreateMap<CustomerDetailDto, CustomerDetail>();
+        CreateMap<ItemDto, Item>();
     }
 }

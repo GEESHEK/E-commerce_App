@@ -16,7 +16,8 @@ public interface IWatchRepository
     bool IsModified(Watch watch);
     Task<IEnumerable<WatchCardDto>> GetHomepageWatchCards();
     Task<IEnumerable<WatchCardDto>> GetWatchCards();
-    Task<IEnumerable<CartWatchDto>> GetCartWatches(List<int> ids);
+    Task<IEnumerable<CartWatchDto>> GetCartWatchesByIds(List<int> ids);
+    Task<List<Watch>> GetWatchesByIds(List<int> ids);
     Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandId(int brandId);
     Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandName(string brand);
     Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypeId);

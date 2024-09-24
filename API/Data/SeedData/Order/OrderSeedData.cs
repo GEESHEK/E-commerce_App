@@ -21,12 +21,14 @@ public static class OrderSeedData
                     {
                         ProductId = 12,
                         ItemTypeId = 1,
+                        Price = 120.00m,
                         Quantity = 1,
                     },
                     new()
                     {
                         ProductId = 10,
                         ItemTypeId = 1,
+                        Price = 1750.00m,
                         Quantity = 2,
                     }
                 }
@@ -42,12 +44,14 @@ public static class OrderSeedData
                     {
                         ProductId = 12,
                         ItemTypeId = 1,
+                        Price = 120.00m,
                         Quantity = 1,
                     },
                     new()
                     {
                         ProductId = 10,
                         ItemTypeId = 1,
+                        Price = 1750.00m,
                         Quantity = 2,
                     }
                 }
@@ -63,6 +67,7 @@ public static class OrderSeedData
                     {
                         ProductId = 1,
                         ItemTypeId = 1,
+                        Price = 120.00m,
                         Quantity = 3,
                     }
                 }
@@ -78,6 +83,7 @@ public static class OrderSeedData
                     {
                         ProductId = 2,
                         ItemTypeId = 1,
+                        Price = 399.99m,
                         Quantity = 2,
                     }
                 }
@@ -93,6 +99,7 @@ public static class OrderSeedData
                     {
                         ProductId = 7,
                         ItemTypeId = 1,
+                        Price = 999.99m,
                         Quantity = 1,
                     }
                 }
@@ -108,6 +115,7 @@ public static class OrderSeedData
                     {
                         ProductId = 11,
                         ItemTypeId = 1,
+                        Price = 750.00m,
                         Quantity = 1,
                     }
                 }
@@ -123,6 +131,7 @@ public static class OrderSeedData
                     {
                         ProductId = 8,
                         ItemTypeId = 1,
+                        Price = 1999.99m,
                         Quantity = 1,
                     }
                 }

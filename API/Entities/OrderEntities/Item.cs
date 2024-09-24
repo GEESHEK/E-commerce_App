@@ -11,6 +11,7 @@ public class Item
     [JsonIgnore]
     public int ItemTypeId { get; set; }
     public ItemType ItemType { get; set; }
+    public decimal Price { get; set; }
     public int Quantity { get; set; }
     [JsonIgnore]
     public int OrderId { get; set; }

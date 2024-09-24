@@ -237,6 +237,10 @@ public class DataContext : DbContext
             .Property(i => i.Quantity)
             .IsRequired();
         
+        modelBuilder.Entity<Item>()
+            .Property(i => i.Price)
+            .IsRequired();
+        
         modelBuilder.Entity<ItemType>()
             .Property(i => i.Type)
             .IsRequired();
