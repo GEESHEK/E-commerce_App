@@ -15,6 +15,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { WatchDetailComponent } from './watch/watch-detail-page/watch-detail.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { CartComponent } from './cart/cart.component';
+import { OrderConfirmationPageComponent } from './order/order-confirmation-page/order-confirmation-page.component';
+import { OrderPageComponent } from './order/order-page/order-page.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { CartComponent } from './cart/cart.component';
     ImageFallbackDirective,
     WatchDetailComponent,
     CartComponent,
+    OrderConfirmationPageComponent,
+    OrderPageComponent,
   ],
   imports: [
     BrowserModule,
