@@ -1,10 +1,42 @@
 <div class="container">
-  <h1>Order</h1>
-  <p>WIP: Returned order details go here!</p>
-  <h2>Customer Detail</h2>
-  <h2>Delivery Address</h2>
-  <h2>Payment</h2>
-  <p>Maybe add in future</p>
-  <h2>Review Items and Delivery</h2>
-  <button type="button" class="btn btn-success">Buy now</button>
+  <div class="row justify-content-center">
+    <form #orderForm="ngForm" class="col-6" (ngSubmit)="orderNow()" autocomplete="off">
+      <div class="col-3"></div>
+      <h2 class="text-center ">Customer Details</h2>
+      <hr>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="firstName" [(ngModel)]="modal.firstName" placeholder="First name">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="surname" [(ngModel)]="modal.surname" placeholder="Surname">
+      </div>
+      <div class="mb-3">
+        <input type="email" class="form-control" name="email" [(ngModel)]="modal.email" placeholder="Email">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="modal.phoneNumber" placeholder="Phone number">
+      </div>
+      <h2 class="text-center ">Shipping Address</h2>
+      <hr>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="address" [(ngModel)]="modal.address" placeholder="Address">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="zipCode" [(ngModel)]="modal.zipCode" placeholder="ZipCode">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="country" [(ngModel)]="modal.country" placeholder="Country">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" name="city" [(ngModel)]="modal.city" placeholder="City">
+      </div>
+        <h2 class="text-center ">Payment</h2>
+        <p class="text-center ">Maybe add in future</p>
+        <h2 class="text-center ">Review Items</h2>
+      <div class="text-center">
+        <button class="btn btn-success me-2">Order now</button>
+        <button class="btn btn-success me-2" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>
