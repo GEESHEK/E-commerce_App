@@ -1,41 +1,55 @@
-<div class="container">
+<div class="container" *ngIf="items.length > 0">
   <div class="row justify-content-center">
     <form #orderForm="ngForm" class="col-6" (ngSubmit)="orderNow()" autocomplete="off">
-      <div class="col-3"></div>
       <h2 class="text-center ">Customer Details</h2>
       <hr>
       <div class="mb-3">
-        <input type="text" class="form-control" name="firstName" [(ngModel)]="modal.firstName" placeholder="First name">
+        <input type="text" class="form-control" name="firstName" [(ngModel)]="order.CustomerDetail.firstName" placeholder="First name">
       </div>
       <div class="mb-3">
-        <input type="text" class="form-control" name="surname" [(ngModel)]="modal.surname" placeholder="Surname">
+        <input type="text" class="form-control" name="surname" [(ngModel)]="order.CustomerDetail.surname" placeholder="Surname">
       </div>
       <div class="mb-3">
-        <input type="email" class="form-control" name="email" [(ngModel)]="modal.email" placeholder="Email">
+        <input type="email" class="form-control" name="email" [(ngModel)]="order.CustomerDetail.email" placeholder="Email">
       </div>
       <div class="mb-3">
-        <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="modal.phoneNumber" placeholder="Phone number">
+        <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="order.CustomerDetail.phoneNumber" placeholder="Phone number">
       </div>
       <h2 class="text-center ">Shipping Address</h2>
       <hr>
       <div class="mb-3">
-        <input type="text" class="form-control" name="address" [(ngModel)]="modal.address" placeholder="Address">
+        <input type="text" class="form-control" name="address" [(ngModel)]="order.CustomerDetail.address" placeholder="Address">
       </div>
       <div class="mb-3">
-        <input type="text" class="form-control" name="zipCode" [(ngModel)]="modal.zipCode" placeholder="ZipCode">
+        <input type="text" class="form-control" name="zipCode" [(ngModel)]="order.CustomerDetail.zipCode" placeholder="ZipCode">
       </div>
       <div class="mb-3">
-        <input type="text" class="form-control" name="country" [(ngModel)]="modal.country" placeholder="Country">
+        <input type="text" class="form-control" name="country" [(ngModel)]="order.CustomerDetail.country" placeholder="Country">
       </div>
       <div class="mb-3">
-        <input type="text" class="form-control" name="city" [(ngModel)]="modal.city" placeholder="City">
+        <input type="text" class="form-control" name="city" [(ngModel)]="order.CustomerDetail.city" placeholder="City">
       </div>
-        <h2 class="text-center ">Payment</h2>
-        <p class="text-center ">Maybe add in future</p>
-        <h2 class="text-center ">Review Items</h2>
-      <div class="text-center">
-        <button class="btn btn-success me-2">Order now</button>
-        <button class="btn btn-success me-2" (click)="cancel()">Cancel</button>
+      <h2 class="text-center">Review Items</h2>
+      <hr>
+      <div class="row" *ngFor="let item of items">
+        <div class="col-lg-4 main-photo">
+          <img class="mx-auto d-block" src="{{item.photoUrl}}" alt='{{item.brand + " " + item.name + " " + item.reference}}'>
+        </div>
+        <div class="col-lg-8">
+          <h6>{{item.brand + " " + item.name + " " + item.reference}}</h6>
+          <h6>{{"Price: " + (item.price | currency: "USD")}}</h6>
+          <h6>{{"Color: " + item.dial}}</h6>
+          <h6> {{"Qty: " + calculateItemCount(item.id)}}</h6>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-4 text-center">
+          <button class="btn btn-success me-2">Order now</button>
+        </div>
+        <div class="col-8">
+          <h4>{{ "Order Total: " + (totalPrice | currency: "USD") }}</h4>
+        </div>
       </div>
     </form>
   </div>

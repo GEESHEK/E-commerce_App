@@ -1,11 +1,7 @@
-﻿export interface Order {
-  id: number;
-  name: string;
-  brand: string;
-  dial: string;
-  reference: string;
-  price: number;
-  stock: number;
-  photoUrl: string;
-  // quantity: number;
+﻿import { CustomerDetails } from './customerDetail';
+import { Item } from './item';
+
+export interface Order {
+  CustomerDetail: CustomerDetails;
+  Item: Item[];
 }
