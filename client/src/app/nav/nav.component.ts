@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Brand } from '../../models/brand';
-import { Categories } from '../../models/categories';
+import { Category } from '../../models/category';
 import { Observable } from 'rxjs';
 import { WatchService } from '../services/watch.service';
 import { CartService } from '../services/cart.service';
@@ -12,7 +12,7 @@ import { CartService } from '../services/cart.service';
 })
 export class NavComponent implements OnInit {
   brands$: Observable<Brand[]> | undefined;
-  categories$: Observable<Categories[]> | undefined;
+  categories$: Observable<Category[]> | undefined;
   itemsInCart: number = 0;
 
   constructor(
