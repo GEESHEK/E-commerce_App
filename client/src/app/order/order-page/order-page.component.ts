@@ -3,7 +3,7 @@ import {Order} from '../../../models/order';
 import {CartWatch} from '../../../models/cartWatch';
 import {CartService} from '../../services/cart.service';
 import {WatchService} from '../../services/watch.service';
-import {FormControl, FormGroup, Validators,} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
 
 @Component({
   selector: 'app-order-page',
@@ -32,6 +32,7 @@ export class OrderPageComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private watchService: WatchService,
+    private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
@@ -43,15 +44,15 @@ export class OrderPageComponent implements OnInit {
   }
 
   initialiseForm() {
-    this.orderForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      surname: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{11}$')]),
-      address: new FormControl('', Validators.required),
-      zipCode: new FormControl('', Validators.required),
-      country: new FormControl('', Validators.required),
-      city: new FormControl('', Validators.required),
+    this.orderForm = this.fb.group({
+      firstName: ['', Validators.required],
+      surname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
+      address: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      country: ['', Validators.required],
+      city: ['', Validators.required],
     });
   }
 

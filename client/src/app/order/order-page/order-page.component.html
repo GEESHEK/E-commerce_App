@@ -3,52 +3,16 @@
     <form [formGroup]="orderForm" class="col-6" (ngSubmit)="orderNow()" autocomplete="off">
       <h2 class="text-center ">Customer Details</h2>
       <hr>
-      <div class="mb-3">
-        <input type="text" [class.is-invalid]="orderForm.get('firstName')?.errors && orderForm.get('firstName')?.touched"
-               class="form-control" formControlName="firstName" placeholder="First Name">
-        <div class="invalid-feedback">Please enter a first name</div>
-      </div>
-      <div class="mb-3">
-        <input type="text" [class.is-invalid]="orderForm.get('surname')?.errors && orderForm.get('surname')?.touched"
-               class="form-control" formControlName="surname" placeholder="Surname">
-        <div class="invalid-feedback">Please enter a surname</div>
-      </div>
-      <div class="mb-3">
-        <input type="email" [class.is-invalid]="orderForm.get('email')?.errors && orderForm.get('email')?.touched"
-               class="form-control" formControlName="email" placeholder="Email">
-        <div class="invalid-feedback" *ngIf="orderForm.get('email')?.hasError('required')">Please enter a email</div>
-        <div class="invalid-feedback" *ngIf="orderForm.get('email')?.hasError('email')">Please enter valid email</div>
-      </div>
-      <div class="mb-3">
-        <input type="text" [class.is-invalid]="orderForm.get('phoneNumber')?.errors && orderForm.get('phoneNumber')?.touched"
-               class="form-control" formControlName="phoneNumber" placeholder="Phone Number">
-        <div class="invalid-feedback" *ngIf="orderForm.get('phoneNumber')?.hasError('required')">Please enter a phone number</div>
-        <div class="invalid-feedback" *ngIf="orderForm.get('phoneNumber')?.hasError('pattern')">Please enter valid phone number</div>
-      </div>
+      <app-text-input [formControl]="$any(orderForm.controls['firstName'])" [label]="'First Name'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['surname'])" [label]="'Surname'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['email'])" [label]="'Email'" [type]="'email'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['phoneNumber'])" [label]="'Phone Number'"></app-text-input>
       <h2 class="text-center ">Shipping Address</h2>
       <hr>
-      <p>Form value: {{orderForm.value | json}}</p>
-      <p>Form value: {{orderForm.status | json}}</p>
-      <div class="mb-3">
-        <input type="text" [class.is-invalid]="orderForm.get('address')?.errors && orderForm.get('address')?.touched"
-               class="form-control" formControlName="address" placeholder="Address">
-        <div class="invalid-feedback" *ngIf="orderForm.get('address')?.hasError('required')">Please enter an address</div>
-      </div>
-      <div class="mb-3">
-        <input type="text" [class.is-invalid]="orderForm.get('zipCode')?.errors && orderForm.get('zipCode')?.touched"
-               class="form-control" formControlName="zipCode" placeholder="ZipCode">
-        <div class="invalid-feedback" *ngIf="orderForm.get('zipCode')?.hasError('required')">Please enter a zipcode</div>
-      </div>
-      <div class="mb-3">
-        <input type="text" [class.is-invalid]="orderForm.get('country')?.errors && orderForm.get('country')?.touched"
-               class="form-control" formControlName="country" placeholder="Country">
-        <div class="invalid-feedback" *ngIf="orderForm.get('country')?.hasError('required')">Please enter a country</div>
-      </div>
-      <div class="mb-3">
-        <input type="text" [class.is-invalid]="orderForm.get('city')?.errors && orderForm.get('city')?.touched"
-               class="form-control" formControlName="city" placeholder="City">
-        <div class="invalid-feedback" *ngIf="orderForm.get('city')?.hasError('required')">Please enter a zipcode</div>
-      </div>
+      <app-text-input [formControl]="$any(orderForm.controls['address'])" [label]="'Address'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['zipCode'])" [label]="'ZipCode'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['country'])" [label]="'Country'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['city'])" [label]="'City'"></app-text-input>
       <h2 class="text-center">Review Items</h2>
       <hr>
       <div class="row" *ngFor="let item of items">

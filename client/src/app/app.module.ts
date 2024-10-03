@@ -18,6 +18,7 @@ import { CartComponent } from './cart/cart.component';
 import { OrderConfirmationPageComponent } from './order/order-confirmation-page/order-confirmation-page.component';
 import { OrderPageComponent } from './order/order-page/order-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TextInputComponent } from './forms/text-input/text-input.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CartComponent,
     OrderConfirmationPageComponent,
     OrderPageComponent,
+    TextInputComponent,
   ],
   imports: [
     BrowserModule,
