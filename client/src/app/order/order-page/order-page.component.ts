@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Order } from '../../../models/order';
-import { CartWatch } from '../../../models/cartWatch';
-import { CartService } from '../../services/cart.service';
-import { WatchService } from '../../services/watch.service';
+import {Component, OnInit} from '@angular/core';
+import {Order} from '../../../models/order';
+import {CartWatch} from '../../../models/cartWatch';
+import {CartService} from '../../services/cart.service';
+import {WatchService} from '../../services/watch.service';
+import {FormControl, FormGroup, Validators,} from '@angular/forms';
 
 @Component({
   selector: 'app-order-page',
@@ -11,6 +12,7 @@ import { WatchService } from '../../services/watch.service';
 })
 export class OrderPageComponent implements OnInit {
   itemIds: number[] = [];
+  orderForm: FormGroup = new FormGroup({});
   items: CartWatch[] = [];
   totalPrice: number = 0;
   order: Order = {
@@ -33,10 +35,24 @@ export class OrderPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.initialiseForm();
     this.itemIds = this.cartService.getItemIds();
     if (this.itemIds.length > 0) {
       this.loadItems(this.itemIds);
     }
+  }
+
+  initialiseForm() {
+    this.orderForm = new FormGroup({
+      firstName: new FormControl('', Validators.required),
+      surname: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{11}$')]),
+      address: new FormControl('', Validators.required),
+      zipCode: new FormControl('', Validators.required),
+      country: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+    });
   }
 
   loadItems(ids: number[]) {
@@ -68,7 +84,7 @@ export class OrderPageComponent implements OnInit {
   }
 
   orderNow() {
-    console.log(this.order);
+    console.log(this.orderForm?.value);
   }
 
   cancel() {

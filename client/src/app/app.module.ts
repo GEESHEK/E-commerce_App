@@ -17,7 +17,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { CartComponent } from './cart/cart.component';
 import { OrderConfirmationPageComponent } from './order/order-confirmation-page/order-confirmation-page.component';
 import { OrderPageComponent } from './order/order-page/order-page.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -41,6 +41,7 @@ import { FormsModule } from '@angular/forms';
     BsDropdownModule.forRoot(),
     AccordionModule.forRoot(),
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
