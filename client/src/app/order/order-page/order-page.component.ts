@@ -4,6 +4,7 @@ import {CartWatch} from '../../../models/cartWatch';
 import {CartService} from '../../services/cart.service';
 import {WatchService} from '../../services/watch.service';
 import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {Item} from "../../../models/item";
 
 @Component({
   selector: 'app-order-page',
@@ -11,23 +12,11 @@ import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
   styleUrls: ['./order-page.component.css'],
 })
 export class OrderPageComponent implements OnInit {
+  private watchTypeId: number = 1;
   itemIds: number[] = [];
   orderForm: FormGroup = new FormGroup({});
   items: CartWatch[] = [];
   totalPrice: number = 0;
-  order: Order = {
-    CustomerDetail: {
-      firstName: '',
-      surname: '',
-      email: '',
-      phoneNumber: '',
-      address: '',
-      zipCode: '',
-      city: '',
-      country: '',
-    },
-    Item: [],
-  };
 
   constructor(
     private cartService: CartService,
@@ -85,10 +74,38 @@ export class OrderPageComponent implements OnInit {
   }
 
   orderNow() {
-    console.log(this.orderForm?.value);
+    if (this.orderForm.valid) {
+      console.log(this.orderForm?.value);
+
+      const order: Order = {
+        CustomerDetail: {
+          firstName: this.orderForm.value.firstName,
+          surname: this.orderForm.value.surname,
+          email: this.orderForm.value.email,
+          phoneNumber: this.orderForm.value.phoneNumber,
+          address: this.orderForm.value.address,
+          zipCode: this.orderForm.value.zipCode,
+          city: this.orderForm.value.city,
+          country: this.orderForm.value.country,
+        },
+        Item: this.setOrderItems()
+      }
+
+      console.log(order);
+    }
   }
 
-  cancel() {
-    console.log('cancelled');
+  setOrderItems(): Item[] {
+    const itemList: Item[] = [];
+
+    for (const item of this.items) {
+      itemList.push({
+        productId: item.id,
+        itemTypeId: this.watchTypeId,
+        quantity: item.stock,
+      })
+    }
+
+    return itemList;
   }
 }
