@@ -5,6 +5,7 @@ import {CartService} from '../../services/cart.service';
 import {WatchService} from '../../services/watch.service';
 import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
 import {Item} from "../../../models/item";
+import {OrderService} from "../../services/order.service";
 
 @Component({
   selector: 'app-order-page',
@@ -17,11 +18,13 @@ export class OrderPageComponent implements OnInit {
   orderForm: FormGroup = new FormGroup({});
   items: CartWatch[] = [];
   totalPrice: number = 0;
+  validationErrors: string[] | undefined;
 
   constructor(
     private cartService: CartService,
     private watchService: WatchService,
     private fb: FormBuilder,
+    private orderService: OrderService,
   ) {}
 
   ngOnInit(): void {
@@ -74,8 +77,8 @@ export class OrderPageComponent implements OnInit {
   }
 
   orderNow() {
-    if (this.orderForm.valid) {
-      console.log(this.orderForm?.value);
+    if (this.orderForm.valid && this.items.length > 0) {
+      // console.log(this.orderForm?.value);
 
       const order: Order = {
         CustomerDetail: {
@@ -88,10 +91,21 @@ export class OrderPageComponent implements OnInit {
           city: this.orderForm.value.city,
           country: this.orderForm.value.country,
         },
-        Item: this.setOrderItems()
+        Items: this.setOrderItems()
       }
 
-      console.log(order);
+      console.log(JSON.stringify(order));
+
+      this.orderService.order(order).subscribe({
+        next: () => {
+          console.log(this.orderService.successOrder);
+          console.log("order was successful");
+          //empty the shopping cart and redirect them to the success page
+        },
+        error: (error: string[] | undefined) => {
+          this.validationErrors = error;
+        }
+      })
     }
   }
 
@@ -102,7 +116,7 @@ export class OrderPageComponent implements OnInit {
       itemList.push({
         productId: item.id,
         itemTypeId: this.watchTypeId,
-        quantity: item.stock,
+        quantity: this.calculateItemCount(item.id),
       })
     }
 

@@ -1,18 +1,15 @@
-import { Injectable, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import {Injectable, OnInit} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService implements OnInit {
-  baseUrl = environment.apiUrl;
   private cartIds: number[] = this.getCartIdsFromStorage();
   private itemCountSource = new BehaviorSubject<number>(this.cartIds.length);
   itemCount$ = this.itemCountSource.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   ngOnInit(): void {
     // Initialize itemCountSource with the length from localStorage

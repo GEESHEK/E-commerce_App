@@ -55,7 +55,7 @@ public class OrderController : BaseApiController
     [HttpPost]
     public async Task<ActionResult<OrderDto>> CreateOrder(OrderDto orderDto)
     {
-        if (orderDto == null) return BadRequest();
+        if (orderDto == null) return BadRequest("very very bad");
 
         List<int> watchIds = new List<int>();
 

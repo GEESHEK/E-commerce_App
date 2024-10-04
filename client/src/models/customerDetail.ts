@@ -1,4 +1,4 @@
-﻿export interface CustomerDetails {
+﻿export interface CustomerDetail {
   firstName: string;
   surname: string;
   email: string;

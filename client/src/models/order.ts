@@ -1,7 +1,7 @@
-﻿import { CustomerDetails } from './customerDetail';
-import { Item } from './item';
+﻿import {CustomerDetail} from './customerDetail';
+import {Item} from './item';
 
 export interface Order {
-  CustomerDetail: CustomerDetails;
-  Item: Item[];
+  CustomerDetail: CustomerDetail;
+  Items: Item[];
 }
