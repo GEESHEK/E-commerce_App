@@ -204,10 +204,6 @@ public class DataContext : DbContext
         modelBuilder.Entity<CustomerDetail>()
             .Property(c => c.Email)
             .IsRequired();
-
-        modelBuilder.Entity<CustomerDetail>()
-            .HasIndex(c => c.Email)
-            .IsUnique();
         
         modelBuilder.Entity<CustomerDetail>()
             .Property(c => c.Address)

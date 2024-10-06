@@ -47,7 +47,7 @@
       <h4>{{ "Subtotal (" + itemIds.length + " " + itemLabel + "): " + (totalPrice | currency: "USD") }}</h4>
       <!--TODO add check (One way blinding to component T/F) if the stock == 0 then Proceed To Checkout won't work until all watch with stock == 0 is deleted      -->
       <!--TODO Maybe button that removes all the watches from the watch items and itemsIDArray     -->
-      <button type="button" class="btn btn-success mt-lg-2">Proceed To Checkout</button>
+      <button type="button" class="btn btn-success mt-lg-2" routerLink="/order">Proceed To Checkout</button>
     </div>
   </div>
 </div>

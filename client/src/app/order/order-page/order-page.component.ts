@@ -6,6 +6,7 @@ import {WatchService} from '../../services/watch.service';
 import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
 import {Item} from "../../../models/item";
 import {OrderService} from "../../services/order.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-order-page',
@@ -25,6 +26,7 @@ export class OrderPageComponent implements OnInit {
     private watchService: WatchService,
     private fb: FormBuilder,
     private orderService: OrderService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -101,9 +103,12 @@ export class OrderPageComponent implements OnInit {
           console.log(this.orderService.successOrder);
           console.log("order was successful");
           //empty the shopping cart and redirect them to the success page
+          this.cartService.removeAllItems();
+          this.router.navigateByUrl('/order/confirmation');
         },
         error: (error: string[] | undefined) => {
           this.validationErrors = error;
+          console.log("Errors: " + this.validationErrors)
         }
       })
     }
