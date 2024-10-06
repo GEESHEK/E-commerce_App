@@ -53,9 +53,9 @@ public class OrderController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<OrderDto>> CreateOrder(OrderDto orderDto)
+    public async Task<ActionResult<int>> CreateOrder(OrderDto orderDto)
     {
-        if (orderDto == null) return BadRequest("very very bad");
+        if (orderDto == null) return BadRequest();
 
         List<int> watchIds = new List<int>();
 
@@ -76,8 +76,7 @@ public class OrderController : BaseApiController
 
             watchIds.Add(item.ProductId);
         }
-
-        watchIds = watchIds.Distinct().ToList();
+        
         var watches = await _watchRepository.GetWatchesByIds(watchIds);
 
         if (watches.Count == 0)
@@ -113,8 +112,7 @@ public class OrderController : BaseApiController
         
         if (await _orderRepository.SaveAllAsync())
         {
-           var order = await _orderRepository.GetOrderById(mappedOrder.Id);
-           return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
+           return CreatedAtAction(nameof(GetOrder), new { id = mappedOrder.Id }, mappedOrder.Id);
         }
 
         return BadRequest("Failed to create order");
