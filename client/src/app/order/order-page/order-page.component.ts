@@ -80,10 +80,9 @@ export class OrderPageComponent implements OnInit {
 
   orderNow() {
     if (this.orderForm.valid && this.items.length > 0) {
-      // console.log(this.orderForm?.value);
 
       const order: Order = {
-        CustomerDetail: {
+        customerDetail: {
           firstName: this.orderForm.value.firstName,
           surname: this.orderForm.value.surname,
           email: this.orderForm.value.email,
@@ -93,18 +92,17 @@ export class OrderPageComponent implements OnInit {
           city: this.orderForm.value.city,
           country: this.orderForm.value.country,
         },
-        Items: this.setOrderItems()
+        items: this.setOrderItems()
       }
 
       console.log(JSON.stringify(order));
 
       this.orderService.order(order).subscribe({
-        next: () => {
-          console.log(this.orderService.successOrder);
+        next: (orderId: number) => {
           console.log("order was successful");
           //empty the shopping cart and redirect them to the success page
           this.cartService.removeAllItems();
-          this.router.navigateByUrl('/order/confirmation');
+          this.router.navigateByUrl('/order/confirmation/' + orderId);
         },
         error: (error: string[] | undefined) => {
           this.validationErrors = error;

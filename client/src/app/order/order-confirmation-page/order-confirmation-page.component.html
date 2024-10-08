@@ -1,4 +1,7 @@
-<div class="container">
+<div class="container" *ngIf="order">
   <h1>Order Confirmation</h1>
-  <p>WIP: Returned order details go here!</p>
+  <p>Order Reference: {{order.id}}</p>
+  <p>Order Total: {{order.total}}</p>
+  <p>Order Status {{order.statusType}}</p>
+  <p>Order Address {{order.customerDetail.address}}</p>
 </div>

@@ -2,6 +2,6 @@
 import {Item} from './item';
 
 export interface Order {
-  CustomerDetail: CustomerDetail;
-  Items: Item[];
+  customerDetail: CustomerDetail;
+  items: Item[];
 }

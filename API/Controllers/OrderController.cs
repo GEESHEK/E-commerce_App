@@ -51,6 +51,19 @@ public class OrderController : BaseApiController
 
         return Ok(order);
     }
+    
+    [HttpGet("success/{id:int}")]
+    public async Task<ActionResult<OrderDto>> GetSuccessOrder(int id)
+    {
+        var order = await _orderRepository.GetSuccessOrderById(id);
+
+        if (order == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(order);
+    }
 
     [HttpPost]
     public async Task<ActionResult<int>> CreateOrder(OrderDto orderDto)

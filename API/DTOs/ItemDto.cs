@@ -10,5 +10,5 @@ public class ItemDto
     public int ItemTypeId { get; set; }
     [Required]
     public int Quantity { get; set; }
-    public int Price { get; set; }
+    public decimal Price { get; set; }
 }
