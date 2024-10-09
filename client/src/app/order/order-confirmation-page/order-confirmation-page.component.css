@@ -1,0 +1,18 @@
+.container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.main-photo img {
+  max-width: 50%;
+  height: auto;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+h6.clickable:hover {
+  text-decoration: underline;
+  color: blue;
+}

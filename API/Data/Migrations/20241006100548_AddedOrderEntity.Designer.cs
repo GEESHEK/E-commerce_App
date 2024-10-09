@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240924180445_AddedOrderEntity")]
+    [Migration("20241006100548_AddedOrderEntity")]
     partial class AddedOrderEntity
     {
         /// <inheritdoc />
@@ -66,9 +66,6 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("CustomerDetails");
                 });

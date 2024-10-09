@@ -66,5 +66,10 @@ public class AutomapperProfiles : Profile
         CreateMap<OrderDto, Order>();
         CreateMap<CustomerDetailDto, CustomerDetail>();
         CreateMap<ItemDto, Item>();
+        CreateMap<Order, SuccessOrderDto>()
+            .ForMember(dest => dest.StatusType,
+                opt => opt.MapFrom(src => src.StatusType.Status));
+        CreateMap<CustomerDetail, CustomerDetailDto>();
+        CreateMap<Item, ItemDto>();
     }
 }

@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { WatchCard } from '../../models/watchCard';
 import { map, of } from 'rxjs';
 import { Brand } from '../../models/brand';
-import { Categories } from '../../models/categories';
+import { Category } from '../../models/category';
 import { WatchDetail } from '../../models/watchDetail';
 import { CartWatch } from '../../models/cartWatch';
 
@@ -85,6 +85,6 @@ export class WatchService {
   }
 
   getCategories() {
-    return this.http.get<Categories[]>(this.baseUrl + '/watchType');
+    return this.http.get<Category[]>(this.baseUrl + '/watchType');
   }
 }

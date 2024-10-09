@@ -116,12 +116,6 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerDetails_Email",
-                table: "CustomerDetails",
-                column: "Email",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Items_ItemTypeId",
                 table: "Items",
                 column: "ItemTypeId");

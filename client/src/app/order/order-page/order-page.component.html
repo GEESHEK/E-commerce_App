@@ -1,0 +1,30 @@
+<div class="container" *ngIf="items.length > 0">
+  <div class="row justify-content-center">
+    <form [formGroup]="orderForm" class="col-6" (ngSubmit)="orderNow()" autocomplete="off">
+      <h2 class="text-center">Customer Details</h2>
+      <hr>
+      <app-text-input [formControl]="$any(orderForm.controls['firstName'])" [label]="'First Name'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['surname'])" [label]="'Surname'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['email'])" [label]="'Email'" [type]="'email'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['phoneNumber'])" [label]="'Phone Number'"></app-text-input>
+      <h2 class="text-center">Shipping Address</h2>
+      <hr>
+      <app-text-input [formControl]="$any(orderForm.controls['address'])" [label]="'Address'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['zipCode'])" [label]="'ZipCode'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['country'])" [label]="'Country'"></app-text-input>
+      <app-text-input [formControl]="$any(orderForm.controls['city'])" [label]="'City'"></app-text-input>
+      <h2 class="text-center">Review Items</h2>
+      <hr>
+      <app-order-watch-list [items]="items" [itemIds]="itemIds"></app-order-watch-list>
+      <hr>
+      <div class="row">
+        <div class="col-4 text-center">
+          <button class="btn btn-success me-2">Order now</button>
+        </div>
+        <div class="col-8">
+          <h4>{{ "Order Total: " + (totalPrice | currency: "USD") }}</h4>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
