@@ -5,33 +5,40 @@
       <hr>
       <div class="row">
         <div class="col-6">
-          <h5>Order # {{ order.id }}</h5>
-          <h5>Order Placed: {{ order.dataTime }}</h5>
-          <h5>Order Status: {{ order.statusType }}</h5>
+          <h6>Order # {{ order.id }}</h6>
+          <h6>Order Placed: {{ order.dateTime | date:'d MMMM y' }}</h6>
+          <h6>Order Status: {{ order.statusType }}</h6>
         </div>
         <div class="col-6">
-          <h5>Dispatched To:</h5>
-          <h5>{{ order.customerDetail.firstName }} {{ order.customerDetail.surname }}</h5>
-          <h5>{{ order.customerDetail.address }}</h5>
-          <h5>{{ order.customerDetail.country }}</h5>
-          <h5>{{ order.customerDetail.zipCode }}</h5>
+          <h6>Dispatched To:</h6>
+          <h6>{{ order.customerDetail.firstName }} {{ order.customerDetail.surname }}</h6>
+          <h6>{{ order.customerDetail.address }}</h6>
+          <h6>{{ order.customerDetail.country }}</h6>
+          <h6>{{ order.customerDetail.zipCode }}</h6>
         </div>
       </div>
       <hr>
       <div *ngIf="items">
-      <div class="row" *ngFor="let item of items">
-        <div class="col-6 main-photo">
-          <img class="mx-auto d-block" src="{{item.photoUrl}}"
-               alt='{{item.brand + " " + item.name + " " + item.reference}}'>
+        <div class="row" *ngFor="let item of items">
+          <div class="col-6 main-photo clickable" [routerLink]="['/watch/' + item.id]">
+            <img class="mx-auto d-block" src="{{item.photoUrl}}"
+                 alt='{{item.brand + " " + item.name + " " + item.reference}}'>
+          </div>
+          <div class="col-6">
+            <h6 class="clickable" [routerLink]="['/watch/' + item.id]">{{ item.brand + " " + item.name + " " + item.reference }}</h6>
+            <h6>{{ "Price: " + (item.price | currency: "USD") }}</h6>
+            <h6>{{ "Color: " + item.dial }}</h6>
+            <h6> {{ "Qty: " + this.getQuantity(item.id) }}</h6>
+          </div>
         </div>
-        <div class="col-6">
-          <h6>{{ item.brand + " " + item.name + " " + item.reference }}</h6>
-          <h6>{{ "Price: " + (item.price | currency: "USD") }}</h6>
-          <h6>{{ "Color: " + item.dial }}</h6>
-          <h6> {{ "Qty: "  }}</h6>
+        <hr>
+        <div class="row">
+          <div class="col-6"></div>
+          <div class="col-6">
+            <h4>{{ "Order Total: " + (order.total | currency: "USD") }}</h4>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </div>

@@ -3,7 +3,7 @@ import {Item} from "./item";
 
 export interface SuccessOrder {
   id: number;
-  dataTime: string;
+  dateTime: string;
   statusType: string;
   customerDetail: CustomerDetail;
   items: Item[];

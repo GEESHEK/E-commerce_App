@@ -41,11 +41,7 @@ export class OrderConfirmationPageComponent implements OnInit {
       this.orderService.retrieveSuccessOrder(this.orderId).subscribe({
         next: (response) => {
           this.order = response;
-          console.log("logging order: " + JSON.stringify(this.order));
           this.itemIds = this.getProductIds(this.order);
-          console.log("all the ids: " + this.itemIds);
-
-          console.log("length:" + this.itemIds.length);
           if (this.itemIds.length > 0) {
             this.loadItems(this.itemIds);
           }
@@ -59,7 +55,6 @@ export class OrderConfirmationPageComponent implements OnInit {
     this.watchService.getCartWatches(ids).subscribe({
       next: (response) => {
         this.items = response;
-        console.log("cart watch: " + JSON.stringify(this.items));
       },
       error: (error) => console.log(error),
     });
@@ -67,5 +62,9 @@ export class OrderConfirmationPageComponent implements OnInit {
 
   getProductIds(order: SuccessOrder): number[] {
     return order.items.map(item => item.productId);
+  }
+
+  getQuantity(id: number): number {
+    return this.order!.items.find(x => x.productId === id)!.quantity;
   }
 }

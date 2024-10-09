@@ -4,6 +4,15 @@
 }
 
 .main-photo img {
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+h6.clickable:hover {
+  text-decoration: underline;
+  color: blue;
 }
