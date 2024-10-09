@@ -204,10 +204,6 @@ public class DataContext : DbContext
         modelBuilder.Entity<CustomerDetail>()
             .Property(c => c.Email)
             .IsRequired();
-
-        modelBuilder.Entity<CustomerDetail>()
-            .HasIndex(c => c.Email)
-            .IsUnique();
         
         modelBuilder.Entity<CustomerDetail>()
             .Property(c => c.Address)
@@ -235,6 +231,10 @@ public class DataContext : DbContext
         
         modelBuilder.Entity<Item>()
             .Property(i => i.Quantity)
+            .IsRequired();
+        
+        modelBuilder.Entity<Item>()
+            .Property(i => i.Price)
             .IsRequired();
         
         modelBuilder.Entity<ItemType>()

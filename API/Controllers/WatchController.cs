@@ -51,15 +51,18 @@ public class WatchController : BaseApiController
         if (await _watchRepository.WatchExists(createWatchDto.Reference))
             return BadRequest("Watch reference already exists");
 
-        var watch = _mapper.Map<Watch>(createWatchDto);
+        var mappedWatch = _mapper.Map<Watch>(createWatchDto);
 
-        _watchRepository.AddWatch(watch);
+        _watchRepository.AddWatch(mappedWatch);
 
         if (await _watchRepository.SaveAllAsync())
-            return CreatedAtAction(nameof(GetWatch), new { id = watch.Id }, watch);
+        {
+            var watch = await _watchRepository.GetWatchById(mappedWatch.Id);
+            return CreatedAtAction(nameof(GetWatch), new { id = mappedWatch.Id }, watch);
+        }
 
         //Todo come back to catch other errors: look at notes if you return bool in save all then nothing can be caught
-        return BadRequest("Failed to add watch");
+        return BadRequest("Failed to create watch");
     }
 
     [HttpPut("{id:int}")]

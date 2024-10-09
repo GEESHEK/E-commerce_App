@@ -15,6 +15,11 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { WatchDetailComponent } from './watch/watch-detail-page/watch-detail.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { CartComponent } from './cart/cart.component';
+import { OrderConfirmationPageComponent } from './order/order-confirmation-page/order-confirmation-page.component';
+import { OrderPageComponent } from './order/order-page/order-page.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TextInputComponent } from './forms/text-input/text-input.component';
+import { OrderWatchListComponent } from './order/order-watch-list/order-watch-list.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,10 @@ import { CartComponent } from './cart/cart.component';
     ImageFallbackDirective,
     WatchDetailComponent,
     CartComponent,
+    OrderConfirmationPageComponent,
+    OrderPageComponent,
+    TextInputComponent,
+    OrderWatchListComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +44,8 @@ import { CartComponent } from './cart/cart.component';
     NgOptimizedImage,
     BsDropdownModule.forRoot(),
     AccordionModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

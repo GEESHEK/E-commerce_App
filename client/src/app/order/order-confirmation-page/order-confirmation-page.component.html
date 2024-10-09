@@ -1,0 +1,44 @@
+<div class="container" *ngIf="order">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <h1>Order Confirmation</h1>
+      <hr>
+      <div class="row">
+        <div class="col-6">
+          <h6>Order # {{ order.id }}</h6>
+          <h6>Order Placed: {{ order.dateTime | date:'d MMMM y' }}</h6>
+          <h6>Order Status: {{ order.statusType }}</h6>
+        </div>
+        <div class="col-6">
+          <h6>Dispatched To:</h6>
+          <h6>{{ order.customerDetail.firstName }} {{ order.customerDetail.surname }}</h6>
+          <h6>{{ order.customerDetail.address }}</h6>
+          <h6>{{ order.customerDetail.country }}</h6>
+          <h6>{{ order.customerDetail.zipCode }}</h6>
+        </div>
+      </div>
+      <hr>
+      <div *ngIf="items">
+        <div class="row" *ngFor="let item of items">
+          <div class="col-6 main-photo clickable" [routerLink]="['/watch/' + item.id]">
+            <img class="mx-auto d-block" src="{{item.photoUrl}}"
+                 alt='{{item.brand + " " + item.name + " " + item.reference}}'>
+          </div>
+          <div class="col-6">
+            <h6 class="clickable" [routerLink]="['/watch/' + item.id]">{{ item.brand + " " + item.name + " " + item.reference }}</h6>
+            <h6>{{ "Price: " + (item.price | currency: "USD") }}</h6>
+            <h6>{{ "Color: " + item.dial }}</h6>
+            <h6> {{ "Qty: " + this.getQuantity(item.id) }}</h6>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-6"></div>
+          <div class="col-6">
+            <h4>{{ "Order Total: " + (order.total | currency: "USD") }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

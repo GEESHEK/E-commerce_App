@@ -12,7 +12,7 @@ public class Order
     public int CustomerDetailId { get; set; }
     public CustomerDetail CustomerDetail { get; set; }
     [JsonIgnore]
-    public int StatusTypeId { get; set; }
+    public int StatusTypeId { get; set; } = 1;
     public StatusType StatusType { get; set; }
     public decimal Total { get; set; }
     public List<Item> Items { get; set; } = new();
