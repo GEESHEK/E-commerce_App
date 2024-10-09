@@ -1,7 +1,22 @@
 <div class="container" *ngIf="order">
-  <h1>Order Confirmation</h1>
-  <p>Order Reference: {{order.id}}</p>
-  <p>Order Total: {{order.total}}</p>
-  <p>Order Status {{order.statusType}}</p>
-  <p>Order Address {{order.customerDetail.address}}</p>
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <h1>Order Confirmation</h1>
+      <hr>
+      <div class="row">
+        <div class="col-6">
+          <h5>Order # {{ order.id }}</h5>
+          <h5>Order Placed: {{ order.dataTime }}</h5>
+          <h5>Order Status: {{ order.statusType }}</h5>
+        </div>
+        <div class="col-6">
+          <h5>Dispatched To:</h5>
+          <h5>{{ order.customerDetail.firstName }} {{ order.customerDetail.surname }}</h5>
+          <h5>{{ order.customerDetail.address }}</h5>
+          <h5>{{ order.customerDetail.country }}</h5>
+          <h5>{{ order.customerDetail.zipCode }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,13 +1,13 @@
 <div class="container" *ngIf="items.length > 0">
   <div class="row justify-content-center">
     <form [formGroup]="orderForm" class="col-6" (ngSubmit)="orderNow()" autocomplete="off">
-      <h2 class="text-center ">Customer Details</h2>
+      <h2 class="text-center">Customer Details</h2>
       <hr>
       <app-text-input [formControl]="$any(orderForm.controls['firstName'])" [label]="'First Name'"></app-text-input>
       <app-text-input [formControl]="$any(orderForm.controls['surname'])" [label]="'Surname'"></app-text-input>
       <app-text-input [formControl]="$any(orderForm.controls['email'])" [label]="'Email'" [type]="'email'"></app-text-input>
       <app-text-input [formControl]="$any(orderForm.controls['phoneNumber'])" [label]="'Phone Number'"></app-text-input>
-      <h2 class="text-center ">Shipping Address</h2>
+      <h2 class="text-center">Shipping Address</h2>
       <hr>
       <app-text-input [formControl]="$any(orderForm.controls['address'])" [label]="'Address'"></app-text-input>
       <app-text-input [formControl]="$any(orderForm.controls['zipCode'])" [label]="'ZipCode'"></app-text-input>
