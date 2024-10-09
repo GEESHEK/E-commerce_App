@@ -17,6 +17,21 @@
           <h5>{{ order.customerDetail.zipCode }}</h5>
         </div>
       </div>
+      <hr>
+      <div *ngIf="items">
+      <div class="row" *ngFor="let item of items">
+        <div class="col-6 main-photo">
+          <img class="mx-auto d-block" src="{{item.photoUrl}}"
+               alt='{{item.brand + " " + item.name + " " + item.reference}}'>
+        </div>
+        <div class="col-6">
+          <h6>{{ item.brand + " " + item.name + " " + item.reference }}</h6>
+          <h6>{{ "Price: " + (item.price | currency: "USD") }}</h6>
+          <h6>{{ "Color: " + item.dial }}</h6>
+          <h6> {{ "Qty: "  }}</h6>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </div>

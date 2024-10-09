@@ -15,17 +15,7 @@
       <app-text-input [formControl]="$any(orderForm.controls['city'])" [label]="'City'"></app-text-input>
       <h2 class="text-center">Review Items</h2>
       <hr>
-      <div class="row" *ngFor="let item of items">
-        <div class="col-lg-4 main-photo">
-          <img class="mx-auto d-block" src="{{item.photoUrl}}" alt='{{item.brand + " " + item.name + " " + item.reference}}'>
-        </div>
-        <div class="col-lg-8">
-          <h6>{{item.brand + " " + item.name + " " + item.reference}}</h6>
-          <h6>{{"Price: " + (item.price | currency: "USD")}}</h6>
-          <h6>{{"Color: " + item.dial}}</h6>
-          <h6> {{"Qty: " + calculateItemCount(item.id)}}</h6>
-        </div>
-      </div>
+      <app-order-watch-list [items]="items" [itemIds]="itemIds"></app-order-watch-list>
       <hr>
       <div class="row">
         <div class="col-4 text-center">

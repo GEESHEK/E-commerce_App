@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../services/order.service";
 import {ActivatedRoute} from "@angular/router";
 import {SuccessOrder} from "../../../models/successOrder";
+import {CartWatch} from "../../../models/cartWatch";
+import {WatchService} from "../../services/watch.service";
 
 @Component({
   selector: 'app-order-confirmation-page',
@@ -11,9 +13,12 @@ import {SuccessOrder} from "../../../models/successOrder";
 export class OrderConfirmationPageComponent implements OnInit {
   orderId: number | undefined;
   order: SuccessOrder | undefined;
+  itemIds: number[] = [];
+  items: CartWatch[] = [];
 
   constructor(
     private orderService: OrderService,
+    private watchService: WatchService,
     private route: ActivatedRoute) {
   }
 
@@ -37,9 +42,30 @@ export class OrderConfirmationPageComponent implements OnInit {
         next: (response) => {
           this.order = response;
           console.log("logging order: " + JSON.stringify(this.order));
+          this.itemIds = this.getProductIds(this.order);
+          console.log("all the ids: " + this.itemIds);
+
+          console.log("length:" + this.itemIds.length);
+          if (this.itemIds.length > 0) {
+            this.loadItems(this.itemIds);
+          }
         },
         error: (error) => console.log(error)
       });
     }
+  }
+
+  loadItems(ids: number[]) {
+    this.watchService.getCartWatches(ids).subscribe({
+      next: (response) => {
+        this.items = response;
+        console.log("cart watch: " + JSON.stringify(this.items));
+      },
+      error: (error) => console.log(error),
+    });
+  }
+
+  getProductIds(order: SuccessOrder): number[] {
+    return order.items.map(item => item.productId);
   }
 }
