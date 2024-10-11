@@ -14,7 +14,7 @@ public static class OrderSeedData
             {
                 CustomerDetailId = 1,
                 StatusTypeId = 1,
-                Total = 2545.00m,
+                Total = 3620.00m,
                 Items = new List<Item>()
                 {
                     new()
@@ -37,7 +37,7 @@ public static class OrderSeedData
             {
                 CustomerDetailId = 2,
                 StatusTypeId = 2,
-                Total = 2545.00m,
+                Total = 3620.00m,
                 Items = new List<Item>()
                 {
                     new()
@@ -60,7 +60,7 @@ public static class OrderSeedData
             {
                 CustomerDetailId = 3,
                 StatusTypeId = 3,
-                Total = 750.00m,
+                Total = 360.00m,
                 Items = new List<Item>()
                 {
                     new()
@@ -76,7 +76,7 @@ public static class OrderSeedData
             {
                 CustomerDetailId = 4,
                 StatusTypeId = 4,
-                Total = 300.00m,
+                Total = 799.98m,
                 Items = new List<Item>()
                 {
                     new()
@@ -92,7 +92,7 @@ public static class OrderSeedData
             {
                 CustomerDetailId = 5,
                 StatusTypeId = 5,
-                Total = 499.99m,
+                Total = 999.99m,
                 Items = new List<Item>()
                 {
                     new()
@@ -108,7 +108,7 @@ public static class OrderSeedData
             {
                 CustomerDetailId = 6,
                 StatusTypeId = 6,
-                Total = 500.00m,
+                Total = 750.00m,
                 Items = new List<Item>()
                 {
                     new()
@@ -124,7 +124,7 @@ public static class OrderSeedData
             {
                 CustomerDetailId = 7,
                 StatusTypeId = 7,
-                Total = 1000.00m,
+                Total = 1999.99m,
                 Items = new List<Item>()
                 {
                     new()
