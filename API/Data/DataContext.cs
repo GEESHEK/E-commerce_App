@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using API.Entities.OrderEntities;
+using API.Entities.UserEntities;
 using API.Entities.WatchEntities;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ public class DataContext : DbContext
         
     }
     
+    public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<Watch> Watches { get; set; }
     public DbSet<Brand> Brands { get; set; }
     public DbSet<Calibre> Calibres { get; set; }
@@ -259,6 +261,22 @@ public class DataContext : DbContext
         
         modelBuilder.Entity<Order>()
             .Property(i => i.Total)
+            .IsRequired();
+
+        modelBuilder.Entity<AppUser>()
+            .Property(a => a.KnownAs)
+            .IsRequired();
+        
+        modelBuilder.Entity<AppUser>()
+            .Property(a => a.Created)
+            .IsRequired();
+        
+        modelBuilder.Entity<AppUser>()
+            .Property(a => a.Gender)
+            .IsRequired();
+        
+        modelBuilder.Entity<AppUser>()
+            .Property(a => a.DateOfBirth)
             .IsRequired();
     }
 }
