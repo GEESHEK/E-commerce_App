@@ -8,13 +8,13 @@ public class UserController : BaseApiController
 {
     private readonly IUserRepository _userRepository;
 
-    public UserController()
+    public UserController(IUserRepository userRepository)
     {
-        _userRepository = new UserRepository();
+        _userRepository = userRepository;
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+    public Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
         return null;
     }
