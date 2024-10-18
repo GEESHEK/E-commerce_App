@@ -11,7 +11,7 @@ public class CustomerDetail
     public int AppUserId { get; set; }
     [JsonIgnore]
     public AppUser AppUser { get; set; }
-    public bool IsMain { get; set; }
+    public bool IsMain { get; set; } = true;
     public string FirstName { get; set; }
     public string Surname { get; set; }
     public string Email { get; set; }
