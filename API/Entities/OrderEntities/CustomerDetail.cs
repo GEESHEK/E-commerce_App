@@ -8,10 +8,10 @@ namespace API.Entities.OrderEntities;
 public class CustomerDetail
 {
     public int Id { get; set; }
-    public int AppUserId { get; set; }
+    public int? AppUserId { get; set; }
     [JsonIgnore]
-    public AppUser AppUser { get; set; }
-    public bool IsMain { get; set; } = true;
+    public AppUser? AppUser { get; set; }
+    public bool? IsMain { get; set; }
     public string FirstName { get; set; }
     public string Surname { get; set; }
     public string Email { get; set; }
