@@ -34,6 +34,9 @@ namespace API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("text");
@@ -50,6 +53,9 @@ namespace API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool?>("IsMain")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("text");
@@ -63,6 +69,8 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("CustomerDetails");
                 });
@@ -166,6 +174,38 @@ namespace API.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("StatusTypes");
+                });
+
+            modelBuilder.Entity("API.Entities.UserEntities.AppUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("AppUsers");
                 });
 
             modelBuilder.Entity("API.Entities.WatchEntities.Brand", b =>
@@ -549,6 +589,15 @@ namespace API.Data.Migrations
                     b.ToTable("WaterResistances");
                 });
 
+            modelBuilder.Entity("API.Entities.OrderEntities.CustomerDetail", b =>
+                {
+                    b.HasOne("API.Entities.UserEntities.AppUser", "AppUser")
+                        .WithMany("CustomerDetails")
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("API.Entities.OrderEntities.Item", b =>
                 {
                     b.HasOne("API.Entities.OrderEntities.ItemType", "ItemType")
@@ -713,6 +762,11 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.OrderEntities.Order", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("API.Entities.UserEntities.AppUser", b =>
+                {
+                    b.Navigation("CustomerDetails");
                 });
 
             modelBuilder.Entity("API.Entities.WatchEntities.Brand", b =>
