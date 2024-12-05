@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241204161953_AddedUserEntity")]
-    partial class AddedUserEntity
+    [Migration("20241205103823_AddUserAndOrderEntity")]
+    partial class AddUserAndOrderEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -187,9 +187,8 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()

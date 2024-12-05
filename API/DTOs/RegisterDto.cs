@@ -9,5 +9,5 @@ public class RegisterDto
     [Required]
     public string Password { get; set; }
     [Required]
-    public string Gender { get; set; }
+    public int Gender { get; set; }
 }

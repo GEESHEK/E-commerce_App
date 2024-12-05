@@ -1,26 +1,28 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using API.Data;
+using API.Data.Repositories;
 using API.DTOs;
 using API.Entities.UserEntities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
 public class AccountController : BaseApiController
 {
-    private readonly DataContext _context;
+    private readonly IAccountRepository _accountRepository;
 
-    public AccountController(DataContext context)
+    public AccountController(IAccountRepository accountRepository)
     {
-        _context = context;
+        _accountRepository = accountRepository;
     }
 
     [HttpPost("register")]
     public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
     {
-        if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
+        if (await _accountRepository.UserExists(registerDto.Username)) return BadRequest("Username is taken");
+
+        if (registerDto.Gender != 0 && registerDto.Gender != 1)
+            return BadRequest("Invalid Gender value. Must be 0 (Male) or 1 (Female)");
         
         //If we don't use using, garbage collector will at some point dispose of it
         //Using will depose of it as soon as we stop using it
@@ -31,11 +33,11 @@ public class AccountController : BaseApiController
             Username = registerDto.Username.ToLower(),
             PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
             PasswordSalt = hmac.Key,
-            Gender = registerDto.Gender, //change to enum
+            Gender = registerDto.Gender == 0 ? Gender.Male : Gender.Female
         };
 
-        _context.AppUsers.Add(user);
-        await _context.SaveChangesAsync();
+        _accountRepository.AddUser(user);
+        await _accountRepository.SaveAllAsync();
 
         return user;
     }
@@ -43,12 +45,11 @@ public class AccountController : BaseApiController
     [HttpPost("login")]
     public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
     {
-        var user = await _context.AppUsers.FirstOrDefaultAsync(x => 
-            x.Username == loginDto.Username.ToLower());
+        var user = await _accountRepository.UserExists(loginDto);
         
         if (user == null) return Unauthorized("Invalid username");
         
-        using var hmac = new HMACSHA512(user.PasswordSalt);
+        using var hmac = new HMACSHA512(user.PasswordHash);
         
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
@@ -58,10 +59,5 @@ public class AccountController : BaseApiController
         }
         
         return user;
-    }
-
-    private async Task<bool> UserExists(string username)
-    {
-        return await _context.AppUsers.AnyAsync(x => x.Username.ToLower() == username.ToLower());
     }
 }

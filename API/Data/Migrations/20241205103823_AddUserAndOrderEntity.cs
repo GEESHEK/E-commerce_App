@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedUserEntity : Migration
+    public partial class AddUserAndOrderEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,7 @@ namespace API.Data.Migrations
                     Username = table.Column<string>(type: "text", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "bytea", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false),
-                    Gender = table.Column<string>(type: "text", nullable: false)
+                    Gender = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

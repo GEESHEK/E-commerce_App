@@ -184,9 +184,8 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
