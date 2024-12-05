@@ -14,9 +14,9 @@ public class AccountRepository : IAccountRepository
     }
     
     
-    public void AddUser(AppUser appUser)
+    public void AddUser(AppUser user)
     {
-        _context.AppUsers.Add(appUser);
+        _context.AppUsers.Add(user);
     }
 
     public async Task<bool> SaveAllAsync()
