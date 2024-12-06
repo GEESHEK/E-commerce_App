@@ -1,4 +1,4 @@
-﻿using API.DTOs;
+﻿using API.DTOs.UserDTOs;
 using API.Entities.UserEntities;
 
 namespace API.Data.Repositories;

@@ -1,4 +1,4 @@
-﻿using API.DTOs;
+﻿using API.DTOs.WatchDTOs;
 using API.Entities.WatchEntities;
 using AutoMapper;
 

@@ -1,5 +1,5 @@
 ﻿using API.Data.Repositories;
-using API.DTOs;
+using API.DTOs.WatchDTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;

@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using API.Data.Repositories;
-using API.DTOs;
+using API.DTOs.UserDTOs;
 using API.Entities.UserEntities;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,6 @@
 ﻿using API.Entities.WatchEntities;
 
-namespace API.DTOs;
+namespace API.DTOs.WatchDTOs;
 
 public class WatchDetailDto
 {
