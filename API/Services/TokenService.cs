@@ -15,16 +15,15 @@ public class TokenService : ITokenService
         _config = config;
     }
     
-    
     public string CreateToken(AppUser user)
     {
         var tokenKey = _config["TokenKey"] ?? throw new Exception("Cannot access tokenKey from appsettings");
-        if (tokenKey.Length < 64) throw new Exception("Invalid token key length needs to be longer");
+        if (tokenKey.Length < 64) throw new Exception("Invalid tokenKey length needs to be longer");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
 
         var claims = new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, user.Username)
+            new(ClaimTypes.NameIdentifier, user.UserName)
         };
         
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241205103823_AddUserAndOrderEntity")]
+    [Migration("20241206154218_AddUserAndOrderEntity")]
     partial class AddUserAndOrderEntity
     {
         /// <inheritdoc />
@@ -198,13 +198,13 @@ namespace API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("bytea");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Username")
+                    b.HasIndex("UserName")
                         .IsUnique();
 
                     b.ToTable("AppUsers");

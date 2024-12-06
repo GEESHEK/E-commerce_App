@@ -264,11 +264,11 @@ public class DataContext : DbContext
             .IsRequired();
 
         modelBuilder.Entity<AppUser>()
-            .Property(a => a.Username)
+            .Property(a => a.UserName)
             .IsRequired();
         
         modelBuilder.Entity<AppUser>()
-            .HasIndex(a => a.Username)
+            .HasIndex(a => a.UserName)
             .IsUnique();
         
         modelBuilder.Entity<AppUser>()

@@ -3,6 +3,7 @@ using System.Text;
 using API.Data.Repositories;
 using API.DTOs.UserDTOs;
 using API.Entities.UserEntities;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -10,14 +11,16 @@ namespace API.Controllers;
 public class AccountController : BaseApiController
 {
     private readonly IAccountRepository _accountRepository;
+    private readonly ITokenService _tokenService;
 
-    public AccountController(IAccountRepository accountRepository)
+    public AccountController(IAccountRepository accountRepository, ITokenService tokenService)
     {
         _accountRepository = accountRepository;
+        _tokenService = tokenService;
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
+    public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
         if (await _accountRepository.UserExists(registerDto.Username)) return BadRequest("Username is taken");
 
@@ -30,7 +33,7 @@ public class AccountController : BaseApiController
 
         var user = new AppUser
         {
-            Username = registerDto.Username.ToLower(),
+            UserName = registerDto.Username.ToLower(),
             PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
             PasswordSalt = hmac.Key,
             Gender = registerDto.Gender == 0 ? Gender.Male : Gender.Female
@@ -39,17 +42,21 @@ public class AccountController : BaseApiController
         _accountRepository.AddUser(user);
         await _accountRepository.SaveAllAsync();
 
-        return user;
+        return new UserDto
+        {
+            Username = user.UserName,
+            Token = _tokenService.CreateToken(user)
+        };
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+    public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
         var user = await _accountRepository.UserExists(loginDto);
         
         if (user == null) return Unauthorized("Invalid username");
         
-        using var hmac = new HMACSHA512(user.PasswordHash);
+        using var hmac = new HMACSHA512(user.PasswordSalt);
         
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
@@ -58,6 +65,10 @@ public class AccountController : BaseApiController
             if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
         }
         
-        return user;
+        return new UserDto
+        {
+            Username = user.UserName,
+            Token = _tokenService.CreateToken(user)
+        };
     }
 }

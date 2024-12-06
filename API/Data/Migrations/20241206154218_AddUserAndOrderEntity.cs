@@ -18,7 +18,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Username = table.Column<string>(type: "text", nullable: false),
+                    UserName = table.Column<string>(type: "text", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "bytea", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false),
                     Gender = table.Column<int>(type: "integer", nullable: false)
@@ -139,9 +139,9 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppUsers_Username",
+                name: "IX_AppUsers_UserName",
                 table: "AppUsers",
-                column: "Username",
+                column: "UserName",
                 unique: true);
 
             migrationBuilder.CreateIndex(

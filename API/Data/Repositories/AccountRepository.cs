@@ -26,11 +26,11 @@ public class AccountRepository : IAccountRepository
 
     public async Task<bool> UserExists(string username)
     {
-        return await _context.AppUsers.AnyAsync(x => x.Username.ToLower() == username.ToLower());
+        return await _context.AppUsers.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
     }
 
     public async Task<AppUser> UserExists(LoginDto loginDto)
     {
-        return await _context.AppUsers.FirstOrDefaultAsync(x => x.Username == loginDto.Username.ToLower());
+        return await _context.AppUsers.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
     }
 }
