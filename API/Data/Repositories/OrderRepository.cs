@@ -1,4 +1,4 @@
-﻿using API.DTOs;
+﻿using API.DTOs.OrderDTOs;
 using API.Entities.OrderEntities;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;

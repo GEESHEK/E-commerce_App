@@ -5,9 +5,10 @@ namespace API.Entities.UserEntities;
 public class AppUser
 {
     public int Id { get; set; }
-    public string KnownAs { get; set; }
-    public DateOnly DateOfBirth { get; set; }
-    public DateTime Created { get; set; } = DateTime.UtcNow;
-    public string Gender { get; set; }
+    //Identity requires PascalCase for UserName
+    public required string UserName { get; set; }
+    public required byte[] PasswordHash { get; set; }
+    public required byte[] PasswordSalt { get; set; }
+    public Gender Gender { get; set; }
     public List<CustomerDetail> CustomerDetails  { get; set; } = new();
 }

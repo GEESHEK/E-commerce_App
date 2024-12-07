@@ -1,5 +1,5 @@
 ﻿using API.Data.Repositories;
-using API.DTOs;
+using API.DTOs.WatchDTOs;
 using API.Entities.WatchEntities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;

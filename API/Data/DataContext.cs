@@ -205,7 +205,7 @@ public class DataContext : DbContext
         
         modelBuilder.Entity<CustomerDetail>()
             .Property(c => c.Email)
-            .IsRequired();
+            .IsRequired(); 
         
         modelBuilder.Entity<CustomerDetail>()
             .Property(c => c.Address)
@@ -264,19 +264,23 @@ public class DataContext : DbContext
             .IsRequired();
 
         modelBuilder.Entity<AppUser>()
-            .Property(a => a.KnownAs)
+            .Property(a => a.UserName)
             .IsRequired();
         
         modelBuilder.Entity<AppUser>()
-            .Property(a => a.Created)
-            .IsRequired();
+            .HasIndex(a => a.UserName)
+            .IsUnique();
         
         modelBuilder.Entity<AppUser>()
             .Property(a => a.Gender)
             .IsRequired();
+
+        modelBuilder.Entity<AppUser>()
+            .Property(a => a.PasswordHash)
+            .IsRequired();
         
         modelBuilder.Entity<AppUser>()
-            .Property(a => a.DateOfBirth)
+            .Property(a => a.PasswordSalt)
             .IsRequired();
     }
 }

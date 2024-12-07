@@ -5,4 +5,5 @@ namespace API.Data.Repositories;
 public interface IUserRepository
 {
     Task<IEnumerable<AppUser>> GetUsers();
+    Task<AppUser> GetUserById(int id);
 }

@@ -1,5 +1,5 @@
 ﻿using API.Data.Repositories;
-using API.DTOs;
+using API.DTOs.OrderDTOs;
 using API.Entities.OrderEntities;
 using API.Services;
 using AutoMapper;
