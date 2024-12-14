@@ -20,6 +20,7 @@ import { OrderPageComponent } from './order/order-page/order-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from './forms/text-input/text-input.component';
 import { OrderWatchListComponent } from './order/order-watch-list/order-watch-list.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { OrderWatchListComponent } from './order/order-watch-list/order-watch-li
     OrderPageComponent,
     TextInputComponent,
     OrderWatchListComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
