@@ -4,6 +4,7 @@ import {Category} from '../../models/category';
 import {Observable} from 'rxjs';
 import {WatchService} from '../services/watch.service';
 import {CartService} from '../services/cart.service';
+import {AccountService} from "../services/account.service";
 
 @Component({
   selector: 'app-nav',
@@ -14,12 +15,13 @@ export class NavComponent implements OnInit {
   brands$: Observable<Brand[]> | undefined;
   categories$: Observable<Category[]> | undefined;
   itemsInCart: number = 0;
-  username: string | null = null;
+  username: string = "";
   accountDropDowns: string[] | null = null;
 
   constructor(
     private watchService: WatchService,
     private cartService: CartService,
+    private accountService: AccountService
   ) {
   }
 
@@ -27,10 +29,12 @@ export class NavComponent implements OnInit {
     this.brands$ = this.watchService.getBrands();
     this.categories$ = this.watchService.getCategories();
     this.getCartItemCount();
-    // this.username = "Gee's";
-    if (this.username == null) {
+    if (this.accountService.currentUser() === null) {
       this.accountDropDowns = ["Your Account", "Your Orders", "Create Account", "Sign in"];
     } else {
+      if (this.accountService.currentUser()?.username !== null) {
+        this.username = this.capitalizeFirstLetter(this.accountService.currentUser()!.username) + "'s";
+      }
       this.accountDropDowns = ["Your Account", "Your Orders", "Sign Out"];
     }
   }
@@ -45,7 +49,7 @@ export class NavComponent implements OnInit {
   }
 
   getRouterLink(item: string): string {
-    if (this.username == null && item != "Create Account") return '/signin';
+    if (this.accountService.currentUser() === null && item !== "Create Account") return '/signin';
 
     switch (item) {
       case 'Your Account':
@@ -59,5 +63,24 @@ export class NavComponent implements OnInit {
       default:
         return "";
     }
+  }
+
+  logout() {
+    this.accountService.logout();
+    if (this.accountService.currentUser() === null) {
+      this.accountDropDowns = ["Your Account", "Your Orders", "Create Account", "Sign in"];
+    } else {
+      console.log(this.accountService.currentUser()?.username);
+      if (this.accountService.currentUser()?.username !== null) {
+        this.username = this.capitalizeFirstLetter(this.accountService.currentUser()!.username) + "'s";
+      }
+      this.accountDropDowns = ["Your Account", "Your Orders", "Sign Out"];
+    }
+    this.username = "";
+  }
+
+  capitalizeFirstLetter(value: string): string {
+    if (!value) return value;
+    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 }

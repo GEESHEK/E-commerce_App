@@ -26,7 +26,8 @@
       <button class="btn btn-outline-success dropdown-toggle me-2" dropdownToggle><i class="fa fa-user"></i> {{username}} Account</button>
       <ul class="dropdown-menu" *dropdownMenu>
         <li *ngFor="let item of accountDropDowns">
-          <a class="dropdown-item" [routerLink]="getRouterLink(item)">{{ item }}</a>
+          <a *ngIf="item === 'Sign Out'" class="dropdown-item" (click)="logout()">{{ item }}</a>
+          <a *ngIf="item !== 'Sign Out'" class="dropdown-item" [routerLink]="getRouterLink(item)">{{ item }}</a>
         </li>
       </ul>
       <button class="btn btn-outline-danger position-relative" routerLink="/cart">

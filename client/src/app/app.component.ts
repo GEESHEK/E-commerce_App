@@ -12,12 +12,14 @@ export class AppComponent implements OnInit {
   title = 'Home Page';
   protected readonly Router = Router;
 
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  constructor(
+    private http: HttpClient,
+    private accountService: AccountService) {
 
   }
 
   ngOnInit() {
-    // this.getUsers();
+    this.setCurrentUser();
   }
 
   setCurrentUser() {
@@ -26,10 +28,4 @@ export class AppComponent implements OnInit {
     const user = JSON.parse(userString);
     this.accountService.currentUser.set(user);
   }
-
-  // getUsers() {
-  //   this.http.get('http://localhost:5001/api/users').subscribe({
-  //
-  //   })
-  // }
 }
