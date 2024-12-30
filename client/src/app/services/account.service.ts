@@ -10,7 +10,8 @@ import {map} from "rxjs";
 export class AccountService {
   private http = inject(HttpClient);
   baseUrl = environment.apiUrl;
-  currentUser = signal<User | null>(null);
+  private currentUser = signal<User | null>(null);
+  currentUser$ = this.currentUser.asReadonly()
 
   login(model: any) {
     return this.http.post<User>(this.baseUrl + '/account/login', model).pipe(
@@ -26,5 +27,9 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
+  }
+
+  setUser(user: User) {
+    this.currentUser.set(user);
   }
 }

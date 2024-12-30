@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, computed, OnInit} from '@angular/core';
 import {Brand} from '../../models/brand';
 import {Category} from '../../models/category';
 import {Observable} from 'rxjs';
@@ -15,7 +15,13 @@ export class NavComponent implements OnInit {
   brands$: Observable<Brand[]> | undefined;
   categories$: Observable<Category[]> | undefined;
   itemsInCart: number = 0;
-  username: string = "";
+  username = computed(() => {
+    const user = this.accountService.currentUser$();
+    if (user) {
+      this.userExists();
+    }
+    return user?.username ? this.capitalizeFirstLetter(user.username) + "'s" : "";
+  });
   accountDropDowns: string[] | null = null;
 
   constructor(
@@ -29,14 +35,7 @@ export class NavComponent implements OnInit {
     this.brands$ = this.watchService.getBrands();
     this.categories$ = this.watchService.getCategories();
     this.getCartItemCount();
-    if (this.accountService.currentUser() === null) {
-      this.accountDropDowns = ["Your Account", "Your Orders", "Create Account", "Sign in"];
-    } else {
-      if (this.accountService.currentUser()?.username !== null) {
-        this.username = this.capitalizeFirstLetter(this.accountService.currentUser()!.username) + "'s";
-      }
-      this.accountDropDowns = ["Your Account", "Your Orders", "Sign Out"];
-    }
+    this.createDropDown();
   }
 
   private getCartItemCount() {
@@ -49,7 +48,7 @@ export class NavComponent implements OnInit {
   }
 
   getRouterLink(item: string): string {
-    if (this.accountService.currentUser() === null && item !== "Create Account") return '/signin';
+    if (this.username() === "" && item !== "Create Account") return '/signin';
 
     switch (item) {
       case 'Your Account':
@@ -67,20 +66,23 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.accountService.logout();
-    if (this.accountService.currentUser() === null) {
-      this.accountDropDowns = ["Your Account", "Your Orders", "Create Account", "Sign in"];
-    } else {
-      console.log(this.accountService.currentUser()?.username);
-      if (this.accountService.currentUser()?.username !== null) {
-        this.username = this.capitalizeFirstLetter(this.accountService.currentUser()!.username) + "'s";
-      }
-      this.accountDropDowns = ["Your Account", "Your Orders", "Sign Out"];
-    }
-    this.username = "";
+    this.createDropDown();
   }
 
   capitalizeFirstLetter(value: string): string {
     if (!value) return value;
     return value.charAt(0).toUpperCase() + value.slice(1);
+  }
+
+  createDropDown() {
+    if (this.username() === "") {
+      this.accountDropDowns = ["Your Account", "Your Orders", "Create Account", "Sign in"];
+    } else {
+      this.userExists();
+    }
+  }
+
+  userExists() {
+    this.accountDropDowns = ["Your Account", "Your Orders", "Sign Out"];
   }
 }

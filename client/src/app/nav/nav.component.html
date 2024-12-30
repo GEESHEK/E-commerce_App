@@ -23,7 +23,7 @@
       </li>
     </ul>
     <div class="d-flex nav-item dropdown" dropdown>
-      <button class="btn btn-outline-success dropdown-toggle me-2" dropdownToggle><i class="fa fa-user"></i> {{username}} Account</button>
+      <button class="btn btn-outline-success dropdown-toggle me-2" dropdownToggle><i class="fa fa-user"></i> {{username()}} Account</button>
       <ul class="dropdown-menu" *dropdownMenu>
         <li *ngFor="let item of accountDropDowns">
           <a *ngIf="item === 'Sign Out'" class="dropdown-item" (click)="logout()">{{ item }}</a>
