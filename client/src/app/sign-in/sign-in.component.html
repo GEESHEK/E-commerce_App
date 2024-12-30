@@ -1,13 +1,19 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-6">
-      <h1 class="text-center"><a class="navbar-brand" routerLink="/" routerLinkActive="active">JDM Watches</a></h1>
-      <br>
-      <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex flex-column" autocomplete="off">
-        <input name="username" [(ngModel)]="model.username" class="form-control me-2 mb-2" placeholder="Username">
-        <input name="password" [(ngModel)]="model.password"class="form-control me-2 mb-2" placeholder="Password" type="password">
-        <button class="btn btn-outline-success" type="submit">Login</button>
-      </form>
+      <h1 class="text-center mb-4"><a class="navbar-brand" routerLink="/" routerLinkActive="active">JDM Watches</a></h1>
+      <h4>Sign in</h4>
+      <hr>
+      <div class="d-flex flex-column">
+        <form #loginForm="ngForm" (ngSubmit)="login()"  class="d-flex flex-column mb-2" autocomplete="off">
+          <input name="username" [(ngModel)]="model.username" class="form-control mb-2" placeholder="Username">
+          <input name="password" [(ngModel)]="model.password"class="form-control mb-2" placeholder="Password" type="password">
+          <button class="btn btn-success" type="submit">Login</button>
+        </form>
+        <hr>
+        <h6 class="text-center text-black-50">New to JDM Watches?</h6>
+        <button class="btn btn-outline-dark">Create your JDM account</button>
+      </div>
     </div>
   </div>
 
