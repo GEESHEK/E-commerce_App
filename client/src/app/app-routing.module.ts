@@ -7,6 +7,7 @@ import {CartComponent} from './cart/cart.component';
 import {OrderPageComponent} from './order/order-page/order-page.component';
 import {OrderConfirmationPageComponent} from './order/order-confirmation-page/order-confirmation-page.component';
 import {SignInComponent} from "./sign-in/sign-in.component";
+import {RegisterComponent} from "./register/register.component";
 
 const appName: string = 'JDM Watches';
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'order', component: OrderPageComponent, title: 'Order - ' + appName },
   { path: 'order/confirmation/:orderId', component: OrderConfirmationPageComponent, title: 'Order Confirmation - ' + appName },
   { path: 'signin', component: SignInComponent, title: 'Sign In - ' + appName },
+  { path: 'register', component: RegisterComponent, title: 'Create Account - ' + appName },
   { path: '**', component: HomeComponent, pathMatch: 'full', title: 'Home - ' + appName,},
   //TODO add a route for not-found pathways
 ];

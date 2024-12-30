@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from './forms/text-input/text-input.component';
 import { OrderWatchListComponent } from './order/order-watch-list/order-watch-list.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
     TextInputComponent,
     OrderWatchListComponent,
     SignInComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

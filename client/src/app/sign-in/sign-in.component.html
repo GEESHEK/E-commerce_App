@@ -6,15 +6,14 @@
       <hr>
       <div class="d-flex flex-column">
         <form #loginForm="ngForm" (ngSubmit)="login()"  class="d-flex flex-column mb-2" autocomplete="off">
-          <input name="username" [(ngModel)]="model.username" class="form-control mb-2" placeholder="Username">
-          <input name="password" [(ngModel)]="model.password"class="form-control mb-2" placeholder="Password" type="password">
+          <input type="text" name="username" [(ngModel)]="model.username" class="form-control mb-2" placeholder="Username">
+          <input type="password" name="password" [(ngModel)]="model.password" class="form-control mb-2" placeholder="Password">
           <button class="btn btn-success" type="submit">Login</button>
         </form>
         <hr>
         <h6 class="text-center text-black-50">New to JDM Watches?</h6>
-        <button class="btn btn-outline-dark">Create your JDM account</button>
+        <button class="btn btn-outline-dark" routerLink="/register">Create your JDM account</button>
       </div>
     </div>
   </div>
-
 </div>
