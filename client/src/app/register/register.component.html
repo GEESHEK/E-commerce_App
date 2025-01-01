@@ -12,9 +12,16 @@
           <input type="password" class="form-control" name="password" [(ngModel)]="modal.password" placeholder="Password">
           <label>Password</label>
         </div>
+        <div>
+          <label class="me-2">
+            <input type="radio" name="gender" [(ngModel)]="modal.gender" value="0"/> Male
+          </label>
+          <label class="me-2">
+            <input type="radio" name="gender" [(ngModel)]="modal.gender" value="1"/> Female
+          </label>
+        </div>
         <div class="form-group text-center">
           <button class="btn btn-success me-2" type="submit">Register</button>
-          <button class="btn btn-default me-2" (click)="cancel()" type="button">Cancel</button>
         </div>
       </form>
     </div>
