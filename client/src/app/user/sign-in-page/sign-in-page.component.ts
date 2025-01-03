@@ -1,13 +1,13 @@
 import {Component, inject} from '@angular/core';
-import {AccountService} from "../services/account.service";
+import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  selector: 'app-sign-in-page',
+  templateUrl: './sign-in-page.component.html',
+  styleUrls: ['./sign-in-page.component.css']
 })
-export class SignInComponent {
+export class SignInPageComponent {
   private accountService = inject(AccountService);
   private router = inject(Router);
   model: any = {};
