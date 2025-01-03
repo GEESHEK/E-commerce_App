@@ -12,7 +12,11 @@ export class SignInPageComponent {
   private accountService = inject(AccountService);
   private router = inject(Router);
   private toastr = inject(ToastrService);
-  model: any = {};
+  model: any = {
+    username: "",
+    password: "",
+    gender: ""
+  };
 
   login() {
     this.accountService.login(this.model).subscribe({
