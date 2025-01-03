@@ -4,6 +4,7 @@ import {environment} from "../../environments/environment";
 import {User} from "../../models/user";
 import {map} from "rxjs";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import {Router} from "@angular/router";
 export class AccountService {
   private http = inject(HttpClient);
   private router = inject(Router);
+  private toastr = inject(ToastrService);
   baseUrl = environment.apiUrl;
   private currentUser = signal<User | null>(null);
   currentUser$ = this.currentUser.asReadonly()
@@ -21,6 +23,7 @@ export class AccountService {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUser.set(user);
+          this.toastr.success('Login Successfully');
         }
       })
     )
@@ -30,6 +33,7 @@ export class AccountService {
     localStorage.removeItem('user');
     this.currentUser.set(null);
     this.router.navigateByUrl('/signin');
+    this.toastr.success('Logout Successfully');
   }
 
   register(model: any) {

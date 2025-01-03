@@ -48,13 +48,14 @@ export class NavComponent implements OnInit {
   }
 
   getRouterLink(item: string): string {
-    if (this.username() === "" && item !== "Create Account") return '/signin';
+    //auth guard will handle this and prompt user to sign in with toastr
+    // if (this.username() === "" && item !== "Create Account") return '/signin';
 
     switch (item) {
       case 'Your Account':
         return '/account';
       case 'Your Orders':
-        return '/account/myorders';
+        return '/myorders';
       case 'Create Account':
         return '/register-page';
       case 'Sign in':

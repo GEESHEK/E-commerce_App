@@ -23,6 +23,8 @@ import {OrderWatchListComponent} from './order/order-watch-list/order-watch-list
 import {SignInPageComponent} from './user/sign-in-page/sign-in-page.component';
 import {RegisterPageComponent} from './user/register-page/register-page.component';
 import {AccountPageComponent} from './user/account-page/account-page.component';
+import {ToastrModule} from 'ngx-toastr';
+import {MyOrdersPageComponent} from './user/my-orders-page/my-orders-page.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import {AccountPageComponent} from './user/account-page/account-page.component';
     SignInPageComponent,
     RegisterPageComponent,
     AccountPageComponent,
+    MyOrdersPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,9 @@ import {AccountPageComponent} from './user/account-page/account-page.component';
     BrowserAnimationsModule,
     NgOptimizedImage,
     BsDropdownModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+    }),
     AccordionModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
