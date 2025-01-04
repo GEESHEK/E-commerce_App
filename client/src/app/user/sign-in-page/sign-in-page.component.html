@@ -5,16 +5,10 @@
       <h4>Sign in</h4>
       <hr>
       <div class="d-flex flex-column">
-        <form #loginForm="ngForm" (ngSubmit)="login()"  class="d-flex flex-column mb-2" autocomplete="off">
-          <input type="text" name="username" [(ngModel)]="model.username" #username="ngModel" class="form-control mb-2" placeholder="Username" required>
-<!--          <div *ngIf="model.username.invalid && model.username.touched" class="text-danger">-->
-<!--            Username is required.-->
-<!--          </div>-->
-          <input type="password" name="password" [(ngModel)]="model.password" class="form-control mb-2" placeholder="Password" required>
-<!--          <div *ngIf="model.password.invalid && model.password.touched" class="text-danger">-->
-<!--            Password is required.-->
-<!--          </div>-->
-          <button class="btn btn-success" type="submit" [disabled]="loginForm.invalid">Login</button>
+        <form [formGroup]="signInForm" (ngSubmit)="login()" class="d-flex flex-column mb-2" autocomplete="off">
+          <app-text-input [formControl]="$any(signInForm.controls['username'])" [label]="'Username'"></app-text-input>
+          <app-text-input [formControl]="$any(signInForm.controls['password'])" [label]="'Password'" [type]="'password'"></app-text-input>
+          <button class="btn btn-success" type="submit" [disabled]="signInForm.invalid">Login</button>
         </form>
         <hr>
         <h6 class="text-center text-black-50">New to JDM Watches?</h6>

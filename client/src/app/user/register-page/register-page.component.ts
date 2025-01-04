@@ -19,11 +19,11 @@ export class RegisterPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.initialiseForm();
-    }
+    this.initialiseForm();
+  }
 
   register() {
-    const registerUser : RegisterUser = {
+    const registerUser: RegisterUser = {
       username: this.registerForm.value.username,
       password: this.registerForm.value.password,
       gender: this.registerForm.value.gender
@@ -50,7 +50,7 @@ export class RegisterPageComponent implements OnInit {
     })
   }
 
-  matchValues(matchTo: string) :ValidatorFn {
+  matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
       return control.value === control.parent?.get(matchTo)?.value ? null : {isMatching: true};
     }
