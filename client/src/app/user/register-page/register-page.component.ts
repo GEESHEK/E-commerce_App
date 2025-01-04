@@ -23,8 +23,6 @@ export class RegisterPageComponent implements OnInit {
     }
 
   register() {
-    console.log(this.registerForm.value);
-
     const registerUser : RegisterUser = {
       username: this.registerForm.value.username,
       password: this.registerForm.value.password,
