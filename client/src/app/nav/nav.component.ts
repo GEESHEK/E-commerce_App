@@ -57,7 +57,7 @@ export class NavComponent implements OnInit {
       case 'Your Orders':
         return '/myorders';
       case 'Create Account':
-        return '/register-page';
+        return '/register';
       case 'Sign in':
         return '/signin';
       default:

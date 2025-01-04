@@ -5,6 +5,8 @@ import {User} from "../../models/user";
 import {map} from "rxjs";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
+import {RegisterUser} from "../../models/registerUser";
+import {SignInUser} from "../../models/signInUser";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +19,8 @@ export class AccountService {
   private currentUser = signal<User | null>(null);
   currentUser$ = this.currentUser.asReadonly()
 
-  login(model: any) {
-    return this.http.post<User>(this.baseUrl + '/account/login', model).pipe(
+  login(signInUser: SignInUser) {
+    return this.http.post<User>(this.baseUrl + '/account/login', signInUser).pipe(
       map(user => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
@@ -36,8 +38,8 @@ export class AccountService {
     this.toastr.success('Logout Successfully');
   }
 
-  register(model: any) {
-    return this.http.post<User>(this.baseUrl + '/account/register', model).pipe(
+  register(registerUser: RegisterUser) {
+    return this.http.post<User>(this.baseUrl + '/account/register', registerUser).pipe(
       map(user => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
