@@ -1,6 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-sign-in-page',
@@ -10,15 +11,19 @@ import {Router} from "@angular/router";
 export class SignInPageComponent {
   private accountService = inject(AccountService);
   private router = inject(Router);
-  model: any = {};
+  private toastr = inject(ToastrService);
+  model: any = {
+    username: "",
+    password: "",
+    gender: ""
+  };
 
   login() {
-    console.log(this.model);
     this.accountService.login(this.model).subscribe({
       next: response => {
         this.router.navigateByUrl('/home');
       },
-      error: error => console.log(error)
+      error: error => this.toastr.error(error.error)
     })
   }
 
