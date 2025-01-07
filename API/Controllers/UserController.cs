@@ -1,5 +1,6 @@
 ﻿using API.Data.Repositories;
 using API.Entities.UserEntities;
+using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,14 +25,23 @@ public class UserController : BaseApiController
     }
 
     [Authorize]
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<AppUser>> GetUser(int id)
+    [HttpGet("profile")]
+    public async Task<ActionResult<AppUser>> GetUser()
     {
-        var user = await _userRepository.GetUserById(id);
+        try
+        {
+            var userId = User.GetUserId();
+            
+            var user = await _userRepository.GetUserById(userId);
         
-        if (user == null) return NotFound();
-        
-        return Ok(user);
+            if (user == null) return NotFound("User not found");
+            
+            return Ok(user);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
 }
