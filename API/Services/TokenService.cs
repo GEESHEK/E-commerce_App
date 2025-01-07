@@ -23,7 +23,8 @@ public class TokenService : ITokenService
 
         var claims = new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, user.UserName)
+            new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
         };
         
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
