@@ -1,1 +1,8 @@
-<p>account-page works!</p>
+<div *ngIf="user" class="container">
+  <h1>Your Account</h1>
+  <div *ngIf="user?.username">
+    <h1>We have a user</h1>
+    <h2>my name is {{user.username}}</h2>
+    <h2>my token {{user.token}}</h2>
+  </div>
+</div>
