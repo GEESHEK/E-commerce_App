@@ -1,8 +1,24 @@
-<div *ngIf="user" class="container">
-  <h1>Your Account</h1>
-  <div *ngIf="user?.username">
-    <h1>We have a user</h1>
-    <h2>my name is {{user.username}}</h2>
-    <h2>my token {{user.token}}</h2>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <h1 class="text-center mb-4"><a class="navbar-brand" routerLink="/" routerLinkActive="active">Your Account</a></h1>
+      <hr>
+      <div class="d-flex flex-column">
+        <form [formGroup]="userProfileForm" (ngSubmit)="updateProfile()" class="d-flex flex-column mb-2" autocomplete="off">
+          <app-text-input [formControl]="$any(userProfileForm.controls['firstName'])" [label]="'First Name'"></app-text-input>
+          <app-text-input [formControl]="$any(userProfileForm.controls['surname'])" [label]="'Surname'"></app-text-input>
+          <app-text-input [formControl]="$any(userProfileForm.controls['email'])" [label]="'Email'" type="'email'"></app-text-input>
+          <app-text-input [formControl]="$any(userProfileForm.controls['phoneNumber'])" [label]="'Phone Number'"></app-text-input>
+          <app-text-input [formControl]="$any(userProfileForm.controls['address'])" [label]="'Address'"></app-text-input>
+          <app-text-input [formControl]="$any(userProfileForm.controls['zipCode'])" [label]="'ZipCode'"></app-text-input>
+          <app-text-input [formControl]="$any(userProfileForm.controls['city'])" [label]="'City'"></app-text-input>
+          <app-text-input [formControl]="$any(userProfileForm.controls['country'])" [label]="'Country'"></app-text-input>
+          <div class="d-flex gap-2">
+            <button class="btn btn-danger" [disabled]="userProfileForm.invalid">Edit</button>
+            <button class="btn btn-success" type="submit" [disabled]="userProfileForm.invalid">Update</button>
+          </div>
+        </form>
+        <hr>
+    </div>
   </div>
 </div>
