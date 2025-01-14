@@ -1,12 +1,12 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {User} from "../../models/user";
+import {User} from "../models/user";
 import {map} from "rxjs";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {RegisterUser} from "../../models/registerUser";
-import {SignInUser} from "../../models/signInUser";
+import {RegisterUser} from "../models/registerUser";
+import {SignInUser} from "../models/signInUser";
 
 @Injectable({
   providedIn: 'root'

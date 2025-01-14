@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Order} from '../../../models/order';
-import {CartWatch} from '../../../models/cartWatch';
+import {Order} from '../../models/order';
+import {CartWatch} from '../../models/cartWatch';
 import {CartService} from '../../services/cart.service';
 import {WatchService} from '../../services/watch.service';
 import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {Item} from "../../../models/item";
+import {Item} from "../../models/item";
 import {OrderService} from "../../services/order.service";
 import {Router} from "@angular/router";
 

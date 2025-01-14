@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { WatchService } from '../../services/watch.service';
-import { WatchDetail } from '../../../models/watchDetail';
-import { Photo } from '../../../models/photo';
-import { CartService } from '../../services/cart.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {WatchService} from '../../services/watch.service';
+import {WatchDetail} from '../../models/watchDetail';
+import {Photo} from '../../models/photo';
+import {CartService} from '../../services/cart.service';
 
 @Component({
   selector: 'app-watch-detail-page',

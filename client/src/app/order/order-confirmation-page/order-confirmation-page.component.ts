@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../services/order.service";
 import {ActivatedRoute} from "@angular/router";
-import {SuccessOrder} from "../../../models/successOrder";
-import {CartWatch} from "../../../models/cartWatch";
+import {SuccessOrder} from "../../models/successOrder";
+import {CartWatch} from "../../models/cartWatch";
 import {WatchService} from "../../services/watch.service";
 
 @Component({

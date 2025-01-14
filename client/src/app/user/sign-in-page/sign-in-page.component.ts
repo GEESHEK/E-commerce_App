@@ -3,7 +3,7 @@ import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SignInUser} from "../../../models/signInUser";
+import {SignInUser} from "../../models/signInUser";
 
 @Component({
   selector: 'app-sign-in-page',
