@@ -86,7 +86,7 @@ public class UserController : BaseApiController
 
             if (await _userRepository.SaveAllAsync())
             {
-                var customerDetail = await _userRepository.GetCustomerDetailByUserId(mappedCustomerDetail.Id);
+                var customerDetail = await _userRepository.GetCustomerDetailByUserId(userId);
                 return Ok(customerDetail);
             }
             

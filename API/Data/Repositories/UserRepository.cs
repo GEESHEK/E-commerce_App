@@ -32,7 +32,7 @@ public class UserRepository : IUserRepository
     {
         return await _context.CustomerDetails
                 .Where(x => x.AppUserId == userId && x.IsMain == true)
-                .AsNoTracking()
+                // .AsNoTracking()
                 .ProjectTo<CustomerDetailDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
     }
