@@ -26,6 +26,7 @@ export class AccountPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initialiseForm();
     if (this.user) {
       this.username = this.user?.username ? this.user.username : null;
     }

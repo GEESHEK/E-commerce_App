@@ -7,7 +7,7 @@
         <form [formGroup]="userProfileForm" (ngSubmit)="updateProfile()" class="d-flex flex-column mb-2" autocomplete="off">
           <app-text-input [formControl]="$any(userProfileForm.controls['firstName'])" [label]="'First Name'"></app-text-input>
           <app-text-input [formControl]="$any(userProfileForm.controls['surname'])" [label]="'Surname'"></app-text-input>
-          <app-text-input [formControl]="$any(userProfileForm.controls['email'])" [label]="'Email'" type="'email'"></app-text-input>
+          <app-text-input [formControl]="$any(userProfileForm.controls['email'])" [label]="'Email'" [type]="'email'"></app-text-input>
           <app-text-input [formControl]="$any(userProfileForm.controls['phoneNumber'])" [label]="'Phone Number'"></app-text-input>
           <app-text-input [formControl]="$any(userProfileForm.controls['address'])" [label]="'Address'"></app-text-input>
           <app-text-input [formControl]="$any(userProfileForm.controls['zipCode'])" [label]="'ZipCode'"></app-text-input>
@@ -19,6 +19,7 @@
           </div>
         </form>
         <hr>
+      </div>
     </div>
   </div>
 </div>
