@@ -14,4 +14,8 @@ export class UserService {
   getUserProfile() {
     return this.http.get<CustomerDetail>(this.baseUrl + '/user/details');
   }
+
+  addUserProfile(userProfile: CustomerDetail) {
+    return this.http.post<CustomerDetail>(this.baseUrl + '/user/details', userProfile);
+  }
 }

@@ -47,6 +47,26 @@ export class AccountPageComponent implements OnInit {
 
   updateProfile() {
     console.log(this.user?.username + " updated!");
+    const profile: CustomerDetail = {
+      firstName: this.userProfileForm.value.firstName,
+      surname: this.userProfileForm.value.surname,
+      email: this.userProfileForm.value.email,
+      phoneNumber: this.userProfileForm.value.phoneNumber,
+      address: this.userProfileForm.value.address,
+      zipCode: this.userProfileForm.value.zipCode,
+      city: this.userProfileForm.value.city,
+      country: this.userProfileForm.value.country,
+    }
+
+    this.userService.addUserProfile(profile).subscribe({
+      next: response => {
+          this.userProfile = response;
+          this.initialiseForm();
+        },
+      error: (error) => {
+        this.toastr.error(error.error);
+      }
+    })
   }
 
   initialiseForm() {
@@ -73,5 +93,10 @@ export class AccountPageComponent implements OnInit {
         country: ["", Validators.required],
       });
     }
+  }
+
+  // Check if any form values have changed
+  hasFormChanged(): boolean {
+    return JSON.stringify(this.userProfileForm.value) !== JSON.stringify(this.userProfile);
   }
 }

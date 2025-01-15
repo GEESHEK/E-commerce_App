@@ -14,8 +14,8 @@
           <app-text-input [formControl]="$any(userProfileForm.controls['city'])" [label]="'City'"></app-text-input>
           <app-text-input [formControl]="$any(userProfileForm.controls['country'])" [label]="'Country'"></app-text-input>
           <div class="d-flex gap-2">
-            <button class="btn btn-danger" [disabled]="userProfileForm.invalid">Edit</button>
-            <button class="btn btn-success" type="submit" [disabled]="userProfileForm.invalid">Update</button>
+            <button class="btn btn-danger" [disabled]="userProfileForm.invalid || !hasFormChanged()" (click)="initialiseForm()">Reset</button>
+            <button class="btn btn-success" type="submit" [disabled]="userProfileForm.invalid || !hasFormChanged()">Update</button>
           </div>
         </form>
         <hr>
