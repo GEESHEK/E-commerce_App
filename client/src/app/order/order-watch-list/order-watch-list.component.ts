@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
-import {CartWatch} from "../../../models/cartWatch";
+import {CartWatch} from "../../models/cartWatch";
 import {CartService} from "../../services/cart.service";
 import {WatchService} from "../../services/watch.service";
 import {OrderService} from "../../services/order.service";

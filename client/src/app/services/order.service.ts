@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {Order} from "../../models/order";
+import {Order} from "../models/order";
 import {Observable} from "rxjs";
-import {SuccessOrder} from "../../models/successOrder";
+import {SuccessOrder} from "../models/successOrder";
 
 @Injectable({
   providedIn: 'root'

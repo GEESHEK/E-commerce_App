@@ -1,6 +1,6 @@
 import {Component, computed, OnInit} from '@angular/core';
-import {Brand} from '../../models/brand';
-import {Category} from '../../models/category';
+import {Brand} from '../models/brand';
+import {Category} from '../models/category';
 import {Observable} from 'rxjs';
 import {WatchService} from '../services/watch.service';
 import {CartService} from '../services/cart.service';

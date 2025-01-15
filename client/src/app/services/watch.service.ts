@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { WatchCard } from '../../models/watchCard';
-import { map, of } from 'rxjs';
-import { Brand } from '../../models/brand';
-import { Category } from '../../models/category';
-import { WatchDetail } from '../../models/watchDetail';
-import { CartWatch } from '../../models/cartWatch';
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {WatchCard} from '../models/watchCard';
+import {map, of} from 'rxjs';
+import {Brand} from '../models/brand';
+import {Category} from '../models/category';
+import {WatchDetail} from '../models/watchDetail';
+import {CartWatch} from '../models/cartWatch';
 
 @Injectable({
   providedIn: 'root',

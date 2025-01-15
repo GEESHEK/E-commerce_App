@@ -1,21 +1,26 @@
 ﻿using API.Data.Repositories;
+using API.DTOs.OrderDTOs;
+using API.Entities.OrderEntities;
 using API.Entities.UserEntities;
 using API.Extensions;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize]
 public class UserController : BaseApiController
 {
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserRepository userRepository, IMapper mapper)
     {
         _userRepository = userRepository;
+        _mapper = mapper;
     }
     
-    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
@@ -23,8 +28,7 @@ public class UserController : BaseApiController
         
         return Ok(users);
     }
-
-    [Authorize]
+    
     [HttpGet("profile")]
     public async Task<ActionResult<AppUser>> GetUser()
     {
@@ -44,4 +48,53 @@ public class UserController : BaseApiController
         }
     }
     
+    [HttpGet("details")]
+    public async Task<ActionResult<CustomerDetailDto>> GetUsersCustomerDetails()
+    {
+        try
+        {
+            var userId = User.GetUserId();
+            
+            var user = await _userRepository.GetCustomerDetailByUserId(userId);
+        
+            if (user == null) return NotFound("User details not found");
+            
+            return Ok(user);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPost("details")]
+    public async Task<ActionResult<CustomerDetailDto>> CreateUserDetails(CustomerDetailDto customerDetailDto)
+    {
+        if (customerDetailDto == null) return BadRequest();
+        
+        try
+        {
+            var userId = User.GetUserId();
+            
+            var mappedCustomerDetail = _mapper.Map<CustomerDetail>(customerDetailDto);
+            
+            mappedCustomerDetail.AppUserId = userId;
+            mappedCustomerDetail.IsMain = true;
+            _userRepository.SetCustomerDetailIsMainToFalse();
+
+            _userRepository.AddCustomerDetail(mappedCustomerDetail, userId);
+
+            if (await _userRepository.SaveAllAsync())
+            {
+                var customerDetail = await _userRepository.GetCustomerDetailByUserId(userId);
+                return Ok(customerDetail);
+            }
+            
+            return BadRequest("Failed to create customer detail");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

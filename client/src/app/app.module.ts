@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, provideHttpClient, withInterceptors} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -25,6 +25,7 @@ import {RegisterPageComponent} from './user/register-page/register-page.componen
 import {AccountPageComponent} from './user/account-page/account-page.component';
 import {ToastrModule} from 'ngx-toastr';
 import {MyOrdersPageComponent} from './user/my-orders-page/my-orders-page.component';
+import {jwtInterceptor} from "./interceptors/jwtInterceptor";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import {MyOrdersPageComponent} from './user/my-orders-page/my-orders-page.compon
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [provideHttpClient(withInterceptors([jwtInterceptor]))],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { WatchCard } from '../../../models/watchCard';
-import { CartService } from '../../services/cart.service';
+import {Component, Input} from '@angular/core';
+import {WatchCard} from '../../models/watchCard';
+import {CartService} from '../../services/cart.service';
 
 @Component({
   selector: 'app-watch-card',
