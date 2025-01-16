@@ -1,8 +1,10 @@
 ﻿using API.Data.Repositories;
 using API.DTOs.OrderDTOs;
 using API.Entities.OrderEntities;
+using API.Extensions;
 using API.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -52,8 +54,34 @@ public class OrderController : BaseApiController
         return Ok(order);
     }
     
+    //another controller to get a list of orders ids, status, watch id url to get the picture
+    
+    [Authorize]
+    [HttpGet("user")]
+    public async Task<ActionResult<List<SuccessOrderDto>>> GetUserSuccessOrder()
+    {
+        try
+        {
+            var userId = User.GetUserId();
+            
+            var order = await _orderRepository.GetUserSuccessOrderByUserId(userId);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(order);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    //TODO Create order should pass down the successOrder so customer can't just call this and return orders
     [HttpGet("success/{id:int}")]
-    public async Task<ActionResult<OrderDto>> GetSuccessOrder(int id)
+    public async Task<ActionResult<SuccessOrderDto>> GetSuccessOrder(int id)
     {
         var order = await _orderRepository.GetSuccessOrderById(id);
 
