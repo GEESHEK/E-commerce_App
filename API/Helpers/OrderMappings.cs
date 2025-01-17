@@ -16,5 +16,8 @@ public static class OrderMappings
                 opt => opt.MapFrom(src => src.StatusType.Status));
         profile.CreateMap<CustomerDetail, CustomerDetailDto>();
         profile.CreateMap<Item, ItemDto>();
+        profile.CreateMap<Order, OrderDetailDto>()
+            .ForMember(dest => dest.StatusType,
+                opt => opt.MapFrom(src => src.StatusType.Status));
     }
 }

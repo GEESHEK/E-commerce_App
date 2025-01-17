@@ -47,11 +47,20 @@ public class OrderRepository : IOrderRepository
     }
 
     public async Task<List<SuccessOrderDto>> GetUserSuccessOrderByUserId(int userId)
-    {
+    { // come back to fix
         return await _context.Orders
             .Where(x => x.CustomerDetail.AppUserId == userId)
             .AsNoTracking()
             .ProjectTo<SuccessOrderDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<List<OrderDetailDto>> GetUserOrderHistoryByUserId(int userId)
+    {
+        return await _context.Orders
+            .Where(c => c.CustomerDetail.AppUserId == userId)
+            .ProjectTo<OrderDetailDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
             .ToListAsync();
     }
 
@@ -62,7 +71,8 @@ public class OrderRepository : IOrderRepository
             .Include(o => o.StatusType)
             .Include(o => o.Items)
             .ThenInclude(i => i.ItemType)
-            .AsNoTracking().ToListAsync();
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public async Task<bool> SaveAllAsync()

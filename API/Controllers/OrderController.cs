@@ -55,9 +55,31 @@ public class OrderController : BaseApiController
     }
     
     //another controller to get a list of orders ids, status, watch id url to get the picture
+    [Authorize]
+    [HttpGet("user/order-history")]
+    public async Task<ActionResult<List<OrderDetailDto>>> GetUserOrderHistory()
+    {
+        try
+        {
+            var userId = User.GetUserId();
+
+            var orderHistory = await _orderRepository.GetUserOrderHistoryByUserId(userId);
+
+            if (orderHistory == null)
+            {
+                return NotFound("User has no order history");
+            }
+
+            return Ok(orderHistory);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
     
     [Authorize]
-    [HttpGet("user")]
+    [HttpGet]
     public async Task<ActionResult<List<SuccessOrderDto>>> GetUserSuccessOrder()
     {
         try
