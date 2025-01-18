@@ -56,7 +56,7 @@ public class OrderController : BaseApiController
     
     //another controller to get a list of orders ids, status, watch id url to get the picture
     [Authorize]
-    [HttpGet("user/order-history")]
+    [HttpGet("history")]
     public async Task<ActionResult<List<OrderDetailDto>>> GetUserOrderHistory()
     {
         try
