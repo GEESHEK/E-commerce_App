@@ -9,7 +9,7 @@ public interface IOrderRepository
     Task<Order> GetOrderById(int id);
     Task<SuccessOrderDto> GetSuccessOrderById(int id);
     Task<List<SuccessOrderDto>> GetUserSuccessOrderByUserId(int userId);
-    Task<List<OrderDetailDto>> GetUserOrderHistoryByUserId(int userId);
+    Task<List<OrderHistoryDto>> GetUserOrderHistoryByUserId(int userId);
     Task<IEnumerable<Order>> GetOrdersByStatus(int statusId);
     Task<bool> SaveAllAsync();
     void CreateOrder(Order order);

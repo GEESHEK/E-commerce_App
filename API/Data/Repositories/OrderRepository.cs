@@ -55,11 +55,11 @@ public class OrderRepository : IOrderRepository
             .ToListAsync();
     }
 
-    public async Task<List<OrderDetailDto>> GetUserOrderHistoryByUserId(int userId)
+    public async Task<List<OrderHistoryDto>> GetUserOrderHistoryByUserId(int userId)
     {
         return await _context.Orders
             .Where(c => c.CustomerDetail.AppUserId == userId)
-            .ProjectTo<OrderDetailDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<OrderHistoryDto>(_mapper.ConfigurationProvider)
             .AsNoTracking()
             .ToListAsync();
     }

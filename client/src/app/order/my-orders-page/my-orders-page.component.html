@@ -1,0 +1,8 @@
+<div class="container" *ngIf="orderHistory">
+  <h1>Your orders</h1>
+  <div *ngFor="let order of orderHistory">
+    <h2>{{order.id}}</h2>
+    <h2>{{order.dateTime | date:'d MMMM y' }}</h2>
+    <h2>{{order.statusType}}</h2>
+  </div>
+</div>

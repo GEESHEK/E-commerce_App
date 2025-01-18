@@ -10,7 +10,7 @@ import {SignInPageComponent} from "./user/sign-in-page/sign-in-page.component";
 import {RegisterPageComponent} from "./user/register-page/register-page.component";
 import {AccountPageComponent} from "./user/account-page/account-page.component";
 import {authGuard} from "./guards/auth.guard";
-import {MyOrdersPageComponent} from "./user/my-orders-page/my-orders-page.component";
+import {MyOrdersPageComponent} from "./order/my-orders-page/my-orders-page.component";
 
 const appName: string = 'JDM Watches';
 
