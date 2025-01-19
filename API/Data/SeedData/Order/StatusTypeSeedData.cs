@@ -28,7 +28,7 @@ public static class StatusTypeSeedData
             },
             new()
             {
-                Status = "Canceled"
+                Status = "Cancelled"
             },
             new()
             {
