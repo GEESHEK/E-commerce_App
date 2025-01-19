@@ -6,3 +6,7 @@
 .statusType {
   color: green;
 }
+
+.clickable-order {
+  cursor: pointer;
+}

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../services/order.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {SuccessOrder} from "../../models/successOrder";
 import {CartWatch} from "../../models/cartWatch";
 import {WatchService} from "../../services/watch.service";
@@ -19,7 +19,8 @@ export class OrderConfirmationPageComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private watchService: WatchService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -29,8 +30,7 @@ export class OrderConfirmationPageComponent implements OnInit {
       if (isNaN(this.orderId)) {
         // Handle the case where the parameter is not a number
         console.error('Invalid parameter value');
-        //TODO redirect user
-        return;
+        this.router.navigateByUrl('home');
       }
       this.loadOrderDetails();
     })
