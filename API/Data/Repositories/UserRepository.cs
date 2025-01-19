@@ -43,9 +43,10 @@ public class UserRepository : IUserRepository
         
     }
 
-    public void SetCustomerDetailIsMainToFalse()
+    public void SetCustomerDetailIsMainToFalse(int userId)
     {
-        var customerDetail = _context.CustomerDetails.FirstOrDefaultAsync(x => x.IsMain == true).Result;
+        var customerDetail = _context.CustomerDetails
+            .FirstOrDefaultAsync(x => x.IsMain == true && x.AppUserId == userId).Result;
 
         if (customerDetail != null)
         {

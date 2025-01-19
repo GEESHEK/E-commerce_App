@@ -10,6 +10,6 @@ public interface IUserRepository
     Task<AppUser> GetUserById(int id);
     Task<CustomerDetailDto> GetCustomerDetailByUserId(int userId);
     void AddCustomerDetail(CustomerDetail customerDetail, int userId);
-    void SetCustomerDetailIsMainToFalse();
+    void SetCustomerDetailIsMainToFalse(int userId);
     Task<bool> SaveAllAsync();
 }
