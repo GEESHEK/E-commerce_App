@@ -14,14 +14,16 @@ public class OrderController : BaseApiController
     private readonly IOrderRepository _orderRepository;
     private readonly IWatchRepository _watchRepository;
     private readonly IOrderService _orderService;
+    private readonly ICustomerService _customerService;
     private readonly IMapper _mapper;
 
     public OrderController(IOrderRepository orderRepository, IWatchRepository watchRepository,
-        IOrderService orderService, IMapper mapper)
+        IOrderService orderService, ICustomerService customerService, IMapper mapper)
     {
         _orderRepository = orderRepository;
         _watchRepository = watchRepository;
         _orderService = orderService;
+        _customerService = customerService;
         _mapper = mapper;
     }
 
@@ -171,13 +173,34 @@ public class OrderController : BaseApiController
         
         _orderService.AddPriceToOrderItems(watches, mappedOrder);
         
-        _orderRepository.CreateOrder(mappedOrder);
-        
-        if (await _orderRepository.SaveAllAsync())
+        //If user is present then update the customer detail user id and set it to false (does not match)
+        //or if same update customer id and remove the customer detail
+        try
         {
-           return CreatedAtAction(nameof(GetOrder), new { id = mappedOrder.Id }, mappedOrder.Id);
-        }
+            var userId = User.GetUserId();
+            mappedOrder.CustomerDetail.AppUserId = User.GetUserId();
+            
+            var updatedOrder = _customerService.UpdateCustomerDetailToExistingUser(userId, mappedOrder);
+            
+            _orderRepository.CreateOrder(updatedOrder);
+        
+            if (await _orderRepository.SaveAllAsync())
+            {
+                return CreatedAtAction(nameof(GetOrder), new { id = updatedOrder.Id }, updatedOrder.Id);
+            }
 
-        return BadRequest("Failed to create order");
+            return BadRequest("Failed to create order");
+        }
+        catch (Exception e)
+        {
+            _orderRepository.CreateOrder(mappedOrder);
+        
+            if (await _orderRepository.SaveAllAsync())
+            {
+                return CreatedAtAction(nameof(GetOrder), new { id = mappedOrder.Id }, mappedOrder.Id);
+            }
+
+            return BadRequest("Failed to create order");
+        }
     }
 }

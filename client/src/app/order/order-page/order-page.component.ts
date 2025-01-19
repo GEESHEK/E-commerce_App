@@ -7,6 +7,11 @@ import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
 import {Item} from "../../models/item";
 import {OrderService} from "../../services/order.service";
 import {Router} from "@angular/router";
+import {User} from "../../models/user";
+import {AccountService} from "../../services/account.service";
+import {UserService} from "../../services/user.service";
+import {CustomerDetail} from "../../models/customerDetail";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-order-page',
@@ -14,7 +19,9 @@ import {Router} from "@angular/router";
   styleUrls: ['./order-page.component.css'],
 })
 export class OrderPageComponent implements OnInit {
-  private watchTypeId: number = 1;
+  user: User | null = this.accountService.currentUser$();
+  userProfile: CustomerDetail | undefined;
+  private readonly watchTypeId: number = 1;
   itemIds: number[] = [];
   orderForm: FormGroup = new FormGroup({});
   items: CartWatch[] = [];
@@ -26,11 +33,30 @@ export class OrderPageComponent implements OnInit {
     private watchService: WatchService,
     private fb: FormBuilder,
     private orderService: OrderService,
+    private accountService: AccountService,
+    private userService: UserService,
     private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.initialiseForm();
+    if (this.user) {
+      this.userService.getUserProfile().subscribe({
+        next: (response) => {
+          (this.userProfile = response);
+          this.initialiseForm();
+        },
+        error: (error) => {
+          if (error.error === "User details not found") {
+            this.initialiseForm();
+          } else {
+            this.toastr.error(error.error);
+          }
+        }
+      });
+    }
+
     this.itemIds = this.cartService.getItemIds();
     if (this.itemIds.length > 0) {
       this.loadItems(this.itemIds);
@@ -38,16 +64,29 @@ export class OrderPageComponent implements OnInit {
   }
 
   initialiseForm() {
-    this.orderForm = this.fb.group({
-      firstName: ['', Validators.required],
-      surname: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
-      address: ['', Validators.required],
-      zipCode: ['', Validators.required],
-      country: ['', Validators.required],
-      city: ['', Validators.required],
-    });
+    if (this.userProfile) {
+      this.orderForm = this.fb.group({
+        firstName: [this.userProfile.firstName, Validators.required],
+        surname: [this.userProfile.surname, Validators.required],
+        email: [this.userProfile.email, [Validators.required, Validators.email]],
+        phoneNumber: [this.userProfile.phoneNumber, [Validators.required, Validators.pattern('^[0-9]{11}$')]],
+        address: [this.userProfile.address, Validators.required],
+        zipCode: [this.userProfile.zipCode, Validators.required],
+        city: [this.userProfile.city, Validators.required],
+        country: [this.userProfile.country, Validators.required],
+      }, {updateOn: 'change'});
+    } else {
+      this.orderForm = this.fb.group({
+        firstName: ["", Validators.required],
+        surname: ["", Validators.required],
+        email: ["", [Validators.required, Validators.email]],
+        phoneNumber: ["", [Validators.required, Validators.pattern('^[0-9]{11}$')]],
+        address: ["", Validators.required],
+        zipCode: ["", Validators.required],
+        city: ["", Validators.required],
+        country: ["", Validators.required],
+      });
+    }
   }
 
   loadItems(ids: number[]) {
@@ -103,6 +142,7 @@ export class OrderPageComponent implements OnInit {
           //empty the shopping cart and redirect them to the success page
           this.cartService.removeAllItems();
           this.router.navigateByUrl('/order/confirmation/' + orderId);
+          this.toastr.success("Order has been confirmed!");
         },
         error: (error: string[] | undefined) => {
           this.validationErrors = error;

@@ -13,7 +13,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class AccountPageComponent implements OnInit {
   user: User | null = this.accountService.currentUser$();
-  username: string | null = "";
   userProfile: CustomerDetail | undefined;
   userProfileForm: FormGroup = new FormGroup({});
 
@@ -28,21 +27,20 @@ export class AccountPageComponent implements OnInit {
   ngOnInit(): void {
     this.initialiseForm();
     if (this.user) {
-      this.username = this.user?.username ? this.user.username : null;
-    }
-    this.userService.getUserProfile().subscribe({
-      next: (response) => {
-        (this.userProfile = response);
-        this.initialiseForm();
-      },
-      error: (error) => {
-        if (error.error === "User details not found") {
+      this.userService.getUserProfile().subscribe({
+        next: (response) => {
+          (this.userProfile = response);
           this.initialiseForm();
-        } else {
-          this.toastr.error(error.error);
+        },
+        error: (error) => {
+          if (error.error === "User details not found") {
+            this.initialiseForm();
+          } else {
+            this.toastr.error(error.error);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   updateProfile() {
@@ -62,6 +60,7 @@ export class AccountPageComponent implements OnInit {
       next: response => {
           this.userProfile = response;
           this.initialiseForm();
+          this.toastr.success("User profile successfully updated!");
         },
       error: (error) => {
         this.toastr.error(error.error);
