@@ -1,0 +1,24 @@
+<div class="container">
+  <div *ngIf="orderHistory.length > 0" class="row justify-content-center">
+    <div class="col-6">
+      <h1 class="text-center mb-4"><a class="navbar-brand">My Orders</a></h1>
+      <hr>
+      <div *ngFor="let order of orderHistory" class="row">
+        <div class="col-6 clickable-order" routerLink="/order/confirmation/{{order.id}}">
+          <h6>{{"Order Status:" | uppercase}}</h6>
+          <h6 class="statusType">{{"It's " + order.statusType + "!" | uppercase}}</h6>
+        </div>
+        <div class="col-6 clickable-order" routerLink="/order/confirmation/{{order.id}}">
+          <h6>Order Placed: {{order.dateTime | date:'d MMMM y' }}</h6>
+          <h6>{{"Order No. " + order.id | uppercase }}</h6>
+          <h6>{{ "Order Total: " + (order.total | currency: "USD") }}</h6>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="orderHistory.length < 1">
+    <h1>Looks like you have no orders!</h1>
+    <p class="mt-0">Continue shopping on the <a routerLink="/">JDM Homepage</a>, or check out our latest watches <a routerLink="/watches/all">Here</a></p>
+  </div>
+</div>

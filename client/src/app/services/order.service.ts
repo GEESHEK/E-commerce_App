@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Order} from "../models/order";
 import {Observable} from "rxjs";
 import {SuccessOrder} from "../models/successOrder";
+import {OrderHistory} from "../models/orderHistory";
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,9 @@ export class OrderService {
 
   retrieveSuccessOrder(id: number): Observable<SuccessOrder> {
     return this.http.get<SuccessOrder>(this.baseUrl + '/order/success/' + id);
+  }
+
+  orderHistory() {
+    return this.http.get<OrderHistory[]>(this.baseUrl + '/order/history');
   }
 }

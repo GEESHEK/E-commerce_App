@@ -123,7 +123,62 @@ public static class OrderSeedData
             new()
             {
                 CustomerDetailId = 7,
-                StatusTypeId = 7,
+                StatusTypeId = 6,
+                Total = 1999.99m,
+                Items = new List<Item>()
+                {
+                    new()
+                    {
+                        ProductId = 8,
+                        ItemTypeId = 1,
+                        Price = 1999.99m,
+                        Quantity = 1,
+                    }
+                }
+            },
+            new()
+            {
+                CustomerDetailId = 11,
+                StatusTypeId = 6,
+                Total = 1999.99m,
+                Items = new List<Item>()
+                {
+                    new()
+                    {
+                        ProductId = 8,
+                        ItemTypeId = 1,
+                        Price = 1999.99m,
+                        Quantity = 1,
+                    }
+                }
+            },
+            new()
+            {
+                CustomerDetailId = 11,
+                StatusTypeId = 3,
+                Total = 3620.00m,
+                Items = new List<Item>()
+                {
+                    new()
+                    {
+                        ProductId = 12,
+                        ItemTypeId = 1,
+                        Price = 120.00m,
+                        Quantity = 1,
+                    },
+                    new()
+                    {
+                        ProductId = 10,
+                        ItemTypeId = 1,
+                        Price = 1750.00m,
+                        Quantity = 2,
+                    }
+                }
+            },
+            new()
+            {
+                CustomerDetailId = 12,
+                StatusTypeId = 4,
                 Total = 1999.99m,
                 Items = new List<Item>()
                 {

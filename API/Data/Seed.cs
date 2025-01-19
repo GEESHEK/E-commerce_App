@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using API.Data.SeedData.Order;
+using API.Data.SeedData.User;
 using API.Data.SeedData.Watch;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,15 @@ public static class Seed
         await context.SaveChangesAsync();
         
         await context.Orders.AddRangeAsync(OrderSeedData.GetOrderSeedData());
+        
+        await context.SaveChangesAsync();
+    }
+
+    public static async Task SeedUser(DataContext context)
+    {
+        if (await context.AppUsers.AnyAsync()) return;
+        
+        await context.AppUsers.AddRangeAsync(UserSeedData.GetUserSeedData());
         
         await context.SaveChangesAsync();
     }
