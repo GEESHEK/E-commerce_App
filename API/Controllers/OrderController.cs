@@ -59,7 +59,7 @@ public class OrderController : BaseApiController
     //another controller to get a list of orders ids, status, watch id url to get the picture
     [Authorize]
     [HttpGet("history")]
-    public async Task<ActionResult<List<OrderHistoryDto>>> GetUserOrderHistory()
+    public async Task<ActionResult<IEnumerable<OrderHistoryDto>>> GetUserOrderHistory()
     {
         try
         {
@@ -73,29 +73,6 @@ public class OrderController : BaseApiController
             }
 
             return Ok(orderHistory);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
-    
-    [Authorize]
-    [HttpGet]
-    public async Task<ActionResult<List<SuccessOrderDto>>> GetUserSuccessOrder()
-    {
-        try
-        {
-            var userId = User.GetUserId();
-            
-            var order = await _orderRepository.GetUserSuccessOrderByUserId(userId);
-
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(order);
         }
         catch (Exception e)
         {
@@ -173,14 +150,12 @@ public class OrderController : BaseApiController
         
         _orderService.AddPriceToOrderItems(watches, mappedOrder);
         
-        //If user is present then update the customer detail user id and set it to false (does not match)
-        //or if same update customer id and remove the customer detail
         try
         {
             var userId = User.GetUserId();
             mappedOrder.CustomerDetail.AppUserId = User.GetUserId();
             
-            var updatedOrder = _customerService.UpdateCustomerDetailToExistingUser(userId, mappedOrder);
+            var updatedOrder = _customerService.UpdateAndAddCustomerDetailToExistingUser(userId, mappedOrder);
             
             _orderRepository.CreateOrder(updatedOrder);
         

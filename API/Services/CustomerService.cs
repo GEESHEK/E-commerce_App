@@ -12,7 +12,10 @@ public class CustomerService : ICustomerService
         _customerRepository = customerRepository;
     }
 
-    public Order UpdateCustomerDetailToExistingUser(int appUserId, Order order)
+    /*If user is signed in then update the customer details userAppId and set isMain to false
+     (if details don't match || they do not have any customer details)
+    or if customerDetails are the same add customerDetailId and remove the customer detail added by mapper*/
+    public Order UpdateAndAddCustomerDetailToExistingUser(int appUserId, Order order)
     {
         var customerDetail = _customerRepository.GetCustomerDetailByAppUserId(appUserId).Result;
 

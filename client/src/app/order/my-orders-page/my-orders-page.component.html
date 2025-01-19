@@ -8,7 +8,7 @@
           <h6>{{"Order Status:" | uppercase}}</h6>
           <h6 class="statusType">{{"It's " + order.statusType + "!" | uppercase}}</h6>
         </div>
-        <div class="col-6">
+        <div class="col-6 clickable-order" routerLink="/order/confirmation/{{order.id}}">
           <h6>Order Placed: {{order.dateTime | date:'d MMMM y' }}</h6>
           <h6>{{"Order No. " + order.id | uppercase }}</h6>
           <h6>{{ "Order Total: " + (order.total | currency: "USD") }}</h6>
