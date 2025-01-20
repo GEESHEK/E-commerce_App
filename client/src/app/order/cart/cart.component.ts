@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CartService} from '../services/cart.service';
-import {WatchService} from '../services/watch.service';
-import {CartWatch} from '../models/cartWatch';
+import {CartService} from '../../services/cart.service';
+import {WatchService} from '../../services/watch.service';
+import {CartWatch} from '../../models/cartWatch';
 
 @Component({
   selector: 'app-cart',

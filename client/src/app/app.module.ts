@@ -14,7 +14,7 @@ import {ImageFallbackDirective} from './directive/image-fallback.directive';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {WatchDetailComponent} from './watch/watch-detail-page/watch-detail.component';
 import {AccordionModule} from 'ngx-bootstrap/accordion';
-import {CartComponent} from './cart/cart.component';
+import {CartComponent} from './order/cart/cart.component';
 import {OrderConfirmationPageComponent} from './order/order-confirmation-page/order-confirmation-page.component';
 import {OrderPageComponent} from './order/order-page/order-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -24,7 +24,7 @@ import {SignInPageComponent} from './user/sign-in-page/sign-in-page.component';
 import {RegisterPageComponent} from './user/register-page/register-page.component';
 import {AccountPageComponent} from './user/account-page/account-page.component';
 import {ToastrModule} from 'ngx-toastr';
-import {MyOrdersPageComponent} from './user/my-orders-page/my-orders-page.component';
+import {MyOrdersPageComponent} from './order/my-orders-page/my-orders-page.component';
 import {jwtInterceptor} from "./interceptors/jwtInterceptor";
 
 @NgModule({

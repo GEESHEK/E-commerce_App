@@ -1,8 +1,10 @@
 ﻿using API.Data.Repositories;
 using API.DTOs.OrderDTOs;
 using API.Entities.OrderEntities;
+using API.Extensions;
 using API.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -12,14 +14,16 @@ public class OrderController : BaseApiController
     private readonly IOrderRepository _orderRepository;
     private readonly IWatchRepository _watchRepository;
     private readonly IOrderService _orderService;
+    private readonly ICustomerService _customerService;
     private readonly IMapper _mapper;
 
     public OrderController(IOrderRepository orderRepository, IWatchRepository watchRepository,
-        IOrderService orderService, IMapper mapper)
+        IOrderService orderService, ICustomerService customerService, IMapper mapper)
     {
         _orderRepository = orderRepository;
         _watchRepository = watchRepository;
         _orderService = orderService;
+        _customerService = customerService;
         _mapper = mapper;
     }
 
@@ -52,8 +56,33 @@ public class OrderController : BaseApiController
         return Ok(order);
     }
     
+    //another controller to get a list of orders ids, status, watch id url to get the picture
+    [Authorize]
+    [HttpGet("history")]
+    public async Task<ActionResult<IEnumerable<OrderHistoryDto>>> GetUserOrderHistory()
+    {
+        try
+        {
+            var userId = User.GetUserId();
+
+            var orderHistory = await _orderRepository.GetUserOrderHistoryByUserId(userId);
+
+            if (orderHistory == null)
+            {
+                return NotFound("User has no order history");
+            }
+
+            return Ok(orderHistory);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    //TODO Create order should pass down the successOrder so customer can't just call this and return orders
     [HttpGet("success/{id:int}")]
-    public async Task<ActionResult<OrderDto>> GetSuccessOrder(int id)
+    public async Task<ActionResult<SuccessOrderDto>> GetSuccessOrder(int id)
     {
         var order = await _orderRepository.GetSuccessOrderById(id);
 
@@ -121,13 +150,32 @@ public class OrderController : BaseApiController
         
         _orderService.AddPriceToOrderItems(watches, mappedOrder);
         
-        _orderRepository.CreateOrder(mappedOrder);
-        
-        if (await _orderRepository.SaveAllAsync())
+        try
         {
-           return CreatedAtAction(nameof(GetOrder), new { id = mappedOrder.Id }, mappedOrder.Id);
-        }
+            var userId = User.GetUserId();
+            mappedOrder.CustomerDetail.AppUserId = User.GetUserId();
+            
+            var updatedOrder = _customerService.UpdateAndAddCustomerDetailToExistingUser(userId, mappedOrder);
+            
+            _orderRepository.CreateOrder(updatedOrder);
+        
+            if (await _orderRepository.SaveAllAsync())
+            {
+                return CreatedAtAction(nameof(GetOrder), new { id = updatedOrder.Id }, updatedOrder.Id);
+            }
 
-        return BadRequest("Failed to create order");
+            return BadRequest("Failed to create order");
+        }
+        catch (Exception e)
+        {
+            _orderRepository.CreateOrder(mappedOrder);
+        
+            if (await _orderRepository.SaveAllAsync())
+            {
+                return CreatedAtAction(nameof(GetOrder), new { id = mappedOrder.Id }, mappedOrder.Id);
+            }
+
+            return BadRequest("Failed to create order");
+        }
     }
 }

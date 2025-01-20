@@ -1,5 +1,6 @@
 ﻿using API.DTOs.OrderDTOs;
 using API.Entities.OrderEntities;
+using API.Entities.UserEntities;
 using AutoMapper;
 
 namespace API.Helpers;
@@ -10,5 +11,6 @@ public static class UserMappings
     {
         profile.CreateMap<CustomerDetail, CustomerDetailDto>();
         profile.CreateMap<CustomerDetailDto, CustomerDetail>();
+        profile.CreateMap<AppUser, OrderHistoryDto>();
     }
 }

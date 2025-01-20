@@ -46,6 +46,16 @@ public class OrderRepository : IOrderRepository
             .SingleOrDefaultAsync();
     }
 
+    public async Task<IEnumerable<OrderHistoryDto>> GetUserOrderHistoryByUserId(int userId)
+    {
+        return await _context.Orders
+            .Where(c => c.CustomerDetail.AppUserId == userId)
+            .OrderByDescending(x => x.DateTime)
+            .ProjectTo<OrderHistoryDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
     public async Task<IEnumerable<Order>> GetOrdersByStatus(int statusId)
     {
         return await _context.Orders.Where(w => w.StatusTypeId == statusId)
@@ -53,7 +63,8 @@ public class OrderRepository : IOrderRepository
             .Include(o => o.StatusType)
             .Include(o => o.Items)
             .ThenInclude(i => i.ItemType)
-            .AsNoTracking().ToListAsync();
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public async Task<bool> SaveAllAsync()

@@ -80,7 +80,7 @@ public class UserController : BaseApiController
             
             mappedCustomerDetail.AppUserId = userId;
             mappedCustomerDetail.IsMain = true;
-            _userRepository.SetCustomerDetailIsMainToFalse();
+            _userRepository.SetCustomerDetailIsMainToFalse(userId);
 
             _userRepository.AddCustomerDetail(mappedCustomerDetail, userId);
 
