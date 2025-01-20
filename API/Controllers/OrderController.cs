@@ -47,16 +47,15 @@ public class OrderController : BaseApiController
     public async Task<ActionResult<Order>> GetOrder(int id)
     {
         var order = await _orderRepository.GetOrderById(id);
-
+    
         if (order == null)
         {
             return NotFound();
         }
-
+    
         return Ok(order);
     }
     
-    //another controller to get a list of orders ids, status, watch id url to get the picture
     [Authorize]
     [HttpGet("history")]
     public async Task<ActionResult<IEnumerable<OrderHistoryDto>>> GetUserOrderHistory()
@@ -80,22 +79,36 @@ public class OrderController : BaseApiController
         }
     }
     
-    //TODO Create order should pass down the successOrder so customer can't just call this and return orders
+    [Authorize]
     [HttpGet("success/{id:int}")]
     public async Task<ActionResult<SuccessOrderDto>> GetSuccessOrder(int id)
     {
-        var order = await _orderRepository.GetSuccessOrderById(id);
+        //make sure users can't just call any
 
-        if (order == null)
+        try
         {
-            return NotFound();
-        }
+            var userId = User.GetUserId();
 
-        return Ok(order);
+            var order = await _orderRepository.GetSuccessOrderByOrderIdAndUserId(id, userId);
+
+            if (order == null)
+            {
+                return NotFound("Order no. does not belong to user");
+            }
+
+            return Ok(order);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+        
+
+     
     }
 
     [HttpPost]
-    public async Task<ActionResult<int>> CreateOrder(OrderDto orderDto)
+    public async Task<ActionResult<SuccessOrderDto>> CreateOrder(OrderDto orderDto)
     {
         if (orderDto == null) return BadRequest();
 
@@ -161,7 +174,14 @@ public class OrderController : BaseApiController
         
             if (await _orderRepository.SaveAllAsync())
             {
-                return CreatedAtAction(nameof(GetOrder), new { id = updatedOrder.Id }, updatedOrder.Id);
+                var order = await _orderRepository.GetSuccessOrderById(updatedOrder.Id);
+
+                if (order == null)
+                {
+                    return NotFound("Order was not found");
+                }
+                
+                return Ok(order);
             }
 
             return BadRequest("Failed to create order");
@@ -172,7 +192,14 @@ public class OrderController : BaseApiController
         
             if (await _orderRepository.SaveAllAsync())
             {
-                return CreatedAtAction(nameof(GetOrder), new { id = mappedOrder.Id }, mappedOrder.Id);
+                var order = await _orderRepository.GetSuccessOrderById(mappedOrder.Id);
+                
+                if (order == null)
+                {
+                    return NotFound("Order was not found");
+                }
+                
+                return Ok(order);
             }
 
             return BadRequest("Failed to create order");
