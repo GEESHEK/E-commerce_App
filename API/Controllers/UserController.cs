@@ -29,18 +29,22 @@ public class UserController : BaseApiController
         return Ok(users);
     }
     
+    [Authorize] //Admin
     [HttpGet("profile")]
     public async Task<ActionResult<AppUser>> GetUser()
     {
         try
         {
             var userId = User.GetUserId();
+
+            if (userId <= 0) return NotFound("User not found");
             
             var user = await _userRepository.GetUserById(userId);
         
             if (user == null) return NotFound("User not found");
             
             return Ok(user);
+
         }
         catch (Exception e)
         {
@@ -54,12 +58,15 @@ public class UserController : BaseApiController
         try
         {
             var userId = User.GetUserId();
+
+            if (userId <= 0) return NotFound("User not found");
             
             var user = await _userRepository.GetCustomerDetailByUserId(userId);
         
             if (user == null) return NotFound("User details not found");
             
             return Ok(user);
+
         }
         catch (Exception e)
         {
@@ -75,6 +82,8 @@ public class UserController : BaseApiController
         try
         {
             var userId = User.GetUserId();
+            
+            if (userId <= 0) return NotFound("User not found");
             
             var mappedCustomerDetail = _mapper.Map<CustomerDetail>(customerDetailDto);
             

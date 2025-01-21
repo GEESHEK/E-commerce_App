@@ -7,13 +7,8 @@ public static class ClaimsPrincipleExtensions
     public static string GetUsername(this ClaimsPrincipal user)
     {
         var username = user.FindFirst(ClaimTypes.Name)?.Value;
-
-        if (string.IsNullOrEmpty(username))
-        {
-            throw new InvalidOperationException("Username claim not found.");
-        }
-
-        return username;
+        
+        return string.IsNullOrEmpty(username) ? null : username;
     }
     
     public static int GetUserId(this ClaimsPrincipal user)
@@ -22,12 +17,12 @@ public static class ClaimsPrincipleExtensions
 
         if (string.IsNullOrEmpty(userIdClaim))
         {
-            throw new InvalidOperationException("User ID claim not found.");
+            return -1;
         }
 
         if (!int.TryParse(userIdClaim, out var userId))
         {
-            throw new FormatException("User ID claim is not a valid integer.");
+            return -1;
         }
 
         return userId;
