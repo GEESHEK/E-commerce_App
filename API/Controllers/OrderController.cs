@@ -63,8 +63,6 @@ public class OrderController : BaseApiController
         try
         {
             var userId = User.GetUserId();
-
-            if (userId <= 0) return NotFound("User not found");
             
             var orderHistory = await _orderRepository.GetUserOrderHistoryByUserId(userId);
 
