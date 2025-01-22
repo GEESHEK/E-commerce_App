@@ -24,31 +24,21 @@ export class OrderConfirmationPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const param = params.get('orderId');
-      this.orderId = param !== null ? +param : NaN;
-      if (isNaN(this.orderId)) {
-        // Handle the case where the parameter is not a number
-        console.error('Invalid parameter value');
-        this.router.navigateByUrl('home');
-      }
-      this.loadOrderDetails();
-    })
+    if (this.orderService.successOrder == null) {
+      this.router.navigateByUrl('/home');
+    }
+    this.loadOrderDetails();
   }
 
   loadOrderDetails(): void {
-    if (this.orderId != null) {
-      this.orderService.retrieveSuccessOrder(this.orderId).subscribe({
-        next: (response) => {
-          this.order = response;
-          this.itemIds = this.getProductIds(this.order);
-          if (this.itemIds.length > 0) {
-            this.loadItems(this.itemIds);
-          }
-        },
-        error: (error) => console.log(error)
-      });
+    if (this.orderService.successOrder != null) {
+      this.order = this.orderService.successOrder;
+      this.itemIds = this.getProductIds(this.order);
+      if (this.itemIds.length > 0) {
+        this.loadItems(this.itemIds);
+      }
     }
+
   }
 
   loadItems(ids: number[]) {
