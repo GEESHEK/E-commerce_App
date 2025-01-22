@@ -162,8 +162,6 @@ public class OrderController : BaseApiController
 
         try
         {
-            Task<SuccessOrderDto> createOrder;
-
             var userId = User.GetUserId();
 
             if (userId > 0)
@@ -172,18 +170,37 @@ public class OrderController : BaseApiController
                 mappedOrder.CustomerDetail.AppUserId = userId;
 
                 var updatedOrder = _customerService.UpdateAndAddCustomerDetailToExistingUser(userId, mappedOrder);
-
-                createOrder = CreateAndSaveOrder(updatedOrder);
+                
+                _orderRepository.CreateOrder(updatedOrder);
+                
+                if (await _orderRepository.SaveAllAsync())
+                {
+                    var order = await _orderRepository.GetSuccessOrderById(updatedOrder.Id);
+                    
+                    if (order == null)
+                    {
+                        return NotFound("Order was not found");
+                    }
+                
+                    return Ok(order);
+                }
+                
+                return BadRequest("Failed to create order");
             }
-            else
+            
+            // Guest user: Create order without updating customer details
+            _orderRepository.CreateOrder(mappedOrder);
+            
+            if (await _orderRepository.SaveAllAsync())
             {
-                // Guest user: Create order without updating customer details
-                createOrder = CreateAndSaveOrder(mappedOrder);
-            }
-
-            if (createOrder.Result != null)
-            {
-                return Ok(createOrder);
+                var order = await _orderRepository.GetSuccessOrderById(mappedOrder.Id);
+                
+                if (order == null)
+                {
+                    return NotFound("Order was not found");
+                }
+                
+                return Ok(order);
             }
 
             return BadRequest("Failed to create order");
@@ -194,15 +211,15 @@ public class OrderController : BaseApiController
         }
     }
 
-    private async Task<SuccessOrderDto> CreateAndSaveOrder(Order order)
-    {
-        _orderRepository.CreateOrder(order);
-        
-        if (await _orderRepository.SaveAllAsync())
-        {
-            return await _orderRepository.GetSuccessOrderById(order.Id);
-        }
-
-        return null;
-    }
+    // private async Task<ActionResult<SuccessOrderDto>> CreateAndSaveOrder(Order order)
+    // {
+    //     _orderRepository.CreateOrder(order);
+    //     
+    //     if (await _orderRepository.SaveAllAsync())
+    //     {
+    //         return await _orderRepository.GetSuccessOrderById(order.Id);
+    //     }
+    //
+    //     return null;
+    // }
 }
