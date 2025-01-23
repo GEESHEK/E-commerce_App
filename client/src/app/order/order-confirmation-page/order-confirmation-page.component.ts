@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../services/order.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {SuccessOrder} from "../../models/successOrder";
 import {CartWatch} from "../../models/cartWatch";
 import {WatchService} from "../../services/watch.service";
@@ -11,7 +11,6 @@ import {WatchService} from "../../services/watch.service";
   styleUrls: ['./order-confirmation-page.component.css']
 })
 export class OrderConfirmationPageComponent implements OnInit {
-  orderId: number | undefined;
   order: SuccessOrder | undefined;
   itemIds: number[] = [];
   items: CartWatch[] = [];
@@ -19,7 +18,6 @@ export class OrderConfirmationPageComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private watchService: WatchService,
-    private route: ActivatedRoute,
     private router: Router) {
   }
 
