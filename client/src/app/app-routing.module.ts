@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'watch/:watchId', component: WatchDetailComponent, title: 'Watch Detail - ' + appName },
   { path: 'cart', component: CartComponent, title: 'Cart - ' + appName },
   { path: 'order', component: OrderPageComponent, title: 'Order - ' + appName },
-  { path: 'order/confirmation/:orderId', component: OrderConfirmationPageComponent, title: 'Order Confirmation - ' + appName },
+  { path: 'order/confirmation', component: OrderConfirmationPageComponent, title: 'Order Confirmation - ' + appName },
   { path: 'signin', component: SignInPageComponent, title: 'Sign In - ' + appName },
   { path: 'register', component: RegisterPageComponent, title: 'Create Account - ' + appName },
   {

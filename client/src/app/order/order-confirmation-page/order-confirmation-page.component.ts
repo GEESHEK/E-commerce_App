@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../services/order.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {SuccessOrder} from "../../models/successOrder";
 import {CartWatch} from "../../models/cartWatch";
 import {WatchService} from "../../services/watch.service";
@@ -11,7 +11,6 @@ import {WatchService} from "../../services/watch.service";
   styleUrls: ['./order-confirmation-page.component.css']
 })
 export class OrderConfirmationPageComponent implements OnInit {
-  orderId: number | undefined;
   order: SuccessOrder | undefined;
   itemIds: number[] = [];
   items: CartWatch[] = [];
@@ -19,36 +18,25 @@ export class OrderConfirmationPageComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private watchService: WatchService,
-    private route: ActivatedRoute,
     private router: Router) {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const param = params.get('orderId');
-      this.orderId = param !== null ? +param : NaN;
-      if (isNaN(this.orderId)) {
-        // Handle the case where the parameter is not a number
-        console.error('Invalid parameter value');
-        this.router.navigateByUrl('home');
-      }
-      this.loadOrderDetails();
-    })
+    if (this.orderService.successOrder == null) {
+      this.router.navigateByUrl('/home');
+    }
+    this.loadOrderDetails();
   }
 
   loadOrderDetails(): void {
-    if (this.orderId != null) {
-      this.orderService.retrieveSuccessOrder(this.orderId).subscribe({
-        next: (response) => {
-          this.order = response;
-          this.itemIds = this.getProductIds(this.order);
-          if (this.itemIds.length > 0) {
-            this.loadItems(this.itemIds);
-          }
-        },
-        error: (error) => console.log(error)
-      });
+    if (this.orderService.successOrder != null) {
+      this.order = this.orderService.successOrder;
+      this.itemIds = this.getProductIds(this.order);
+      if (this.itemIds.length > 0) {
+        this.loadItems(this.itemIds);
+      }
     }
+
   }
 
   loadItems(ids: number[]) {

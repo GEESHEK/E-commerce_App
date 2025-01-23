@@ -42,7 +42,7 @@ public class OrderController : BaseApiController
 
         return Ok(orders);
     }
-    
+
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Order>> GetOrder(int id)
     {
@@ -55,8 +55,7 @@ public class OrderController : BaseApiController
 
         return Ok(order);
     }
-    
-    //another controller to get a list of orders ids, status, watch id url to get the picture
+
     [Authorize]
     [HttpGet("history")]
     public async Task<ActionResult<IEnumerable<OrderHistoryDto>>> GetUserOrderHistory()
@@ -64,7 +63,7 @@ public class OrderController : BaseApiController
         try
         {
             var userId = User.GetUserId();
-
+            
             var orderHistory = await _orderRepository.GetUserOrderHistoryByUserId(userId);
 
             if (orderHistory == null)
@@ -79,27 +78,36 @@ public class OrderController : BaseApiController
             return BadRequest(e.Message);
         }
     }
-    
-    //TODO Create order should pass down the successOrder so customer can't just call this and return orders
-    [HttpGet("success/{id:int}")]
-    public async Task<ActionResult<SuccessOrderDto>> GetSuccessOrder(int id)
+
+    [Authorize]
+    [HttpGet("success/{orderId:int}")]
+    public async Task<ActionResult<SuccessOrderDto>> GetSuccessOrder(int orderId)
     {
-        var order = await _orderRepository.GetSuccessOrderById(id);
-
-        if (order == null)
+        try
         {
-            return NotFound();
-        }
+            var userId = User.GetUserId();
 
-        return Ok(order);
+            var order = await _orderRepository.GetSuccessOrderByOrderIdAndUserId(orderId, userId);
+
+            if (order == null)
+            {
+                return NotFound("Order no. does not belong to user");
+            }
+
+            return Ok(order);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPost]
-    public async Task<ActionResult<int>> CreateOrder(OrderDto orderDto)
+    public async Task<ActionResult<SuccessOrderDto>> CreateOrder(OrderDto orderDto)
     {
         if (orderDto == null) return BadRequest();
 
-        List<int> watchIds = new List<int>();
+        var watchIds = new List<int>();
 
         //check if itemTypes exists
 
@@ -118,19 +126,19 @@ public class OrderController : BaseApiController
 
             watchIds.Add(item.ProductId);
         }
-        
+
         var watches = await _watchRepository.GetWatchesByIds(watchIds);
 
         if (watches.Count == 0)
         {
             return BadRequest("No watches were found");
         }
-        
+
         //call the service to check watch availability and reduced the watch by item purchased
         var mappedOrder = _mapper.Map<Order>(orderDto);
 
         var totalPrice = 0m;
-        
+
         try
         {
             totalPrice = await _orderService.ReduceWatchQuantityAndReturnTotalPrice(watches, mappedOrder);
@@ -147,35 +155,69 @@ public class OrderController : BaseApiController
         {
             return BadRequest("Invalid order total");
         }
-        
+
         _orderService.AddPriceToOrderItems(watches, mappedOrder);
-        
+
         try
         {
             var userId = User.GetUserId();
-            mappedOrder.CustomerDetail.AppUserId = User.GetUserId();
+
+            if (userId > 0)
+            {
+                // Authenticated user: Update customer details
+                mappedOrder.CustomerDetail.AppUserId = userId;
+
+                var updatedOrder = _customerService.UpdateAndAddCustomerDetailToExistingUser(userId, mappedOrder);
+                
+                _orderRepository.CreateOrder(updatedOrder);
+                
+                if (await _orderRepository.SaveAllAsync())
+                {
+                    var order = await _orderRepository.GetSuccessOrderById(updatedOrder.Id);
+                    
+                    if (order == null)
+                    {
+                        return NotFound("Order was not found");
+                    }
+                
+                    return Ok(order);
+                }
+                
+                return BadRequest("Failed to create order");
+            }
             
-            var updatedOrder = _customerService.UpdateAndAddCustomerDetailToExistingUser(userId, mappedOrder);
+            // Guest user: Create order without updating customer details
+            _orderRepository.CreateOrder(mappedOrder);
             
-            _orderRepository.CreateOrder(updatedOrder);
-        
             if (await _orderRepository.SaveAllAsync())
             {
-                return CreatedAtAction(nameof(GetOrder), new { id = updatedOrder.Id }, updatedOrder.Id);
+                var order = await _orderRepository.GetSuccessOrderById(mappedOrder.Id);
+                
+                if (order == null)
+                {
+                    return NotFound("Order was not found");
+                }
+                
+                return Ok(order);
             }
 
             return BadRequest("Failed to create order");
         }
         catch (Exception e)
         {
-            _orderRepository.CreateOrder(mappedOrder);
-        
-            if (await _orderRepository.SaveAllAsync())
-            {
-                return CreatedAtAction(nameof(GetOrder), new { id = mappedOrder.Id }, mappedOrder.Id);
-            }
-
-            return BadRequest("Failed to create order");
+            return BadRequest("An error occurred while creating order");
         }
     }
+
+    // private async Task<ActionResult<SuccessOrderDto>> CreateAndSaveOrder(Order order)
+    // {
+    //     _orderRepository.CreateOrder(order);
+    //     
+    //     if (await _orderRepository.SaveAllAsync())
+    //     {
+    //         return await _orderRepository.GetSuccessOrderById(order.Id);
+    //     }
+    //
+    //     return null;
+    // }
 }

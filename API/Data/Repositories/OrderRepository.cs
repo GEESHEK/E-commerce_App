@@ -46,6 +46,15 @@ public class OrderRepository : IOrderRepository
             .SingleOrDefaultAsync();
     }
 
+    public async Task<SuccessOrderDto> GetSuccessOrderByOrderIdAndUserId(int orderId, int userId)
+    {
+        return await _context.Orders
+            .Where(x => x.Id == orderId && x.CustomerDetail.AppUserId == userId)
+            .AsNoTracking()
+            .ProjectTo<SuccessOrderDto>(_mapper.ConfigurationProvider)
+            .SingleOrDefaultAsync();
+    }
+
     public async Task<IEnumerable<OrderHistoryDto>> GetUserOrderHistoryByUserId(int userId)
     {
         return await _context.Orders

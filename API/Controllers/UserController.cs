@@ -29,6 +29,7 @@ public class UserController : BaseApiController
         return Ok(users);
     }
     
+    //Admin
     [HttpGet("profile")]
     public async Task<ActionResult<AppUser>> GetUser()
     {
@@ -41,6 +42,7 @@ public class UserController : BaseApiController
             if (user == null) return NotFound("User not found");
             
             return Ok(user);
+
         }
         catch (Exception e)
         {
@@ -60,6 +62,7 @@ public class UserController : BaseApiController
             if (user == null) return NotFound("User details not found");
             
             return Ok(user);
+
         }
         catch (Exception e)
         {

@@ -95,7 +95,9 @@ export class OrderPageComponent implements OnInit {
         this.items = response;
         this.totalPrice = this.calculateTotalPrice(this.items);
       },
-      error: (error) => console.log(error),
+      error: (error) => {
+        this.toastr.error(error.error);
+      }
     });
   }
 
@@ -137,11 +139,11 @@ export class OrderPageComponent implements OnInit {
       console.log(JSON.stringify(order));
 
       this.orderService.order(order).subscribe({
-        next: (orderId: number) => {
+        next: () => {
           console.log("order was successful");
           //empty the shopping cart and redirect them to the success page
           this.cartService.removeAllItems();
-          this.router.navigateByUrl('/order/confirmation/' + orderId);
+          this.router.navigateByUrl('/order/confirmation');
           this.toastr.success("Order has been confirmed!");
         },
         error: (error: string[] | undefined) => {
