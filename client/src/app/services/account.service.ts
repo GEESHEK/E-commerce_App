@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {RegisterUser} from "../models/registerUser";
 import {SignInUser} from "../models/signInUser";
+import {OrderService} from "./order.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class AccountService {
   private http = inject(HttpClient);
   private router = inject(Router);
   private toastr = inject(ToastrService);
+  private orderService = inject(OrderService);
   baseUrl = environment.apiUrl;
   private currentUser = signal<User | null>(null);
   currentUser$ = this.currentUser.asReadonly()
@@ -33,6 +35,7 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('user');
+    this.orderService.successOrder = undefined;
     this.currentUser.set(null);
     this.router.navigateByUrl('/signin');
     this.toastr.success('Logout Successfully');
