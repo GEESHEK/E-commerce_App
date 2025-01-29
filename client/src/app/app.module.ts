@@ -26,6 +26,7 @@ import {AccountPageComponent} from './user/account-page/account-page.component';
 import {ToastrModule} from 'ngx-toastr';
 import {MyOrdersPageComponent} from './order/my-orders-page/my-orders-page.component';
 import {jwtInterceptor} from "./interceptors/jwtInterceptor";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import {jwtInterceptor} from "./interceptors/jwtInterceptor";
     RegisterPageComponent,
     AccountPageComponent,
     MyOrdersPageComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
