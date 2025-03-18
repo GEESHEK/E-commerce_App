@@ -113,6 +113,11 @@ public class OrderController : BaseApiController
 
         foreach (var item in orderDto.Items)
         {
+            if (item.Quantity <= 0)
+            {
+                return BadRequest("Items quantity must be greater than 0");
+            }
+            
             switch (item.ItemTypeId)
             {
                 //if the !await does work then you need to check case 1 first, then check if watchExist then check if its false
@@ -152,11 +157,6 @@ public class OrderController : BaseApiController
 
         //Add total to the order
         mappedOrder.Total = totalPrice;
-
-        if (totalPrice <= 0)
-        {
-            return BadRequest("Invalid order total");
-        }
 
         _orderService.AddPriceToOrderItems(watches, mappedOrder);
 
