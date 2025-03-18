@@ -1,4 +1,5 @@
-﻿using API.Data.Repositories;
+﻿using API.Data;
+using API.Data.Repositories;
 using API.Entities.OrderEntities;
 using API.Entities.WatchEntities;
 
@@ -6,12 +7,41 @@ namespace API.Services;
 
 public class OrderService : IOrderService
 {
+    private readonly DataContext _context;
     private readonly IWatchRepository _watchRepository;
+    private readonly IOrderRepository _orderRepository;
 
-    public OrderService(IWatchRepository watchRepository)
+    public OrderService(DataContext context, IWatchRepository watchRepository, IOrderRepository orderRepository)
     {
+        _context = context;
         _watchRepository = watchRepository;
+        _orderRepository = orderRepository;
     }
+
+    // public async Task<Order> PlaceOrder(Order order, List<Watch> watches)
+    // {
+    //     using (var transaction = await _context.Database.BeginTransactionAsync())
+    //     {
+    //         try
+    //         {
+    //             var totalPrice = await ReduceWatchQuantityAndReturnTotalPrice(watches, order);
+    //             order.Total = totalPrice;
+    //             
+    //             // Save all changes together (stock reduction and order creation)
+    //             await _context.SaveChangesAsync();
+    //
+    //             // Commit transaction
+    //             await transaction.CommitAsync();
+    //
+    //             return mappedOrder;
+    //         }
+    //         catch (Exception)
+    //         {
+    //             await transaction.RollbackAsync();
+    //             throw;
+    //         }
+    //     }
+    // }
 
     public async Task<decimal> ReduceWatchQuantityAndReturnTotalPrice(List<Watch> watches, Order order)
     {

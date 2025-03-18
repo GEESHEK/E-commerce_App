@@ -138,7 +138,9 @@ public class OrderController : BaseApiController
         var mappedOrder = _mapper.Map<Order>(orderDto);
 
         var totalPrice = 0m;
-
+        //TODO Start transaction here maybe
+        //Call PlaceOrder with a try and catch, the exception will be thrown up so we can return a bad request
+        
         try
         {
             totalPrice = await _orderService.ReduceWatchQuantityAndReturnTotalPrice(watches, mappedOrder);
