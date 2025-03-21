@@ -1,7 +1,9 @@
 ﻿using API.Data;
 using API.Data.Repositories;
+using API.DTOs.OrderDTOs;
 using API.Entities.OrderEntities;
 using API.Entities.WatchEntities;
+using API.Exceptions;
 
 namespace API.Services;
 
@@ -10,38 +12,81 @@ public class OrderService : IOrderService
     private readonly DataContext _context;
     private readonly IWatchRepository _watchRepository;
     private readonly IOrderRepository _orderRepository;
+    private readonly ICustomerService _customerService;
 
-    public OrderService(DataContext context, IWatchRepository watchRepository, IOrderRepository orderRepository)
+    public OrderService(DataContext context, IWatchRepository watchRepository, 
+        IOrderRepository orderRepository, ICustomerService customerService)
     {
         _context = context;
         _watchRepository = watchRepository;
         _orderRepository = orderRepository;
+        _customerService = customerService;
     }
+    //add to interface
+    public async Task<SuccessOrderDto> PlaceOrder(Order order, List<Watch> watches, int userId)
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+        
+        try
+        {
+            var totalPrice = await ReduceWatchQuantityAndReturnTotalPrice(watches, order);
+            order.Total = totalPrice;
+                
+            AddPriceToOrderItems(watches, order);
 
-    // public async Task<Order> PlaceOrder(Order order, List<Watch> watches)
-    // {
-    //     using (var transaction = await _context.Database.BeginTransactionAsync())
-    //     {
-    //         try
-    //         {
-    //             var totalPrice = await ReduceWatchQuantityAndReturnTotalPrice(watches, order);
-    //             order.Total = totalPrice;
-    //             
-    //             // Save all changes together (stock reduction and order creation)
-    //             await _context.SaveChangesAsync();
-    //
-    //             // Commit transaction
-    //             await transaction.CommitAsync();
-    //
-    //             return mappedOrder;
-    //         }
-    //         catch (Exception)
-    //         {
-    //             await transaction.RollbackAsync();
-    //             throw;
-    //         }
-    //     }
-    // }
+            if (userId > 0)
+            {
+                // Authenticated user: Update customer details
+                order.CustomerDetail.AppUserId = userId;
+
+                var updatedOrder = _customerService.UpdateAndAddCustomerDetailToExistingUser(userId, order);
+                
+                _orderRepository.CreateOrder(updatedOrder);
+                    
+                // Save all changes together (stock reduction and order creation)
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    // Finalize transaction
+                    await transaction.CommitAsync();
+                        
+                    var successOrder = await _orderRepository.GetSuccessOrderById(updatedOrder.Id);
+                    
+                    if (successOrder == null)
+                    {
+                        throw new Exception("Order was not found");
+                    }
+                
+                    return successOrder;
+                }
+                
+                throw new Exception("Failed to create order");
+            }
+                
+            // Guest user: Create order without updating customer details
+            _orderRepository.CreateOrder(order);
+            
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                await transaction.CommitAsync();
+                    
+                var successOrder = await _orderRepository.GetSuccessOrderById(order.Id);
+                
+                if (successOrder == null)
+                {
+                    throw new NotFoundException("Order was not found");
+                }
+
+                return successOrder;
+            }
+
+            throw new Exception("Failed to create order");
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+    }
 
     public async Task<decimal> ReduceWatchQuantityAndReturnTotalPrice(List<Watch> watches, Order order)
     {
@@ -77,7 +122,8 @@ public class OrderService : IOrderService
         }
         
         //TODO unit of work pattern
-        await _watchRepository.SaveAllAsync();
+        // Using the same context to save all changes 
+        // await _watchRepository.SaveAllAsync();
 
         return totalPrice;
     }
