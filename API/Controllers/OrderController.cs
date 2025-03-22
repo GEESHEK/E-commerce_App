@@ -1,6 +1,7 @@
 ﻿using API.Data.Repositories;
 using API.DTOs.OrderDTOs;
 using API.Entities.OrderEntities;
+using API.Exceptions;
 using API.Extensions;
 using API.Services;
 using AutoMapper;
@@ -63,7 +64,7 @@ public class OrderController : BaseApiController
         try
         {
             var userId = User.GetUserId();
-            
+
             var orderHistory = await _orderRepository.GetUserOrderHistoryByUserId(userId);
 
             if (orderHistory == null)
@@ -107,29 +108,28 @@ public class OrderController : BaseApiController
     {
         if (orderDto == null) return BadRequest();
 
+        var userId = User.GetUserId();
         var watchIds = new List<int>();
 
         //check if itemTypes exists
-
         foreach (var item in orderDto.Items)
         {
             if (item.Quantity <= 0)
             {
                 return BadRequest("Items quantity must be greater than 0");
             }
-            
+
             switch (item.ItemTypeId)
             {
-                //if the !await does work then you need to check case 1 first, then check if watchExist then check if its false
-                case 1 when !await _watchRepository.WatchExists(item.ProductId):
-                    return BadRequest("Watch does not exist");
+                case 1:
+                    if (!await _watchRepository.WatchExists(item.ProductId)) return BadRequest("Watch does not exist");
+                    watchIds.Add(item.ProductId);
+                    break;
                 case 2 or 3: //when await > different product repo
                     return BadRequest("These item types are not being sold yet");
-                case > 4:
+                default:
                     return BadRequest("Unknown item type");
             }
-
-            watchIds.Add(item.ProductId);
         }
 
         var watches = await _watchRepository.GetWatchesByIds(watchIds);
@@ -139,85 +139,20 @@ public class OrderController : BaseApiController
             return BadRequest("No watches were found");
         }
 
-        //call the service to check watch availability and reduced the watch by item purchased
         var mappedOrder = _mapper.Map<Order>(orderDto);
 
-        var totalPrice = 0m;
-
+        //Start the transaction of reducing stock count and creating order
         try
         {
-            totalPrice = await _orderService.ReduceWatchQuantityAndReturnTotalPrice(watches, mappedOrder);
+            return Ok(await _orderService.PlaceOrder(mappedOrder, watches, userId));
+        }
+        catch (FailedToCreateOrderException ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
-
-        //Add total to the order
-        mappedOrder.Total = totalPrice;
-
-        _orderService.AddPriceToOrderItems(watches, mappedOrder);
-
-        try
-        {
-            var userId = User.GetUserId();
-
-            if (userId > 0)
-            {
-                // Authenticated user: Update customer details
-                mappedOrder.CustomerDetail.AppUserId = userId;
-
-                var updatedOrder = _customerService.UpdateAndAddCustomerDetailToExistingUser(userId, mappedOrder);
-                
-                _orderRepository.CreateOrder(updatedOrder);
-                
-                if (await _orderRepository.SaveAllAsync())
-                {
-                    var order = await _orderRepository.GetSuccessOrderById(updatedOrder.Id);
-                    
-                    if (order == null)
-                    {
-                        return NotFound("Order was not found");
-                    }
-                
-                    return Ok(order);
-                }
-                
-                return BadRequest("Failed to create order");
-            }
-            
-            // Guest user: Create order without updating customer details
-            _orderRepository.CreateOrder(mappedOrder);
-            
-            if (await _orderRepository.SaveAllAsync())
-            {
-                var order = await _orderRepository.GetSuccessOrderById(mappedOrder.Id);
-                
-                if (order == null)
-                {
-                    return NotFound("Order was not found");
-                }
-                
-                return Ok(order);
-            }
-
-            return BadRequest("Failed to create order");
-        }
-        catch (Exception e)
-        {
-            return BadRequest("An error occurred while creating order");
-        }
     }
-
-    // private async Task<ActionResult<SuccessOrderDto>> CreateAndSaveOrder(Order order)
-    // {
-    //     _orderRepository.CreateOrder(order);
-    //     
-    //     if (await _orderRepository.SaveAllAsync())
-    //     {
-    //         return await _orderRepository.GetSuccessOrderById(order.Id);
-    //     }
-    //
-    //     return null;
-    // }
 }
