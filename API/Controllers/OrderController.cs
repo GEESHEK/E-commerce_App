@@ -146,13 +146,13 @@ public class OrderController : BaseApiController
         {
             return Ok(await _orderService.PlaceOrder(mappedOrder, watches, userId));
         }
-        catch (NotFoundException ex)
+        catch (FailedToCreateOrderException ex)
         {
-            return NotFound(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return BadRequest("An error occurred while creating order");
+            return BadRequest(ex.Message);
         }
     }
 }

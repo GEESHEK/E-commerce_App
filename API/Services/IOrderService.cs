@@ -7,6 +7,6 @@ namespace API.Services;
 public interface IOrderService
 {
     Task<SuccessOrderDto> PlaceOrder(Order order, List<Watch> watches, int userId);
-    Task<decimal> ReduceWatchQuantityAndReturnTotalPrice(List<Watch> watches, Order order);
+    decimal ReduceWatchQuantityAndReturnTotalPrice(List<Watch> watches, Order order);
     void AddPriceToOrderItems(List<Watch> watches, Order order);
 }
