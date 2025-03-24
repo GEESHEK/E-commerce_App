@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace API.Helpers;
+namespace API.Helpers.Automapper;
 
 public class AutomapperProfiles : Profile
 {
@@ -8,5 +8,6 @@ public class AutomapperProfiles : Profile
     {
         this.AddWatchMappings();
         this.AddOrderMappings();
+        this.AddUserMappings();
     }
 }

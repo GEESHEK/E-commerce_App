@@ -2,7 +2,7 @@
 using API.Entities.OrderEntities;
 using AutoMapper;
 
-namespace API.Helpers;
+namespace API.Helpers.Automapper;
 
 public static class OrderMappings
 {

@@ -3,7 +3,7 @@ using API.Entities.OrderEntities;
 using API.Entities.UserEntities;
 using AutoMapper;
 
-namespace API.Helpers;
+namespace API.Helpers.Automapper;
 
 public static class UserMappings
 {
