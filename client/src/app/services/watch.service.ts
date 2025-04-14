@@ -7,6 +7,7 @@ import {Brand} from '../models/brand';
 import {Category} from '../models/category';
 import {WatchDetail} from '../models/watchDetail';
 import {CartWatch} from '../models/cartWatch';
+import {PaginatedResult} from "../models/pagination";
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,7 @@ export class WatchService {
       );
   }
 
+  // getWatchCards(brand?: string, watchType?: string, pageNumber?: number, pageSize?: number) {
   getWatchCards(brand?: string, watchType?: string) {
     let params = new HttpParams();
 
@@ -52,7 +54,38 @@ export class WatchService {
       });
     }
 
+    // if (pageNumber && pageSize) {
+    //   params = params.append('pageNumber', pageNumber);
+    //   params = params.append('pageSize', pageSize);
+    //
+    //   return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards', { observe: 'response', params}).pipe(
+    //     map(response => {
+    //       let paginatedResult = new PaginatedResult<WatchCard[]>();
+    //       paginatedResult.items = response.body ?? []; // or as WatchCard
+    //       paginatedResult.pagination = JSON.parse(response.headers.get('Pagination')!);
+    //       return  paginatedResult;
+    //   }));
+    // }
+
     return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards');
+  }
+
+  // TODO example
+  getPaginatedWatchCards(pageNumber?: number, pageSize?: number) {
+    let params = new HttpParams();
+
+    if (pageNumber && pageSize) {
+      params = params.append('pageNumber', pageNumber);
+      params = params.append('pageSize', pageSize);
+    }
+
+    return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards', { observe: 'response', params}).pipe(
+      map(response => {
+        let paginatedResult = new PaginatedResult<WatchCard[]>();
+        paginatedResult.items = response.body ?? []; // or as WatchCard
+        paginatedResult.pagination = JSON.parse(response.headers.get('Pagination')!);
+        return  paginatedResult;
+      }));
   }
 
   getWatchDetailById(id: number) {

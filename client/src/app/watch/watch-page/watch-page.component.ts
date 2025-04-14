@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {WatchCard} from '../../models/watchCard';
 import {WatchService} from '../../services/watch.service';
 import {ActivatedRoute} from '@angular/router';
+import {PaginatedResult} from "../../models/pagination";
 
 @Component({
   selector: 'app-watch-page',
@@ -12,6 +13,15 @@ export class WatchPageComponent implements OnInit {
   pageType: string | null = ''; //dynamically change based on the page
   filter: string | null = '';
   watchCards: WatchCard[] = [];
+  paginatedResults: PaginatedResult<WatchCard[]> = {
+    items: [],
+    pagination: {
+      currentPage: 1,
+      itemsPerPage: 10,
+      totalItems: 0,
+      totalPages: 0
+    }
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -42,5 +52,12 @@ export class WatchPageComponent implements OnInit {
       next: (response) => (this.watchCards = response),
       error: (error) => console.log(error),
     });
+  }
+
+  loadPaginatedWatchCards(pageNumber?: number, pageSize?: number) {
+    this.watchService.getPaginatedWatchCards(pageNumber, pageSize).subscribe({
+      next: (response) => (this.paginatedResults = response),
+      error: (error) => console.log(error),
+    })
   }
 }
