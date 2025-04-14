@@ -1,5 +1,6 @@
 ﻿using API.DTOs.WatchDTOs;
 using API.Entities.WatchEntities;
+using API.Helpers.Pagination;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -97,13 +98,14 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<WatchCardDto>> GetWatchCards()
+    public async Task<PagedList<WatchCardDto>> GetWatchCards(UserParams userParams)
     {
-        return await _context.Watches
+        var query = _context.Watches
             .OrderByDescending(x => x.DateAdded)
             .AsNoTracking()
-            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider);
+        
+        return await PagedList<WatchCardDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
     }
 
     public async Task<IEnumerable<CartWatchDto>> GetCartWatchesByIds(List<int> ids)

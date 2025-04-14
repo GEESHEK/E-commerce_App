@@ -1,6 +1,8 @@
 ﻿using API.Data.Repositories;
 using API.DTOs.WatchDTOs;
 using API.Entities.WatchEntities;
+using API.Extensions;
+using API.Helpers.Pagination;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -96,7 +98,7 @@ public class WatchController : BaseApiController
     }
 
     [HttpGet("watch-cards")]
-    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards([FromQuery] string brand, [FromQuery] string watchType)
+    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards([FromQuery] string brand, [FromQuery] string watchType, [FromQuery] UserParams userParams)
     {
         //TODO sending up both query parameters don't work for now, fix this in pagination
         if (!string.IsNullOrEmpty(brand))
@@ -113,7 +115,11 @@ public class WatchController : BaseApiController
             return Ok(await _watchRepository.GetWatchCardsByWatchTypeName(watchType));
         }
         
-        return Ok(await _watchRepository.GetWatchCards());
+        var watches = await _watchRepository.GetWatchCards(userParams);
+        
+        Response.AddPaginationHeader(watches);
+        
+        return Ok(watches);
     }
 
     [HttpGet("watch-detail/{id:int}")]
