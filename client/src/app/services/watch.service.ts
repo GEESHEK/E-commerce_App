@@ -34,51 +34,22 @@ export class WatchService {
       );
   }
 
-  // getWatchCards(brand?: string, watchType?: string, pageNumber?: number, pageSize?: number) {
-  getWatchCards(brand?: string, watchType?: string) {
+  getWatchCards(pageNumber?: number, pageSize?: number, brand?: string, watchType?: string) {
     let params = new HttpParams();
 
     if (typeof brand !== 'undefined') {
       params = params.append('brand', brand);
-
-      return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards', {
-        params: params,
-      });
     }
 
     if (typeof watchType !== 'undefined') {
       params = params.append('watchType', watchType);
-
-      return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards', {
-        params: params,
-      });
     }
-
-    // if (pageNumber && pageSize) {
-    //   params = params.append('pageNumber', pageNumber);
-    //   params = params.append('pageSize', pageSize);
-    //
-    //   return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards', { observe: 'response', params}).pipe(
-    //     map(response => {
-    //       let paginatedResult = new PaginatedResult<WatchCard[]>();
-    //       paginatedResult.items = response.body ?? []; // or as WatchCard
-    //       paginatedResult.pagination = JSON.parse(response.headers.get('Pagination')!);
-    //       return  paginatedResult;
-    //   }));
-    // }
-
-    return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards');
-  }
-
-  // TODO example
-  getPaginatedWatchCards(pageNumber?: number, pageSize?: number) {
-    let params = new HttpParams();
 
     if (pageNumber && pageSize) {
       params = params.append('pageNumber', pageNumber);
       params = params.append('pageSize', pageSize);
     }
-
+    //get method exacts the results from the response but the response contains the headers we need
     return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards', { observe: 'response', params}).pipe(
       map(response => {
         let paginatedResult = new PaginatedResult<WatchCard[]>();

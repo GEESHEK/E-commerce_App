@@ -12,12 +12,13 @@ import {PaginatedResult} from "../../models/pagination";
 export class WatchPageComponent implements OnInit {
   pageType: string | null = ''; //dynamically change based on the page
   filter: string | null = '';
-  watchCards: WatchCard[] = [];
+  pageNumber = 1;
+  pageSize = 8;
   paginatedResults: PaginatedResult<WatchCard[]> = {
     items: [],
     pagination: {
       currentPage: 1,
-      itemsPerPage: 10,
+      itemsPerPage: 8,
       totalItems: 0,
       totalPages: 0
     }
@@ -29,6 +30,24 @@ export class WatchPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkPageTypeAndFilterThenLoadWatches();
+  }
+
+  loadWatchCards(brand?: string, category?: string) {
+    this.watchService.getWatchCards(this.pageNumber, this.pageSize, brand, category).subscribe({
+      next: (response) => (this.paginatedResults = response),
+      error: (error) => console.log(error),
+    });
+  }
+
+  pageChanged(event: any) {
+    if (this.pageNumber !== event.page) {
+      this.pageNumber = event.page;
+      this.checkPageTypeAndFilterThenLoadWatches()
+    }
+  }
+
+  checkPageTypeAndFilterThenLoadWatches() {
     this.route.paramMap.subscribe((params) => {
       this.pageType = params.get('pageType');
       this.filter = params.get('filter');
@@ -45,19 +64,5 @@ export class WatchPageComponent implements OnInit {
 
       this.loadWatchCards();
     });
-  }
-
-  loadWatchCards(brand?: string, category?: string) {
-    this.watchService.getWatchCards(brand, category).subscribe({
-      next: (response) => (this.watchCards = response),
-      error: (error) => console.log(error),
-    });
-  }
-
-  loadPaginatedWatchCards(pageNumber?: number, pageSize?: number) {
-    this.watchService.getPaginatedWatchCards(pageNumber, pageSize).subscribe({
-      next: (response) => (this.paginatedResults = response),
-      error: (error) => console.log(error),
-    })
   }
 }

@@ -1,8 +1,21 @@
 <div class="container">
   <h1 *ngIf="pageType" class="page">{{ pageType + " watches" | titlecase}}</h1>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
-    <div *ngFor="let watchCard of watchCards" class="col">
+    <div *ngFor="let watchCard of paginatedResults.items" class="col">
       <app-watch-card [watchCard]="watchCard"></app-watch-card>
     </div>
   </div>
+</div>
+<div *ngIf="paginatedResults?.pagination && pageType" class="d-flex justify-content-center">
+  <pagination
+    [boundaryLinks]="true"
+    [totalItems]="paginatedResults.pagination!.totalItems"
+    [itemsPerPage]="paginatedResults.pagination!.itemsPerPage"
+    (pageChanged)="pageChanged($event)"
+    [maxSize]="8"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;">
+  </pagination>
 </div>
