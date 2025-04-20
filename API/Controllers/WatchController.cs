@@ -98,27 +98,16 @@ public class WatchController : BaseApiController
     }
 
     [HttpGet("watch-cards")]
-    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards([FromQuery] string brand, [FromQuery] string watchType, [FromQuery] UserParams userParams)
+    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards([FromQuery] UserParams userParams)
     {
-        //TODO sending up both query parameters don't work for now, fix this in pagination
-        if (!string.IsNullOrEmpty(brand))
-        {
-            if (!await _brandRepository.BrandExists(brand)) return NotFound("Brand not found");
+        if (userParams.Brand != null && !await _brandRepository.BrandExists(userParams.Brand)) return NotFound("Brand not found");
 
-            return Ok(await _watchRepository.GetWatchCardsByBrandName(brand));
-        }
-        
-        if (!string.IsNullOrEmpty(watchType))
-        {
-            if (!await _watchTypeRepository.WatchTypeExists(watchType)) return NotFound("Watch type not found");
-
-            return Ok(await _watchRepository.GetWatchCardsByWatchTypeName(watchType));
-        }
+        if (userParams.WatchType != null && !await _watchTypeRepository.WatchTypeExists(userParams.WatchType)) return NotFound("Watch type not found");
         
         var watches = await _watchRepository.GetWatchCards(userParams);
-        
+
         Response.AddPaginationHeader(watches);
-        
+
         return Ok(watches);
     }
 
@@ -153,6 +142,12 @@ public class WatchController : BaseApiController
         var watchCards = await _watchRepository.GetWatchCardsByWatchTypeId(watchTypesId);
 
         return Ok(watchCards);
+    }
+
+    [HttpGet("filters")]
+    public async Task<ActionResult<WatchFilterDto>> GetWatchFilters()
+    {
+        return Ok(await _watchRepository.GetWatchFilters());
     }
 
     //Todo add photo or do this in it's own controller

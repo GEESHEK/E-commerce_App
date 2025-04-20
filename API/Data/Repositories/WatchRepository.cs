@@ -100,12 +100,22 @@ public class WatchRepository : IWatchRepository
 
     public async Task<PagedList<WatchCardDto>> GetWatchCards(UserParams userParams)
     {
-        var query = _context.Watches
-            .OrderByDescending(x => x.DateAdded)
-            .AsNoTracking()
-            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider);
+        var query = _context.Watches.AsQueryable();
+
+        if (userParams.Brand != null)
+        {
+            query = query.Where(w => w.Brand.Name == userParams.Brand);
+        }
         
-        return await PagedList<WatchCardDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+        if (userParams.WatchType != null)
+        {
+            query = query.Where(w => w.WatchType.Type == userParams.WatchType);
+        }
+
+        query = query.OrderByDescending(x => x.DateAdded)
+            .AsNoTracking();
+        
+        return await PagedList<WatchCardDto>.CreateAsync(query.ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
     }
 
     public async Task<IEnumerable<CartWatchDto>> GetCartWatchesByIds(List<int> ids)
@@ -146,16 +156,6 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandName(string brand)
-    {
-        return await _context.Watches
-            .Where(x => x.Brand.Name == brand)
-            .OrderByDescending(x => x.DateAdded)
-            .AsNoTracking()
-            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
-    }
-
     public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypeId)
     {
         return await _context.Watches
@@ -165,14 +165,17 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeName(string watchTypeName)
+    public async Task<WatchFilterDto> GetWatchFilters()
     {
-        return await _context.Watches
-            .Where(x => x.WatchType.Type == watchTypeName)
-            .OrderByDescending(x => x.DateAdded)
-            .AsNoTracking()
-            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+        return new WatchFilterDto
+        {
+            Brands = await _context.Brands.Select(b => b.Name).ToListAsync(),
+            Calibres = await _context.Calibres.Select(c => c.Name).ToListAsync(),
+            Dials = await _context.Dials.Select(d => d.Colour).ToListAsync(),
+            MovementTypes = await _context.MovementTypes.Select(m => m.Type).ToListAsync(),
+            WatchTypes = await _context.WatchTypes.Select(w => w.Type).ToListAsync(),
+            Diameters = await _context.WatchCaseMeasurements.Select(w => w.Diameter).Distinct().ToListAsync()
+        };
     }
 
     public async Task<bool> WatchExists(string reference)
