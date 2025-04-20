@@ -8,6 +8,7 @@ import {Category} from '../models/category';
 import {WatchDetail} from '../models/watchDetail';
 import {CartWatch} from '../models/cartWatch';
 import {PaginatedResult} from "../models/pagination";
+import {WatchFilter} from "../models/watchFilter";
 
 @Injectable({
   providedIn: 'root',
@@ -90,5 +91,9 @@ export class WatchService {
 
   getCategories() {
     return this.http.get<Category[]>(this.baseUrl + '/watchType');
+  }
+
+  getWatchFilters() {
+    return this.http.get<WatchFilter>(this.baseUrl + '/watch/filters');
   }
 }

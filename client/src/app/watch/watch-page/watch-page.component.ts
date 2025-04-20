@@ -3,6 +3,7 @@ import {WatchCard} from '../../models/watchCard';
 import {WatchService} from '../../services/watch.service';
 import {ActivatedRoute} from '@angular/router';
 import {PaginatedResult} from "../../models/pagination";
+import {WatchFilter} from "../../models/watchFilter";
 
 @Component({
   selector: 'app-watch-page',
@@ -12,6 +13,7 @@ import {PaginatedResult} from "../../models/pagination";
 export class WatchPageComponent implements OnInit {
   pageType: string | null = ''; //dynamically change based on the page
   filter: string | null = '';
+  watchFilters: WatchFilter | null = null;
   pageNumber = 1;
   pageSize = 8;
   paginatedResults: PaginatedResult<WatchCard[]> = {
@@ -30,6 +32,7 @@ export class WatchPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadFilters();
     this.checkPageTypeAndFilterThenLoadWatches();
   }
 
@@ -38,6 +41,13 @@ export class WatchPageComponent implements OnInit {
       next: (response) => (this.paginatedResults = response),
       error: (error) => console.log(error),
     });
+  }
+
+  loadFilters() {
+    this.watchService.getWatchFilters().subscribe({
+      next: (response) => this.watchFilters = response,
+      error: (error) => console.log(error),
+    })
   }
 
   pageChanged(event: any) {

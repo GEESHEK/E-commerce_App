@@ -1,5 +1,23 @@
 <div class="container">
   <h1 *ngIf="pageType" class="page">{{ pageType + " watches" | titlecase}}</h1>
+
+<!--  <div class="btn-group" dropdown>-->
+<!--    <button dropdownToggle type="button" class="btn btn-dark dropdown-toggle" aria-controls="dropdown-basic">-->
+<!--      Button dropdown <span class="caret"></span>-->
+<!--    </button>-->
+<!--    <ul class="dropdown-menu" *dropdownMenu>-->
+<!--      <li class="dropdown-item"><a class="dropdown-item" href="#">Action</a></li>-->
+<!--      <li class="dropdown-item"><a class="dropdown-item" href="#">Another action</a></li>-->
+<!--      <li class="dropdown-item"><a class="dropdown-item" href="#">Something else here</a></li>-->
+<!--      <li class="divider dropdown-divider"></li>-->
+<!--      <li class="dropdown-item"><a class="dropdown-item" href="#">Separated link</a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+  <div *ngIf="watchFilters">
+    <h1 *ngFor="let filter of watchFilters.brands">{{filter}}</h1>
+  </div>
+
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
     <div *ngFor="let watchCard of paginatedResults.items" class="col">
       <app-watch-card [watchCard]="watchCard"></app-watch-card>
