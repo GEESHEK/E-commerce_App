@@ -96,14 +96,10 @@ public class WatchController : BaseApiController
 
         return BadRequest("Problem deleting watch");
     }
-
+    
     [HttpGet("watch-cards")]
-    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetWatchCards([FromQuery] UserParams userParams)
+    public async Task<ActionResult<IEnumerable<WatchCardDto>>> GetFilteredWatchCards([FromQuery] UserParams userParams)
     {
-        if (userParams.Brand != null && !await _brandRepository.BrandExists(userParams.Brand)) return NotFound("Brand not found");
-
-        if (userParams.WatchType != null && !await _watchTypeRepository.WatchTypeExists(userParams.WatchType)) return NotFound("Watch type not found");
-        
         var watches = await _watchRepository.GetWatchCards(userParams);
 
         Response.AddPaginationHeader(watches);

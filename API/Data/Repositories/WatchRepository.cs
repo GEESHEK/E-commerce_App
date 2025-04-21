@@ -101,17 +101,45 @@ public class WatchRepository : IWatchRepository
     public async Task<PagedList<WatchCardDto>> GetWatchCards(UserParams userParams)
     {
         var query = _context.Watches.AsQueryable();
-
-        if (userParams.Brand != null)
+        
+        if (userParams.Brands != null && userParams.Brands.Length != 0)
         {
-            query = query.Where(w => w.Brand.Name == userParams.Brand);
+            query = query.Where(w => userParams.Brands.Contains(w.Brand.Name));
+        }
+
+        if (userParams.Calibres != null && userParams.Calibres.Length != 0)
+        {
+            query = query.Where(w => userParams.Calibres.Contains(w.Calibre.Name));
+        }
+
+        if (userParams.Dials != null && userParams.Dials.Length != 0)
+        {
+            query = query.Where(w => userParams.Dials.Contains(w.Dial.Colour));
         }
         
-        if (userParams.WatchType != null)
+        if (userParams.Diameters != null && userParams.Diameters.Length != 0)
         {
-            query = query.Where(w => w.WatchType.Type == userParams.WatchType);
+            query = query.Where(w => userParams.Diameters.Contains(w.WatchCaseMeasurements.Diameter));
         }
 
+        if (userParams.MovementTypes != null && userParams.MovementTypes.Length != 0)
+        {
+            query = query.Where(w => userParams.MovementTypes.Contains(w.MovementType.Type));
+        }
+        
+        if (userParams.WatchTypes != null && userParams.WatchTypes.Length != 0)
+        {
+            query = query.Where(w => userParams.WatchTypes.Contains(w.WatchType.Type));
+        }
+
+        if (userParams.Price != null && userParams.Price.Length != 0)
+        {
+            query = userParams.Price[0] == "Low to High" ? query.OrderBy(x => x.Price).ThenByDescending(x => x.DateAdded) 
+                : query.OrderByDescending(x => x.Price).ThenByDescending(x => x.DateAdded);
+            
+            return await PagedList<WatchCardDto>.CreateAsync(query.ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
+        }
+        
         query = query.OrderByDescending(x => x.DateAdded)
             .AsNoTracking();
         

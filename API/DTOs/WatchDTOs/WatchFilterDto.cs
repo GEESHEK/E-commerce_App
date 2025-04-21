@@ -8,4 +8,5 @@ public class WatchFilterDto
     public List<string> MovementTypes { get; set; }
     public List<string> WatchTypes { get; set; }
     public List<double> Diameters { get; set; }
+    public List<string> Price { get; set; } = ["High to Low", "Low to High"];
 }

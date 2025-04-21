@@ -5,4 +5,5 @@
   movementTypes: string[];
   watchTypes: string[];
   diameters: number[];
+  price: string[];
 }
