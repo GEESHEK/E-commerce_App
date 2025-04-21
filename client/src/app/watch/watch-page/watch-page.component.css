@@ -5,3 +5,8 @@
 h1 {
   margin-bottom: 25px;
 }
+
+.selected-filter {
+  background-color: blue;
+  color: white;
+}

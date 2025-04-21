@@ -1,5 +1,6 @@
 ﻿using API.DTOs.WatchDTOs;
 using API.Entities.WatchEntities;
+using API.Helpers.Pagination;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -97,13 +98,52 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<WatchCardDto>> GetWatchCards()
+    public async Task<PagedList<WatchCardDto>> GetWatchCards(UserParams userParams)
     {
-        return await _context.Watches
-            .OrderByDescending(x => x.DateAdded)
-            .AsNoTracking()
-            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+        var query = _context.Watches.AsQueryable();
+        
+        if (userParams.Brands != null && userParams.Brands.Length != 0)
+        {
+            query = query.Where(w => userParams.Brands.Contains(w.Brand.Name));
+        }
+
+        if (userParams.Calibres != null && userParams.Calibres.Length != 0)
+        {
+            query = query.Where(w => userParams.Calibres.Contains(w.Calibre.Name));
+        }
+
+        if (userParams.Dials != null && userParams.Dials.Length != 0)
+        {
+            query = query.Where(w => userParams.Dials.Contains(w.Dial.Colour));
+        }
+        
+        if (userParams.Diameters != null && userParams.Diameters.Length != 0)
+        {
+            query = query.Where(w => userParams.Diameters.Contains(w.WatchCaseMeasurements.Diameter));
+        }
+
+        if (userParams.MovementTypes != null && userParams.MovementTypes.Length != 0)
+        {
+            query = query.Where(w => userParams.MovementTypes.Contains(w.MovementType.Type));
+        }
+        
+        if (userParams.WatchTypes != null && userParams.WatchTypes.Length != 0)
+        {
+            query = query.Where(w => userParams.WatchTypes.Contains(w.WatchType.Type));
+        }
+
+        if (userParams.Price != null && userParams.Price.Length != 0)
+        {
+            query = userParams.Price[0] == "Low to High" ? query.OrderBy(x => x.Price).ThenByDescending(x => x.DateAdded) 
+                : query.OrderByDescending(x => x.Price).ThenByDescending(x => x.DateAdded);
+            
+            return await PagedList<WatchCardDto>.CreateAsync(query.ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
+        }
+        
+        query = query.OrderByDescending(x => x.DateAdded)
+            .AsNoTracking();
+        
+        return await PagedList<WatchCardDto>.CreateAsync(query.ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
     }
 
     public async Task<IEnumerable<CartWatchDto>> GetCartWatchesByIds(List<int> ids)
@@ -144,16 +184,6 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandName(string brand)
-    {
-        return await _context.Watches
-            .Where(x => x.Brand.Name == brand)
-            .OrderByDescending(x => x.DateAdded)
-            .AsNoTracking()
-            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
-    }
-
     public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypeId)
     {
         return await _context.Watches
@@ -163,14 +193,17 @@ public class WatchRepository : IWatchRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeName(string watchTypeName)
+    public async Task<WatchFilterDto> GetWatchFilters()
     {
-        return await _context.Watches
-            .Where(x => x.WatchType.Type == watchTypeName)
-            .OrderByDescending(x => x.DateAdded)
-            .AsNoTracking()
-            .ProjectTo<WatchCardDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+        return new WatchFilterDto
+        {
+            Brands = await _context.Brands.Select(b => b.Name).OrderBy(b => b).AsNoTracking().ToListAsync(),
+            Calibres = await _context.Calibres.Select(c => c.Name).OrderBy(c => c).AsNoTracking().ToListAsync(),
+            Dials = await _context.Dials.Select(d => d.Colour).OrderBy(d => d).AsNoTracking().ToListAsync(),
+            MovementTypes = await _context.MovementTypes.Select(m => m.Type).OrderBy(m => m).AsNoTracking().ToListAsync(),
+            WatchTypes = await _context.WatchTypes.Select(w => w.Type).OrderBy(w => w).AsNoTracking().ToListAsync(),
+            Diameters = await _context.WatchCaseMeasurements.Select(w => w.Diameter).Distinct().OrderBy(w => w).ToListAsync()
+        };
     }
 
     public async Task<bool> WatchExists(string reference)

@@ -24,7 +24,6 @@ export class CartComponent implements OnInit {
     if (this.itemIds.length > 0) {
       this.loadItems(this.itemIds);
     }
-    console.log('how many items are in cartwatch[]: ' + this.items.length);
   }
 
   loadItems(ids: number[]) {

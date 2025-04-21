@@ -26,7 +26,8 @@ import {AccountPageComponent} from './user/account-page/account-page.component';
 import {ToastrModule} from 'ngx-toastr';
 import {MyOrdersPageComponent} from './order/my-orders-page/my-orders-page.component';
 import {jwtInterceptor} from "./interceptors/jwtInterceptor";
-import { FooterComponent } from './footer/footer.component';
+import {FooterComponent} from './footer/footer.component';
+import {PaginationModule} from "ngx-bootstrap/pagination";
 
 @NgModule({
   declarations: [
@@ -48,20 +49,21 @@ import { FooterComponent } from './footer/footer.component';
     MyOrdersPageComponent,
     FooterComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    NgOptimizedImage,
-    BsDropdownModule.forRoot(),
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right',
-    }),
-    AccordionModule.forRoot(),
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        NgOptimizedImage,
+        BsDropdownModule.forRoot(),
+        ToastrModule.forRoot({
+            positionClass: 'toast-bottom-right',
+        }),
+        AccordionModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+        PaginationModule,
+    ],
   providers: [provideHttpClient(withInterceptors([jwtInterceptor]))],
   bootstrap: [AppComponent],
 })

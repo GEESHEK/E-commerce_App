@@ -1,5 +1,6 @@
 ﻿using API.DTOs.WatchDTOs;
 using API.Entities.WatchEntities;
+using API.Helpers.Pagination;
 
 namespace API.Data.Repositories;
 
@@ -15,11 +16,10 @@ public interface IWatchRepository
     Task<bool> WatchExists(int id);
     bool IsModified(Watch watch);
     Task<IEnumerable<WatchCardDto>> GetHomepageWatchCards();
-    Task<IEnumerable<WatchCardDto>> GetWatchCards();
+    Task<PagedList<WatchCardDto>> GetWatchCards(UserParams userParams);
     Task<IEnumerable<CartWatchDto>> GetCartWatchesByIds(List<int> ids);
     Task<List<Watch>> GetWatchesByIds(List<int> ids);
     Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandId(int brandId);
-    Task<IEnumerable<WatchCardDto>> GetWatchCardsByBrandName(string brand);
     Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeId(int watchTypeId);
-    Task<IEnumerable<WatchCardDto>> GetWatchCardsByWatchTypeName(string watchTypeName);
+    Task<WatchFilterDto> GetWatchFilters();
 }

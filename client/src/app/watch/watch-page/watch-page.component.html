@@ -1,8 +1,107 @@
 <div class="container">
-  <h1 *ngIf="pageType" class="page">{{ pageType + " watches" | titlecase}}</h1>
+  <h1 *ngIf="pageType" class="page">{{ pageType + " watches" | titlecase }}</h1>
+  <div *ngIf="watchFilters" class="mb-4">
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn btn-dark dropdown-toggle me-2" aria-controls="dropdown-basic">
+        Price <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" *dropdownMenu>
+        <div *ngIf="userFilters?.price && userFilters!.price.length > 0">
+          <li class="dropdown-item" (click)="clearFilter('price')"> Clear</li>
+          <li class="divider dropdown-divider"></li>
+        </div>
+        <li *ngFor="let filter of watchFilters.price" class="dropdown-item" [class.selected-filter]="userFilters.price.includes(filter)" (click)="filterWatches('price', filter)">{{ filter }}</li>
+      </ul>
+    </div>
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn btn-dark dropdown-toggle me-2" aria-controls="dropdown-basic">
+        Brands <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" *dropdownMenu>
+        <div *ngIf="userFilters?.brands && userFilters!.brands.length > 0">
+        <li class="dropdown-item" (click)="clearFilter('brands')"> Clear</li>
+        <li class="divider dropdown-divider"></li>
+        </div>
+        <li *ngFor="let filter of watchFilters.brands" class="dropdown-item" [class.selected-filter]="userFilters.brands.includes(filter)" (click)="filterWatches('brands', filter)">{{ filter }}</li>
+      </ul>
+    </div>
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn btn-dark dropdown-toggle me-2" aria-controls="dropdown-basic">
+        Calibres <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" *dropdownMenu>
+        <div *ngIf="userFilters?.calibres && userFilters!.calibres.length > 0">
+        <li class="dropdown-item" (click)="clearFilter('calibres')"> Clear</li>
+        <li class="divider dropdown-divider"></li>
+        </div>
+        <li *ngFor="let filter of watchFilters.calibres" class="dropdown-item" [class.selected-filter]="userFilters.calibres.includes(filter)" (click)="filterWatches('calibres', filter)">{{ filter }}</li>
+      </ul>
+    </div>
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn btn-dark dropdown-toggle me-2" aria-controls="dropdown-basic">
+        Dials <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" *dropdownMenu>
+        <div *ngIf="userFilters?.dials && userFilters!.dials.length > 0">
+        <li class="dropdown-item" (click)="clearFilter('dials')"> Clear</li>
+        <li class="divider dropdown-divider"></li>
+        </div>
+        <li *ngFor="let filter of watchFilters.dials" class="dropdown-item" [class.selected-filter]="userFilters.dials.includes(filter)" (click)="filterWatches('dials', filter)">{{ filter }}</li>
+      </ul>
+    </div>
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn btn-dark dropdown-toggle me-2" aria-controls="dropdown-basic">
+        Movement Types <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" *dropdownMenu>
+        <div *ngIf="userFilters?.movementTypes && userFilters!.movementTypes.length > 0">
+        <li class="dropdown-item" (click)="clearFilter('movementTypes')"> Clear</li>
+        <li class="divider dropdown-divider"></li>
+        </div>
+        <li *ngFor="let filter of watchFilters.movementTypes" class="dropdown-item" [class.selected-filter]="userFilters.movementTypes.includes(filter)" (click)="filterWatches('movementTypes', filter)">{{ filter }}</li>
+      </ul>
+    </div>
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn btn-dark dropdown-toggle me-2" aria-controls="dropdown-basic">
+        Watch Types <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" *dropdownMenu>
+        <div *ngIf="userFilters?.watchTypes && userFilters!.watchTypes.length > 0">
+        <li class="dropdown-item" (click)="clearFilter('watchTypes')"> Clear</li>
+        <li class="divider dropdown-divider"></li>
+        </div>
+        <li *ngFor="let filter of watchFilters.watchTypes" class="dropdown-item" [class.selected-filter]="userFilters.watchTypes.includes(filter)" (click)="filterWatches('watchTypes', filter)">{{ filter }}</li>
+      </ul>
+    </div>
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn btn-dark dropdown-toggle" aria-controls="dropdown-basic">
+        Diameters <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" *dropdownMenu>
+        <div *ngIf="userFilters?.diameters && userFilters!.diameters.length > 0">
+        <li class="dropdown-item" (click)="clearFilter('diameters')"> Clear</li>
+        <li class="divider dropdown-divider"></li>
+        </div>
+        <li *ngFor="let filter of watchFilters.diameters" class="dropdown-item" [class.selected-filter]="userFilters.diameters.includes(filter)" (click)="filterWatches('diameters', filter)">{{ filter }}</li>
+      </ul>
+    </div>
+  </div>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
-    <div *ngFor="let watchCard of watchCards" class="col">
+    <div *ngFor="let watchCard of paginatedResults.items" class="col">
       <app-watch-card [watchCard]="watchCard"></app-watch-card>
     </div>
   </div>
+</div>
+<div *ngIf="paginatedResults?.pagination && pageType" class="d-flex justify-content-center">
+  <pagination
+    [boundaryLinks]="true"
+    [totalItems]="paginatedResults.pagination!.totalItems"
+    [itemsPerPage]="paginatedResults.pagination!.itemsPerPage"
+    (pageChanged)="pageChanged($event)"
+    [maxSize]="8"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;">
+  </pagination>
 </div>
