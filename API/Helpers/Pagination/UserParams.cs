@@ -13,6 +13,11 @@ public class UserParams
         set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
     }
     
-    public string? Brand { get; set; }
-    public string? WatchType { get; set; }
+    public string[]? Brands { get; set; } = [];
+    public string[]? Calibres { get; set; } = [];
+    public string[]? Dials { get; set; } = [];
+    public double[]? Diameters { get; set; } = [];
+    public string[]? MovementTypes { get; set; } = [];
+    public string[]? WatchTypes { get; set; } = [];
+    public string[]? Price { get; set; } = [];
 }

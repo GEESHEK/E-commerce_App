@@ -197,12 +197,12 @@ public class WatchRepository : IWatchRepository
     {
         return new WatchFilterDto
         {
-            Brands = await _context.Brands.Select(b => b.Name).ToListAsync(),
-            Calibres = await _context.Calibres.Select(c => c.Name).ToListAsync(),
-            Dials = await _context.Dials.Select(d => d.Colour).ToListAsync(),
-            MovementTypes = await _context.MovementTypes.Select(m => m.Type).ToListAsync(),
-            WatchTypes = await _context.WatchTypes.Select(w => w.Type).ToListAsync(),
-            Diameters = await _context.WatchCaseMeasurements.Select(w => w.Diameter).Distinct().ToListAsync()
+            Brands = await _context.Brands.Select(b => b.Name).OrderBy(b => b).AsNoTracking().ToListAsync(),
+            Calibres = await _context.Calibres.Select(c => c.Name).OrderBy(c => c).AsNoTracking().ToListAsync(),
+            Dials = await _context.Dials.Select(d => d.Colour).OrderBy(d => d).AsNoTracking().ToListAsync(),
+            MovementTypes = await _context.MovementTypes.Select(m => m.Type).OrderBy(m => m).AsNoTracking().ToListAsync(),
+            WatchTypes = await _context.WatchTypes.Select(w => w.Type).OrderBy(w => w).AsNoTracking().ToListAsync(),
+            Diameters = await _context.WatchCaseMeasurements.Select(w => w.Diameter).Distinct().OrderBy(w => w).ToListAsync()
         };
     }
 
