@@ -13,7 +13,6 @@ import {WatchFilter} from "../../models/watchFilter";
 export class WatchPageComponent implements OnInit {
   pageType: string | null = ''; //dynamically change based on the page
   filter: string | null = '';
-  pageRoute: string = '';
   watchFilters: WatchFilter | null = null;
   userFilters: WatchFilter = {
     brands: [], calibres: [], dials: [], diameters: [], movementTypes: [], price: [], watchTypes: []

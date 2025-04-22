@@ -3,6 +3,7 @@ using API.DTOs.OrderDTOs;
 using API.Entities.OrderEntities;
 using API.Exceptions;
 using API.Extensions;
+using API.Helpers.Pagination;
 using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -15,16 +16,14 @@ public class OrderController : BaseApiController
     private readonly IOrderRepository _orderRepository;
     private readonly IWatchRepository _watchRepository;
     private readonly IOrderService _orderService;
-    private readonly ICustomerService _customerService;
     private readonly IMapper _mapper;
 
     public OrderController(IOrderRepository orderRepository, IWatchRepository watchRepository,
-        IOrderService orderService, ICustomerService customerService, IMapper mapper)
+        IOrderService orderService, IMapper mapper)
     {
         _orderRepository = orderRepository;
         _watchRepository = watchRepository;
         _orderService = orderService;
-        _customerService = customerService;
         _mapper = mapper;
     }
 
@@ -44,33 +43,35 @@ public class OrderController : BaseApiController
         return Ok(orders);
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<Order>> GetOrder(int id)
-    {
-        var order = await _orderRepository.GetOrderById(id);
-
-        if (order == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(order);
-    }
+    // [HttpGet("{id:int}")]
+    // public async Task<ActionResult<Order>> GetOrder(int id)
+    // {
+    //     var order = await _orderRepository.GetOrderById(id);
+    //
+    //     if (order == null)
+    //     {
+    //         return NotFound();
+    //     }
+    //
+    //     return Ok(order);
+    // }
 
     [Authorize]
     [HttpGet("history")]
-    public async Task<ActionResult<IEnumerable<OrderHistoryDto>>> GetUserOrderHistory()
+    public async Task<ActionResult<IEnumerable<OrderHistoryDto>>> GetUserOrderHistory([FromQuery] UserParams userParams)
     {
         try
         {
             var userId = User.GetUserId();
 
-            var orderHistory = await _orderRepository.GetUserOrderHistoryByUserId(userId);
+            var orderHistory = await _orderRepository.GetUserOrderHistoryByUserId(userId, userParams);
 
             if (orderHistory == null)
             {
                 return NotFound("User has no order history");
             }
+            
+            Response.AddPaginationHeader(orderHistory);
 
             return Ok(orderHistory);
         }
@@ -81,7 +82,7 @@ public class OrderController : BaseApiController
     }
 
     [Authorize]
-    [HttpGet("success/{orderId:int}")]
+    [HttpGet("{orderId:int}")]
     public async Task<ActionResult<SuccessOrderDto>> GetSuccessOrder(int orderId)
     {
         try
