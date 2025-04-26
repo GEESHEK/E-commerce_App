@@ -1,10 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../services/order.service";
 import {OrderHistory} from "../../models/orderHistory";
 import {ToastrService} from "ngx-toastr";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PaginatedResult} from "../../models/pagination";
-import {PaginationComponent} from "ngx-bootstrap/pagination";
 
 @Component({
   selector: 'app-my-orders-page',
@@ -13,7 +12,7 @@ import {PaginationComponent} from "ngx-bootstrap/pagination";
 })
 export class MyOrdersPageComponent implements OnInit {
   pageNumber = 1;
-  pageSize = 5;
+  pageSize = 8;
   paginatedResults: PaginatedResult<OrderHistory[]> = {
     items: [],
     pagination: {
@@ -24,21 +23,30 @@ export class MyOrdersPageComponent implements OnInit {
     }
   };
 
-  @ViewChild(PaginationComponent) paginationComponent!: PaginationComponent;
-
   constructor(
     private orderService: OrderService,
     private router: Router,
+    private route: ActivatedRoute,
     private toastr: ToastrService,
   ) {
   }
 
   ngOnInit(): void {
-    const currentPage = this.orderService.getCurrentPage();
-    if (currentPage !== 0) {
-      this.pageNumber = currentPage;
-    }
-    this.loadOrders();
+    this.route.queryParams.subscribe(params => {
+      const page = params['page'] ? + params['page'] : null;
+      const pageSize = params['pageSize'] ? + params['pageSize'] : null;
+
+      if (page && pageSize) {
+        this.pageNumber = page;
+        this.pageSize = pageSize;
+      } else {
+        // No pagination in URL, so set defaults in URL
+        this.pageNumber = 1;
+        this.pageSize = 8;
+        this.updateUrl();
+      }
+      this.loadOrders();
+    })
   };
 
   loadOrders() {
@@ -55,7 +63,6 @@ export class MyOrdersPageComponent implements OnInit {
   getOrder(orderId: number) {
     this.orderService.userOrder(orderId).subscribe({
       next: () => {
-        this.orderService.setCurrentPage(this.pageNumber);
         this.router.navigateByUrl('/order/confirmation');
       },
       error: (error) => {
@@ -67,7 +74,19 @@ export class MyOrdersPageComponent implements OnInit {
   pageChanged(event: any) {
     if (this.pageNumber !== event.page) {
       this.pageNumber = event.page;
-      this.loadOrders();
+      this.updateUrl();
     }
   };
+
+  updateUrl() {
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        page: this.pageNumber,
+        pageSize: this.pageSize
+      },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+  }
 }

@@ -13,7 +13,6 @@ import {PaginatedResult} from "../models/pagination";
 export class OrderService {
   baseUrl = environment.apiUrl;
   successOrder: SuccessOrder | undefined;
-  currentPageNumber: number = 0;
 
   constructor(private http: HttpClient) {
   }
@@ -56,11 +55,4 @@ export class OrderService {
     );
   }
 
-  getCurrentPage() {
-    return this.currentPageNumber;
-  }
-
-  setCurrentPage(pageNumber: number) {
-    this.currentPageNumber = pageNumber;
-  }
 }
