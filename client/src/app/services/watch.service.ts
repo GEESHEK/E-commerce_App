@@ -17,10 +17,6 @@ export class WatchService {
   baseUrl = environment.apiUrl;
   homepageWatchCards: WatchCard[] = [];
   watchFilters: WatchFilter | null = null;
-  pageRoute: string = '';
-  userFilters: WatchFilter = {
-    brands: [], calibres: [], dials: [], diameters: [], movementTypes: [], price: [], watchTypes: []
-  };
 
   constructor(private http: HttpClient) {
   }
@@ -105,34 +101,6 @@ export class WatchService {
         paginatedResult.pagination = JSON.parse(response.headers.get('Pagination')!);
         return paginatedResult;
       }));
-  }
-
-  getUserFilters(): WatchFilter {
-    return this.userFilters;
-  }
-
-  setUserFilters(filters: WatchFilter): void {
-    this.userFilters = filters;
-  }
-
-  getPageRoute(): string {
-    return this.pageRoute;
-  }
-
-  setPageRoute(route: string): void {
-    this.pageRoute = route;
-  }
-
-  resetUserFilters(): void {
-    this.userFilters = {
-      brands: [],
-      calibres: [],
-      dials: [],
-      diameters: [],
-      movementTypes: [],
-      price: [],
-      watchTypes: []
-    };
   }
 
   getCartWatches(ids: number[]) {
