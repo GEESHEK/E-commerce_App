@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WatchCard} from '../../models/watchCard';
 import {WatchService} from '../../services/watch.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PaginatedResult} from "../../models/pagination";
 import {WatchFilter} from "../../models/watchFilter";
 
@@ -30,15 +30,60 @@ export class WatchPageComponent implements OnInit {
   };
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private watchService: WatchService,
   ) {
   }
 
   ngOnInit(): void {
-    this.userFilters = this.watchService.getUserFilters();
+    this.route.queryParams.subscribe(params => {
+      const page = params['page'] ? + params['page'] : null;
+      const pageSize = params['pageSize'] ? + params['pageSize'] : null;
+
+      this.userFilters = {
+        brands: [],
+        calibres: [],
+        dials: [],
+        diameters: [],
+        movementTypes: [],
+        price: [],
+        watchTypes: []
+      };
+
+      if (page && pageSize) {
+        this.pageNumber = page;
+        this.pageSize = pageSize;
+        this.userFilters.brands = this.getArrayFromParams(params['brands']);
+        this.userFilters.calibres = this.getArrayFromParams(params['calibres']);
+        this.userFilters.dials = this.getArrayFromParams(params['dials']);
+        this.userFilters.diameters = this.getArrayFromParams(params['diameters']);
+        this.userFilters.movementTypes = this.getArrayFromParams(params['movementTypes']);
+        this.userFilters.price = this.getArrayFromParams(params['price']);
+        this.userFilters.watchTypes = this.getArrayFromParams(params['watchTypes']);
+      } else {
+        // No pagination in URL, so set defaults in URL
+        this.pageNumber = 1;
+        this.pageSize = 8;
+        this.updateUrl();
+      }
+    })
     this.loadFilters();
-    this.checkPageTypeAndFilterThenLoadWatches();
+    // Handle the pageType and filter params from route
+    this.route.paramMap.subscribe((routeParams) => {
+      this.pageType = routeParams.get('pageType');
+      this.filter = routeParams.get('filter');
+
+      if (this.filter === 'brand' && this.pageType) {
+        this.userFilters.brands.push(this.pageType);
+      }
+
+      if (this.filter === 'category' && this.pageType) {
+        this.userFilters.watchTypes.push(this.pageType);
+      }
+
+      this.loadWatchCards();
+    });
   }
 
   loadWatchCards() {
@@ -63,37 +108,9 @@ export class WatchPageComponent implements OnInit {
   pageChanged(event: any) {
     if (this.pageNumber !== event.page) {
       this.pageNumber = event.page;
-      this.checkPageTypeAndFilterThenLoadWatches();
-    }
-  }
-
-  checkPageTypeAndFilterThenLoadWatches() {
-    this.route.paramMap.subscribe((params) => {
-      this.pageType = params.get('pageType');
-      this.filter = params.get('filter');
-
-      const currentPageRoute = this.watchService.getPageRoute();
-
-      if (currentPageRoute !== this.filter + "/" + this.pageType) {
-        this.watchService.setPageRoute(this.filter + "/" + this.pageType);
-        this.watchService.resetUserFilters();
-        this.userFilters = this.watchService.getUserFilters();
-      }
-
-      if (this.filter == 'brand' && this.pageType) {
-        this.userFilters.brands.push(this.pageType);
-        this.loadWatchCards();
-        return;
-      }
-
-      if (this.filter == 'category' && this.pageType) {
-        this.userFilters.watchTypes.push(this.pageType);
-        this.loadWatchCards();
-        return;
-      }
-
       this.loadWatchCards();
-    });
+      this.updateUrl();
+    }
   }
 
   filterWatches(filter: string, value: any) {
@@ -123,12 +140,8 @@ export class WatchPageComponent implements OnInit {
         break;
     }
 
-    this.watchService.setUserFilters(this.userFilters);
-
-    this.watchService.getWatchCards(this.userFilters, this.pageNumber, this.pageSize).subscribe({
-      next: (response) => (this.paginatedResults = response),
-      error: (error) => console.log(error),
-    });
+    this.loadWatchCards();
+    this.updateUrl();
   }
 
   private addOrRemoveUserFilters<T>(arr: T[], val: T): T[] {
@@ -169,7 +182,7 @@ export class WatchPageComponent implements OnInit {
         this.userFilters.watchTypes = [];
         break;
       case 'all':
-        this.userFilters = this.userFilters = {
+        this.userFilters = {
           brands: [],
           calibres: [],
           dials: [],
@@ -183,11 +196,36 @@ export class WatchPageComponent implements OnInit {
         break;
     }
 
-    this.watchService.setUserFilters(this.userFilters);
+    this.loadWatchCards();
+    this.updateUrl();
+  }
 
-    this.watchService.getWatchCards(this.userFilters, this.pageNumber, this.pageSize).subscribe({
-      next: (response) => (this.paginatedResults = response),
-      error: (error) => console.log(error),
+  updateUrl() {
+    const queryParams: any = {
+      page: this.pageNumber,
+      pageSize: this.pageSize,
+    };
+
+    if (this.userFilters) {
+      if (this.userFilters.brands.length) queryParams.brands = this.userFilters.brands;
+      if (this.userFilters.calibres.length) queryParams.calibres = this.userFilters.calibres;
+      if (this.userFilters.dials.length) queryParams.dials = this.userFilters.dials;
+      if (this.userFilters.diameters.length) queryParams.diameters = this.userFilters.diameters;
+      if (this.userFilters.movementTypes.length) queryParams.movementTypes = this.userFilters.movementTypes;
+      if (this.userFilters.price.length) queryParams.price = this.userFilters.price;
+      if (this.userFilters.watchTypes.length) queryParams.watchTypes = this.userFilters.watchTypes;
+    }
+
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
     });
+  }
+
+  private getArrayFromParams(param: any): any[] {
+    if (!param) return [];
+    return Array.isArray(param) ? param : [param];
   }
 }
