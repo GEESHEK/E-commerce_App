@@ -64,7 +64,7 @@ public class OrderRepository : IOrderRepository
             .ProjectTo<OrderHistoryDto>(_mapper.ConfigurationProvider)
             .AsNoTracking();
         
-        return await PagedList<OrderHistoryDto>.CreateAsync(query, userParams.PageNumber, 5);
+        return await PagedList<OrderHistoryDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
     }
 
     public async Task<IEnumerable<Order>> GetOrdersByStatus(int statusId)
