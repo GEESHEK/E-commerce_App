@@ -1,9 +1,9 @@
 <div class="container">
-  <div *ngIf="orderHistory.length > 0" class="row justify-content-center">
+  <div *ngIf="paginatedResults.items!.length > 0" class="row justify-content-center">
     <div class="col-6">
       <h1 class="text-center mb-4"><a class="navbar-brand">My Orders</a></h1>
       <hr>
-      <div *ngFor="let order of orderHistory" class="row">
+      <div *ngFor="let order of paginatedResults.items" class="row">
         <div class="col-6 clickable-order" (click)="getOrder(order.id)">
           <h6>{{"Order Status:" | uppercase}}</h6>
           <h6 class="statusType">{{"It's " + order.statusType + "!" | uppercase}}</h6>
@@ -17,8 +17,22 @@
       </div>
     </div>
   </div>
-  <div *ngIf="orderHistory.length < 1">
+  <div *ngIf="paginatedResults.items?.length === 0">
     <h1>Looks like you have no orders!</h1>
     <p class="mt-0">Continue shopping on the <a routerLink="/">JDM Homepage</a>, or check out our latest watches <a routerLink="/watches/all">Here</a></p>
+  </div>
+  <div *ngIf="paginatedResults?.pagination && paginatedResults.items?.length !== 0"  class="d-flex justify-content-center">
+    <pagination
+      [(ngModel)]="pageNumber"
+      [boundaryLinks]="true"
+      [totalItems]="paginatedResults.pagination!.totalItems"
+      [itemsPerPage]="paginatedResults.pagination!.itemsPerPage"
+      (pageChanged)="pageChanged($event)"
+      [maxSize]="8"
+      previousText="&lsaquo;"
+      nextText="&rsaquo;"
+      firstText="&laquo;"
+      lastText="&raquo;">
+    </pagination>
   </div>
 </div>

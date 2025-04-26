@@ -1,5 +1,6 @@
 ﻿using API.DTOs.OrderDTOs;
 using API.Entities.OrderEntities;
+using API.Helpers.Pagination;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -55,14 +56,15 @@ public class OrderRepository : IOrderRepository
             .SingleOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<OrderHistoryDto>> GetUserOrderHistoryByUserId(int userId)
+    public async Task<PagedList<OrderHistoryDto>> GetUserOrderHistoryByUserId(int userId, UserParams userParams)
     {
-        return await _context.Orders
+        var query = _context.Orders.AsQueryable()
             .Where(c => c.CustomerDetail.AppUserId == userId)
             .OrderByDescending(x => x.DateTime)
             .ProjectTo<OrderHistoryDto>(_mapper.ConfigurationProvider)
-            .AsNoTracking()
-            .ToListAsync();
+            .AsNoTracking();
+        
+        return await PagedList<OrderHistoryDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
     }
 
     public async Task<IEnumerable<Order>> GetOrdersByStatus(int statusId)
