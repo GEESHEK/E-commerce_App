@@ -12,7 +12,7 @@ import {PaginatedResult} from "../../models/pagination";
 })
 export class MyOrdersPageComponent implements OnInit {
   pageNumber = 1;
-  pageSize = 8;
+  pageSize = 5;
   paginatedResults: PaginatedResult<OrderHistory[]> = {
     items: [],
     pagination: {
@@ -42,7 +42,7 @@ export class MyOrdersPageComponent implements OnInit {
       } else {
         // No pagination in URL, so set defaults in URL
         this.pageNumber = 1;
-        this.pageSize = 8;
+        this.pageSize = 5;
         this.updateUrl();
       }
       this.loadOrders();
