@@ -17,7 +17,7 @@
         <a class="nav-link dropdown-toggle text-decoration-none ms-2" dropdownToggle>Categories</a>
         <ul class="dropdown-menu" *dropdownMenu>
           <li *ngFor="let category of categories$ | async">
-            <a class="dropdown-item" routerLink="/watches/category/{{category.type}}">{{ category.type }}</a>
+            <a class="dropdown-item" routerLink="/watches/category/{{category.type}}" routerLinkActive="active">{{ category.type }}</a>
           </li>
         </ul>
       </li>
