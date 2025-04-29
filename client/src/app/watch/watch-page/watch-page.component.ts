@@ -66,7 +66,6 @@ export class WatchPageComponent implements OnInit {
         // No pagination in URL, so set defaults in URL
         this.pageNumber = 1;
         this.pageSize = 8;
-        this.updateUrl();
       }
     })
 
@@ -75,16 +74,6 @@ export class WatchPageComponent implements OnInit {
       this.pageType = routeParams.get('pageType');
       this.filter = routeParams.get('filter');
       this.loadFilters();
-      // if (this.filter === 'brand' && this.pageType) {
-      //   this.userFilters.brands.push(this.pageType);
-      // }
-      //
-      // if (this.filter === 'category' && this.pageType) {
-      //   this.userFilters.watchTypes.push(this.pageType);
-      // }
-
-      // this.applyRouteFiltersAndLoadCards();
-      // this.loadWatchCards();
     });
   }
 
@@ -222,10 +211,11 @@ export class WatchPageComponent implements OnInit {
       if (this.userFilters.watchTypes.length) queryParams.watchTypes = this.userFilters.watchTypes;
     }
 
+    //if Angular doesn't detect a meaningful difference in the URL, force the router to recognize the URL change and reload the component.
+    queryParams._ = Date.now();
     void this.router.navigate([], {
       relativeTo: this.route,
       queryParams,
-      queryParamsHandling: 'merge',
       replaceUrl: true,
     });
   }
@@ -248,7 +238,8 @@ export class WatchPageComponent implements OnInit {
       }
     }
 
-    this.cdr.detectChanges(); // 👈 trigger view update immediately
+    this.updateUrl();
+    this.cdr.detectChanges();
     this.loadWatchCards();
   }
 }
