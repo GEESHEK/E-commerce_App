@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {WatchCard} from '../../models/watchCard';
-import {WatchService} from '../../services/watch.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {PaginatedResult} from "../../models/pagination";
-import {WatchFilter} from "../../models/watchFilter";
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { WatchCard } from '../../models/watchCard';
+import { WatchService } from '../../services/watch.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PaginatedResult } from '../../models/pagination';
+import { WatchFilter } from '../../models/watchFilter';
 
 @Component({
   selector: 'app-watch-page',
@@ -33,6 +33,7 @@ export class WatchPageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private watchService: WatchService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -68,21 +69,22 @@ export class WatchPageComponent implements OnInit {
         this.updateUrl();
       }
     })
-    this.loadFilters();
+
     // Handle the pageType and filter params from route
     this.route.paramMap.subscribe((routeParams) => {
       this.pageType = routeParams.get('pageType');
       this.filter = routeParams.get('filter');
+      this.loadFilters();
+      // if (this.filter === 'brand' && this.pageType) {
+      //   this.userFilters.brands.push(this.pageType);
+      // }
+      //
+      // if (this.filter === 'category' && this.pageType) {
+      //   this.userFilters.watchTypes.push(this.pageType);
+      // }
 
-      if (this.filter === 'brand' && this.pageType) {
-        this.userFilters.brands.push(this.pageType);
-      }
-
-      if (this.filter === 'category' && this.pageType) {
-        this.userFilters.watchTypes.push(this.pageType);
-      }
-
-      this.loadWatchCards();
+      // this.applyRouteFiltersAndLoadCards();
+      // this.loadWatchCards();
     });
   }
 
@@ -96,11 +98,15 @@ export class WatchPageComponent implements OnInit {
   loadFilters() {
     if (this.watchService.watchFilters !== null) {
       this.watchFilters = this.watchService.watchFilters;
+      this.applyRouteFiltersAndLoadCards();
       return;
     }
 
     this.watchService.getWatchFilters().subscribe({
-      next: (response) => this.watchFilters = response,
+      next: (response) => {
+        this.watchFilters = response;
+        this.applyRouteFiltersAndLoadCards();
+      },
       error: (error) => console.log(error),
     });
   }
@@ -227,5 +233,22 @@ export class WatchPageComponent implements OnInit {
   private getArrayFromParams(param: any): any[] {
     if (!param) return [];
     return Array.isArray(param) ? param : [param];
+  }
+
+  private applyRouteFiltersAndLoadCards(): void {
+    if (this.filter === 'brand' && this.pageType) {
+      if (!this.userFilters.brands.includes(this.pageType)) {
+        this.userFilters.brands.push(this.pageType);
+      }
+    }
+
+    if (this.filter === 'category' && this.pageType) {
+      if (!this.userFilters.watchTypes.includes(this.pageType)) {
+        this.userFilters.watchTypes.push(this.pageType);
+      }
+    }
+
+    this.cdr.detectChanges(); // 👈 trigger view update immediately
+    this.loadWatchCards();
   }
 }

@@ -13,6 +13,7 @@
         <li *ngFor="let filter of watchFilters.price" class="dropdown-item" [class.selected-filter]="userFilters.price.includes(filter)" (click)="filterWatches('price', filter)">{{ filter }}</li>
       </ul>
     </div>
+<!--    <div class="btn-group" dropdown *ngIf="watchFilters && watchFilters.brands?.length">-->
     <div class="btn-group" dropdown>
       <button dropdownToggle type="button" class="btn btn-dark dropdown-toggle me-2" aria-controls="dropdown-basic">
         Brands <span class="caret"></span>
