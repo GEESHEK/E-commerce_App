@@ -1,27 +1,33 @@
-import {Component, OnInit} from '@angular/core';
-import {WatchService} from '../services/watch.service';
-import {WatchCard} from '../models/watchCard';
-import {Observable} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { WatchService } from '../services/watch.service';
+import { WatchCard } from '../models/watchCard';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  title = 'Home Page';
-  watchCards$: Observable<WatchCard[]> | undefined;
+  watchCards: WatchCard[] = [];
 
-  constructor(private watchService: WatchService) {}
-
-  ngOnInit(): void {
-    this.watchCards$ = this.watchService.getHomepageWatchCards();
+  constructor(
+    private watchService: WatchService,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService
+  ) {
   }
 
-  // loadWatchCards() {
-  //   this.watchService.getHomepageWatchCards().subscribe({
-  //     next: (response) => (this.watchCards = response),
-  //     error: (error) => console.log(error),
-  //   });
-  // }
+  ngOnInit(): void {
+    this.watchService.getHomepageWatchCards().subscribe({
+      next: (cards) => {
+        this.watchCards = cards;
+      },
+      error: (error) => {
+        console.log('Failed to load watches', error);
+        this.toastr.error('Failed to load watches');
+      }
+    });
+  }
 }
