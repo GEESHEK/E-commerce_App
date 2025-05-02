@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {User} from "../../models/user";
-import {AccountService} from "../../services/account.service";
-import {UserService} from "../../services/user.service";
-import {CustomerDetail} from "../../models/customerDetail";
-import {ToastrService} from "ngx-toastr";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { User } from '../../models/user';
+import { AccountService } from '../../services/account.service';
+import { UserService } from '../../services/user.service';
+import { CustomerDetail } from '../../models/customerDetail';
+import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-account-page',
@@ -63,7 +63,7 @@ export class AccountPageComponent implements OnInit {
           this.toastr.success("User profile successfully updated!");
         },
       error: (error) => {
-        this.toastr.error(error.error);
+        this.toastr.error("Failed to update profile");
       }
     })
   }
