@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WatchService } from '../services/watch.service';
 import { WatchCard } from '../models/watchCard';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -14,7 +13,6 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private watchService: WatchService,
-    private spinner: NgxSpinnerService,
     private toastr: ToastrService
   ) {
   }
