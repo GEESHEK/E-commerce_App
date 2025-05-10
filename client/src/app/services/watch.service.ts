@@ -93,7 +93,7 @@ export class WatchService {
       params = params.append('pageSize', pageSize);
     }
 
-    //get method exacts the results from the response but the response contains the headers we need
+    //get method extracts the results from the response, but the response contains the headers we need
     return this.http.get<WatchCard[]>(this.baseUrl + '/watch/watch-cards', {observe: 'response', params}).pipe(
       map(response => {
         let paginatedResult = new PaginatedResult<WatchCard[]>();
