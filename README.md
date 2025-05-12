@@ -27,4 +27,20 @@ Feature missing:
 - Identity and role management
 - Payment system integration
 
-  
+<img src="AppPhotosForReadME/HomePage.png">
+<img src="AppPhotosForReadME/HomePageNewRelease.png">
+<img src="AppPhotosForReadME/AllWatchPage.png">
+<img src="AppPhotosForReadME/BrandPageFilter.png">
+<img src="AppPhotosForReadME/Filters.png">
+<img src="AppPhotosForReadME/WatchDetailsPage.png">
+<img src="AppPhotosForReadME/WatchDetailsPage1.png">
+<img src="AppPhotosForReadME/WatchDetailsPage2.png">
+<img src="AppPhotosForReadME/SignInPage.png">
+<img src="AppPhotosForReadME/SignUpPage.png">
+<img src="AppPhotosForReadME/EditAccountPage.png">
+<img src="AppPhotosForReadME/MyOrdersPage.png">
+<img src="AppPhotosForReadME/ConfirmationPage.png">
+<img src="AppPhotosForReadME/EmptyCartPage.png">
+<img src="AppPhotosForReadME/CartPage.png">
+<img src="AppPhotosForReadME/OrderPage.png">
+<img src="AppPhotosForReadME/OrderConformationPage.png">
