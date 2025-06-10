@@ -12,6 +12,7 @@ Technologies used:
 
 Features to date:
 - User sign-up and sign-in pages
+- Identity role management for authorisation
 - Cart system and order system
 - Users and non-users can add products to the cart and order them
 - Implement filtering, sorting and paging of data
@@ -24,7 +25,6 @@ Features to date:
 
 Feature missing:
 - Admin Page to update orders and add new products
-- Identity and role management
 - Payment system integration
 
 <img src="AppPhotosForReadME/HomePage.png">
