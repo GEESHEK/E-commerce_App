@@ -20,12 +20,12 @@ public class UserRepository : IUserRepository
     
     public async Task<IEnumerable<AppUser>> GetUsers()
     {
-        return await _context.AppUsers.AsNoTracking().ToListAsync();
+        return await _context.Users.AsNoTracking().ToListAsync();
     }
-
+    
     public async Task<AppUser> GetUserById(int id)
     {
-        return await _context.AppUsers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<CustomerDetailDto> GetCustomerDetailByUserId(int userId)

@@ -2,6 +2,8 @@
 using API.Data.SeedData.Order;
 using API.Data.SeedData.User;
 using API.Data.SeedData.Watch;
+using API.Entities.UserEntities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
@@ -45,12 +47,32 @@ public static class Seed
         await context.SaveChangesAsync();
     }
 
-    public static async Task SeedUser(DataContext context)
+    public static async Task SeedUser(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
     {
-        if (await context.AppUsers.AnyAsync()) return;
+        if (await userManager.Users.AnyAsync()) return;
         
-        await context.AppUsers.AddRangeAsync(UserSeedData.GetUserSeedData());
+        var users = UserSeedData.GetUserSeedData();
         
-        await context.SaveChangesAsync();
+        var roles = UserSeedData.GetRoleSeedData();
+
+        foreach (var role in roles)
+        {
+            await roleManager.CreateAsync(role);
+        }
+
+        foreach (var user in users)
+        {
+            await userManager.CreateAsync(user, "Pa$$w0rd");
+            await userManager.AddToRoleAsync(user, "User");
+        }
+
+        var admin = new AppUser
+        {
+            UserName = "Admin",
+            Gender = 0
+        };
+        
+        await userManager.CreateAsync(admin, "Pa$$w0rd");
+        await userManager.AddToRoleAsync(admin, "Admin");
     }
 } 

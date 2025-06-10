@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using API.Data.Repositories;
+﻿using API.Data.Repositories;
 using API.DTOs.UserDTOs;
 using API.Entities.UserEntities;
 using API.Services;
@@ -26,26 +24,21 @@ public class AccountController : BaseApiController
 
         if (registerDto.Gender != 0 && registerDto.Gender != 1)
             return BadRequest("Invalid Gender value. Must be 0 (Male) or 1 (Female)");
-        
-        //If we don't use using, garbage collector will at some point dispose of it
-        //Using will depose of it as soon as we stop using it
-        using var hmac = new HMACSHA512();
 
         var user = new AppUser
         {
-            UserName = registerDto.Username.ToLower(),
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            PasswordSalt = hmac.Key,
+            UserName = registerDto.Username,
             Gender = registerDto.Gender == 0 ? Gender.Male : Gender.Female
         };
 
-        _accountRepository.AddUser(user);
-        await _accountRepository.SaveAllAsync();
+        var result = await _accountRepository.AddUser(user, registerDto.Password);
+
+        if (!result.Succeeded) return BadRequest(result.Errors);
 
         return new UserDto
         {
             Username = user.UserName,
-            Token = _tokenService.CreateToken(user)
+            Token = await _tokenService.CreateToken(user)
         };
     }
 
@@ -53,22 +46,17 @@ public class AccountController : BaseApiController
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
         var user = await _accountRepository.UserExists(loginDto);
-        
-        if (user == null) return Unauthorized("Invalid username");
-        
-        using var hmac = new HMACSHA512(user.PasswordSalt);
-        
-        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
-        for (int i = 0; i < computedHash.Length; i++)
-        {
-            if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
-        }
-        
+        if (user == null || user.UserName == null) return Unauthorized("Invalid username");
+
+        var result = await _accountRepository.CheckPassword(user, loginDto.Password);
+
+        if (!result) return Unauthorized("Invalid password");
+
         return new UserDto
         {
             Username = user.UserName,
-            Token = _tokenService.CreateToken(user)
+            Token = await _tokenService.CreateToken(user)
         };
     }
 }

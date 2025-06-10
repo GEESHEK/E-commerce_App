@@ -29,7 +29,6 @@ public class UserController : BaseApiController
         return Ok(users);
     }
     
-    //Admin
     [HttpGet("profile")]
     public async Task<ActionResult<AppUser>> GetUser()
     {

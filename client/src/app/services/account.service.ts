@@ -1,13 +1,13 @@
-import {inject, Injectable, signal} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {User} from "../models/user";
-import {map} from "rxjs";
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {RegisterUser} from "../models/registerUser";
-import {SignInUser} from "../models/signInUser";
-import {OrderService} from "./order.service";
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { User } from '../models/user';
+import { map } from 'rxjs';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { RegisterUser } from '../models/registerUser';
+import { SignInUser } from '../models/signInUser';
+import { OrderService } from './order.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,16 @@ export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUser = signal<User | null>(null);
   currentUser$ = this.currentUser.asReadonly()
+  roles = computed(() => {
+    const user = this.currentUser$();
+    if (user && user.token) {
+      // only want the app user roles
+      const role = JSON.parse(atob(user.token.split('.')[1])).role;
+      // in case users have more than one role so it must be in an array
+      return Array.isArray(role) ? role : [role];
+    }
+    return [null];
+  })
 
   login(signInUser: SignInUser) {
     return this.http.post<User>(this.baseUrl + '/account/login', signInUser).pipe(
