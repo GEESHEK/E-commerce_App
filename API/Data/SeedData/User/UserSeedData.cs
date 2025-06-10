@@ -18,6 +18,17 @@ public static class UserSeedData
         return CreateUsers(users);
     }
 
+    public static List<AppRole> GetRoleSeedData()
+    {
+        var roles = new List<AppRole>()
+        {
+            new() { Name = "User" },
+            new() { Name = "Admin" },
+        };
+        
+        return roles;
+    }
+
     private static List<AppUser> CreateUsers(Dictionary<string,int> users)
     {
         var appUsers = new List<AppUser>();

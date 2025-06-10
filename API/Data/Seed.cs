@@ -47,15 +47,32 @@ public static class Seed
         await context.SaveChangesAsync();
     }
 
-    public static async Task SeedUser(UserManager<AppUser> userManager)
+    public static async Task SeedUser(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
     {
         if (await userManager.Users.AnyAsync()) return;
         
         var users = UserSeedData.GetUserSeedData();
+        
+        var roles = UserSeedData.GetRoleSeedData();
+
+        foreach (var role in roles)
+        {
+            await roleManager.CreateAsync(role);
+        }
 
         foreach (var user in users)
         {
             await userManager.CreateAsync(user, "Pa$$w0rd");
+            await userManager.AddToRoleAsync(user, "User");
         }
+
+        var admin = new AppUser
+        {
+            UserName = "Admin",
+            Gender = 0
+        };
+        
+        await userManager.CreateAsync(admin, "Pa$$w0rd");
+        await userManager.AddToRoleAsync(admin, "Admin");
     }
 } 
