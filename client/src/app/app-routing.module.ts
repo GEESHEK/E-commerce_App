@@ -1,16 +1,18 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from './home/home.component';
-import {WatchPageComponent} from './watch/watch-page/watch-page.component';
-import {WatchDetailComponent} from './watch/watch-detail-page/watch-detail.component';
-import {CartComponent} from './order/cart/cart.component';
-import {OrderPageComponent} from './order/order-page/order-page.component';
-import {OrderConfirmationPageComponent} from './order/order-confirmation-page/order-confirmation-page.component';
-import {SignInPageComponent} from "./user/sign-in-page/sign-in-page.component";
-import {RegisterPageComponent} from "./user/register-page/register-page.component";
-import {AccountPageComponent} from "./user/account-page/account-page.component";
-import {authGuard} from "./guards/auth.guard";
-import {MyOrdersPageComponent} from "./order/my-orders-page/my-orders-page.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { WatchPageComponent } from './watch/watch-page/watch-page.component';
+import { WatchDetailComponent } from './watch/watch-detail-page/watch-detail.component';
+import { CartComponent } from './order/cart/cart.component';
+import { OrderPageComponent } from './order/order-page/order-page.component';
+import { OrderConfirmationPageComponent } from './order/order-confirmation-page/order-confirmation-page.component';
+import { SignInPageComponent } from './user/sign-in-page/sign-in-page.component';
+import { RegisterPageComponent } from './user/register-page/register-page.component';
+import { AccountPageComponent } from './user/account-page/account-page.component';
+import { authGuard } from './guards/auth.guard';
+import { MyOrdersPageComponent } from './order/my-orders-page/my-orders-page.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { adminGuard } from './guards/admin.guard';
 
 const appName: string = 'JDM Watches';
 
@@ -30,10 +32,10 @@ const routes: Routes = [
     children: [
       { path: 'account', component: AccountPageComponent, title: 'My Account - ' + appName },
       { path: 'myorders', component: MyOrdersPageComponent, title: 'My Orders - ' + appName },
+      { path: 'admin', component: AdminPanelComponent, title: 'Admin Panel - ' + appName, canActivate: [adminGuard] },
     ]
   },
   { path: '**', component: HomeComponent, pathMatch: 'full', title: 'Home - ' + appName,},
-  //TODO add a route for not-found pathways
 ];
 
 @NgModule({

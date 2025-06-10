@@ -30,6 +30,8 @@ import { FooterComponent } from './footer/footer.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { HasRoleDirective } from './directive/has-role.directive';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { loadingInterceptor } from './interceptors/loading.interceptor';
     RegisterPageComponent,
     AccountPageComponent,
     MyOrdersPageComponent,
-    FooterComponent
+    FooterComponent,
+    AdminPanelComponent,
+    HasRoleDirective
   ],
   imports: [
     BrowserModule,
