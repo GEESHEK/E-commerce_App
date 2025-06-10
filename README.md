@@ -17,7 +17,7 @@ Features to date:
 - Users and non-users can add products to the cart and order them
 - Implement filtering, sorting and paging of data
 - Angular Template forms, Reactive forms and validation
-- Guard system to stop non-users from accessing user pages
+- Guard system to stop non-users from accessing user account pages and the admin pages
 - Added routing to the Angular application and secured routes
 - JWT token needed for Users to edit account details and retrieve their order history
 - Authorisation in the backend to prevent anyone from accessing customer data that does not belong to them
