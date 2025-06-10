@@ -21,6 +21,8 @@ public class TokenService : ITokenService
         if (tokenKey.Length < 64) throw new Exception("Invalid tokenKey length needs to be longer");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
 
+        if (user.UserName == null) throw new Exception("No username for user");
+        
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),

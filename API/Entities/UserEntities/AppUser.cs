@@ -1,14 +1,11 @@
 ﻿using API.Entities.OrderEntities;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Entities.UserEntities;
 
-public class AppUser
+public class AppUser : IdentityUser<int>
 {
-    public int Id { get; set; }
-    //Identity requires PascalCase for UserName
-    public required string UserName { get; set; }
-    public required byte[] PasswordHash { get; set; }
-    public required byte[] PasswordSalt { get; set; }
     public Gender Gender { get; set; }
-    public List<CustomerDetail> CustomerDetails  { get; set; } = new();
+    public List<CustomerDetail> CustomerDetails  { get; set; } = [];
+    public ICollection<AppUserRole> UserRoles { get; set; } = [];
 }

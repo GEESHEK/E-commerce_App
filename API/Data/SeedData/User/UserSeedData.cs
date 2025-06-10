@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Security.Cryptography;
-using System.Text;
 using API.Entities.UserEntities;
 
 namespace API.Data.SeedData.User;
@@ -17,28 +15,24 @@ public static class UserSeedData
             { "Hina", 1 },
         };
       
-        return CreateUsers(users, "Pa$$w0rd");
+        return CreateUsers(users);
     }
 
-    private static List<AppUser> CreateUsers(Dictionary<string,int> users, string password)
+    private static List<AppUser> CreateUsers(Dictionary<string,int> users)
     {
-        var hashedUsers = new List<AppUser>();
+        var appUsers = new List<AppUser>();
 
         foreach (var user in users)
         {
-            using var hmac = new HMACSHA512();
-
             var appUser = new AppUser
             {
-                UserName = user.Key.ToLower(),
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
-                PasswordSalt = hmac.Key,
+                UserName = user.Key,
                 Gender = user.Value == 0 ? Gender.Male : Gender.Female
             };
 
-            hashedUsers.Add(appUser);
+            appUsers.Add(appUser);
         }
 
-        return hashedUsers;
+        return appUsers;
     }
 }

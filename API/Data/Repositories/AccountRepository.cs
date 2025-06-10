@@ -1,36 +1,36 @@
 ﻿using API.DTOs.UserDTOs;
 using API.Entities.UserEntities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories;
 
 public class AccountRepository : IAccountRepository
 {
-    private readonly DataContext _context;
+    private readonly UserManager<AppUser> _userManager;
 
-    public AccountRepository(DataContext context)
+    public AccountRepository(UserManager<AppUser> userManager)
     {
-        _context = context;
+        _userManager = userManager;
     }
     
-    
-    public void AddUser(AppUser user)
+    public async Task<IdentityResult> AddUser(AppUser user, string password)
     {
-        _context.AppUsers.Add(user);
-    }
-
-    public async Task<bool> SaveAllAsync()
-    {
-        return await _context.SaveChangesAsync() > 0;
+        return await _userManager.CreateAsync(user, password);
     }
 
     public async Task<bool> UserExists(string username)
     {
-        return await _context.AppUsers.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
+        return await _userManager.Users.AnyAsync(x => x.NormalizedUserName == username.ToUpper());
     }
-
+    
     public async Task<AppUser> UserExists(LoginDto loginDto)
     {
-        return await _context.AppUsers.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+        return await _userManager.Users.FirstOrDefaultAsync(x => x.NormalizedUserName == loginDto.Username.ToUpper());
+    }
+    
+    public async Task<bool> CheckPassword(AppUser user, string password)
+    {
+        return await _userManager.CheckPasswordAsync(user, password);
     }
 }
